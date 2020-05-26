@@ -1,3 +1,25 @@
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
+
+import 'package:flutter/material.dart';
+
+class App extends StatefulWidget {
+  App({Key key}) : super(key: key);
+
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Parco',
+      theme: ThemeData(
+
+      ),
+      home: Container(),
+    );
+  }
+}

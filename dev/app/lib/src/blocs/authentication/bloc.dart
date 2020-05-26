@@ -1,12 +1,8 @@
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-
 import 'dart:async';
-
-import './index.dart';
+import 'package:app/src/repositories/user.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
+import './index.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository _userRepository;
