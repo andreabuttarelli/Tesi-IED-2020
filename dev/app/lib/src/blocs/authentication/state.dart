@@ -1,3 +1,7 @@
+/// MIT License
+/// by Andrea Buttarelli
+/// creato il 04/02/2020
+
 import 'package:equatable/equatable.dart';
 
 abstract class AuthenticationState extends Equatable {
