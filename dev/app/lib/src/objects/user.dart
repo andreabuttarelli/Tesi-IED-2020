@@ -5,12 +5,12 @@
 
 import 'package:meta/meta.dart';
 
-class User {
+class UserObject {
   String id;
   String name;
   String email;
 
-  User({
+  UserObject({
     this.id,
     this.name,
     this.email,

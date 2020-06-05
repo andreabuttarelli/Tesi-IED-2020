@@ -1,7 +1,7 @@
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
-/// modificato il 03/06/2020
+/// modificato il 05/06/2020
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +19,7 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => NavigationBloc(),
-      child: BottomBarBody(),
+      child: BottomBarBody(items: items,),
     );
   }
 }

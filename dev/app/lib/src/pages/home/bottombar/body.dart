@@ -1,3 +1,8 @@
+/// MIT License
+/// by Andrea Buttarelli
+/// creato il 04/02/2020
+/// modificato il 05/06/2020
+
 import 'package:app/src/blocs/navigation/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,7 +68,7 @@ class _BodyState extends State<BottomBarBody> {
     items.insert(items.length >> 1, _buildMiddleTabItem());
 
     return BottomAppBar(
-      shape: widget.notchedShape,
+      shape: CircularNotchedRectangle(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,

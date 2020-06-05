@@ -1,0 +1,30 @@
+[
+    {
+        "feed": [
+            {
+                "title": [
+                    {
+                        "en": "news"
+                    },
+                    {
+                        "it": "notizie"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "notes": [
+            {
+                "title": [
+                    {
+                        "en": "notes"
+                    },
+                    {
+                        "it": "note"
+                    }
+                ]
+            }
+        ]
+    }
+]
