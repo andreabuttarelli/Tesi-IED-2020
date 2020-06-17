@@ -79,7 +79,7 @@ class _ButtonState extends State<Button> {
           child: Center(
             child: CText(
               '${widget.label}',
-              size: 16,
+              size: 18,
               color: Colors.white,
               weight: FontWeight.w800,
             ),

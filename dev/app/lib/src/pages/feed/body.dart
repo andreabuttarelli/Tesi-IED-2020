@@ -1,3 +1,6 @@
+import 'package:app/src/design_system/text.dart';
+import 'package:content_placeholder/content_placeholder.dart';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
@@ -21,12 +24,32 @@ class _BodyState extends State<Body> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
   FeedBloc _postBloc;
+  List<Widget> placeholderWidgets;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
     _postBloc = BlocProvider.of<FeedBloc>(context);
+
+    placeholderWidgets = List();
+    for (int i = 0; i < 10; i++) {
+      placeholderWidgets.add(
+        ContentPlaceholder(
+          height: 160,
+          bgColor: Colors.black45,
+          highlightColor: Colors.white,
+          spacing: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+          child: Container(
+            height: 160,
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -37,10 +60,28 @@ class _BodyState extends State<Body> {
           return ListView(
             children: [
               Header(),
-              Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child:CircularProgressIndicator(),),
+                        CText(
+                          'Loading...',
+                          size: 24,
+                          weight: FontWeight.bold,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: placeholderWidgets,
+                  ),
+                ],
               ),
             ],
           );
@@ -60,15 +101,15 @@ class _BodyState extends State<Body> {
         if (state is FeedLoaded) {
           if (state.posts.isEmpty) {
             return ListView(
-            children: [
-              Header(),
-              Expanded(
-                child: Center(
-                  child: Text('no posts'),
+              children: [
+                Header(),
+                Expanded(
+                  child: Center(
+                    child: Text('no posts'),
+                  ),
                 ),
-              ),
-            ],
-          );
+              ],
+            );
           }
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {

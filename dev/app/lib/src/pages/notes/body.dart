@@ -20,12 +20,13 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Ciao'),
           Button(
-            label: 'Value',
-            type: ButtonType.primarySolid,
+            label: 'New Note',
+            type: ButtonType.secondarySolid,
             dims: ButtonDims.medium,
           ),
         ],

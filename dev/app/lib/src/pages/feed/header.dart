@@ -16,11 +16,25 @@ class Header extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 24),
       child: Padding(
         padding: const EdgeInsets.only(top: 60),
-        child: CText(
-          'news',
-          size: 50,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: CText(
+          'News',
+          size: 48,
           weight: FontWeight.w700,
+        ),),
+        Wrap(children: [
+          CText(
+          'Tutte le ultime notizie, per te.',
+          size: 20,
+          weight: FontWeight.w700,
+          color: Colors.black.withOpacity(0.7),
         ),
+        ],),
+        ],),
       ),
     );
   }
