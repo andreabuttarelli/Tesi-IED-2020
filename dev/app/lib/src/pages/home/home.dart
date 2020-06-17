@@ -26,8 +26,8 @@ class Home extends StatelessWidget {
       ),
       bottomNavigationBar: BottomBar(
         items: [
-          BottomAppBarItem(iconData: Icons.menu, text: 'This'),
-          BottomAppBarItem(iconData: Icons.layers, text: 'Is'),
+          BottomAppBarItem(iconData: Icons.menu, text: 'News'),
+          BottomAppBarItem(iconData: Icons.layers, text: 'Notes'),
         ],
       ),
     );

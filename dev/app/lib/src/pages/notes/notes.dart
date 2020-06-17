@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import './body.dart';
+import './header.dart';
 
 class Notes extends StatelessWidget {
   const Notes({Key key}) : super(key: key);
@@ -12,13 +13,9 @@ class Notes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
+      child: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 60),
-            child: Text('notes'),
-          ),
+          Header(),
           Body(),
         ],
       ),

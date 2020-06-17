@@ -17,9 +17,6 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => NavigationBloc(),
-      child: BottomBarBody(items: items,),
-    );
+    return BottomBarBody(items: items,);
   }
 }

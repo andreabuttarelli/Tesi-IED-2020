@@ -34,20 +34,41 @@ class _BodyState extends State<Body> {
     return BlocBuilder<FeedBloc, FeedState>(
       builder: (context, state) {
         if (state is FeedUninitialized) {
-          return Center(
-            child: CircularProgressIndicator(),
+          return ListView(
+            children: [
+              Header(),
+              Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ],
           );
         }
         if (state is FeedError) {
-          return Center(
-            child: Text('failed to fetch posts'),
+          return ListView(
+            children: [
+              Header(),
+              Expanded(
+                child: Center(
+                  child: Text('failed to fetch posts'),
+                ),
+              ),
+            ],
           );
         }
         if (state is FeedLoaded) {
           if (state.posts.isEmpty) {
-            return Center(
-              child: Text('no posts'),
-            );
+            return ListView(
+            children: [
+              Header(),
+              Expanded(
+                child: Center(
+                  child: Text('no posts'),
+                ),
+              ),
+            ],
+          );
           }
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) {

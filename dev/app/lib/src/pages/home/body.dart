@@ -17,6 +17,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  int index = 0;
   NavigationBloc navigationBloc;
 
   @override
@@ -30,7 +31,6 @@ class _BodyState extends State<Body> {
     return BlocBuilder<NavigationBloc, int>(
       bloc: navigationBloc,
       builder: (context, i) {
-        print(i);
         return Stack(
           children: [
             Visibility(

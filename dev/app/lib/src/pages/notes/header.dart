@@ -1,9 +1,4 @@
 import 'package:app/src/design_system/text.dart';
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 05/06/2020
-/// aggiornato il 05/06/2020
-
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
@@ -17,7 +12,7 @@ class Header extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 60),
         child: CText(
-          'news',
+          'notes',
           size: 50,
           weight: FontWeight.w700,
         ),
