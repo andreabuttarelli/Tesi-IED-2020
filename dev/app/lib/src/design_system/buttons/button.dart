@@ -1,27 +1,105 @@
+import 'package:app/src/design_system/buttons/dims.dart';
+import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatefulWidget {
-  Button({Key key}) : super(key: key);
+  final String label;
+  final Color color;
+  final ButtonType type;
+  final ButtonDims dims;
+  Button({
+    Key key,
+    this.label,
+    this.color,
+    this.type,
+    this.dims,
+  }) : super(key: key);
 
   @override
   _ButtonState createState() => _ButtonState();
 }
 
 class _ButtonState extends State<Button> {
+  bool isTapped = false;
+  double hPadding = 0;
+  double width;
+  double height;
+  Color color;
+
+  @override
+  void initState() {
+    if (widget.dims == ButtonDims.large) {
+      hPadding = 24;
+      height = 54;
+    }
+    else if (widget.dims == ButtonDims.medium) {
+      height = 54;
+      width = 200;
+    } else
+      hPadding = 8;
+
+    if (widget.color != null)
+      color = widget.color;
+    else if (widget.type == ButtonType.primarySolid)
+      color = Colors.black;
+    else if (widget.type == ButtonType.secondarySolid)
+      color = Color(0xFFA92217);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isTapped) color = color.withOpacity(0.5);
+    else color = color.withOpacity(1);
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 44, vertical: 8),
-      child: FlatButton(
-        onPressed: () {},
-        child: Container(
+      padding: EdgeInsets.symmetric(horizontal: hPadding, vertical: 8),
+      child: GestureDetector(
+        onTapDown: (TapDownDetails details) => toogleTappedFlag(),
+        onTapCancel: () => cancelTappedFlag(),
+        child: AnimatedContainer(
+          width: width,
+          height: height,
+          decoration: (widget.type == ButtonType.primarySolid ||
+                  widget.type == ButtonType.secondarySolid ||
+                  widget.type == null)
+              ? BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(16),
+              )
+              : BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: color,
+                  width: 1,
+                ),
+              ),
           child: Center(
-            child: CText('Value',
-                size: 12, color: Colors.white, weight: FontWeight.w800),
+            child: CText(
+              '${widget.label}',
+              size: 16,
+              color: Colors.white,
+              weight: FontWeight.w800,
+            ),
           ),
+          duration: Duration(milliseconds: 200),
+          curve: Curves.fastOutSlowIn,
         ),
       ),
     );
+  }
+
+  toogleTappedFlag() {
+    setState(() {
+      isTapped = true;
+    });
+  }
+
+  cancelTappedFlag() {
+    setState(() {
+      isTapped = false;
+    });
   }
 }

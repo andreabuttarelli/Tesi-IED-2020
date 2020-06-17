@@ -1,3 +1,7 @@
+import 'package:app/src/design_system/buttons/button.dart';
+import 'package:app/src/design_system/buttons/dims.dart';
+import 'package:app/src/design_system/buttons/type.dart';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
@@ -15,6 +19,17 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Column(
+        children: [
+          Text('Ciao'),
+          Button(
+            label: 'Value',
+            type: ButtonType.primarySolid,
+            dims: ButtonDims.medium,
+          ),
+        ],
+      ),
+    );
   }
 }
