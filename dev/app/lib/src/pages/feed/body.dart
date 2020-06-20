@@ -36,12 +36,12 @@ class _BodyState extends State<Body> {
     for (int i = 0; i < 10; i++) {
       placeholderWidgets.add(
         ContentPlaceholder(
-          height: 160,
+          height: 240,
           bgColor: Colors.black45,
           highlightColor: Colors.white,
           spacing: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
           child: Container(
-            height: 160,
+            height: 240,
             decoration: BoxDecoration(
               color: Colors.black54,
               borderRadius: BorderRadius.circular(24),

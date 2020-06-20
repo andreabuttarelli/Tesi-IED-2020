@@ -102,7 +102,7 @@ class _BodyState extends State<BottomBarBody> {
     int index,
     ValueChanged<int> onPressed,
   }) {
-    Color color = selectedIndex == index ? widget.selectedColor : widget.color;
+    Color color = selectedIndex == index ? widget.color : widget.color.withOpacity(0.55);
     return Expanded(
       child: SizedBox(
         height: widget.height,

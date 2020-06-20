@@ -19,12 +19,15 @@ class Home extends StatelessWidget {
       body: Body(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
         onPressed: () {},
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white),
         elevation: 2.0,
       ),
       bottomNavigationBar: BottomBar(
+        color: Colors.white,
+        bgColor: Colors.black,
         items: [
           BottomAppBarItem(iconData: Icons.menu, text: 'News'),
           BottomAppBarItem(iconData: Icons.layers, text: 'Notes'),
