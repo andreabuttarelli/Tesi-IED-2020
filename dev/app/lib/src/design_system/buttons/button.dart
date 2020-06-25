@@ -26,14 +26,15 @@ class _ButtonState extends State<Button> {
   double width;
   double height;
   Color color;
+  BoxDecoration decoration;
+  double opacity;
 
   @override
   void initState() {
     if (widget.dims == ButtonDims.large) {
       hPadding = 24;
       height = 54;
-    }
-    else if (widget.dims == ButtonDims.medium) {
+    } else if (widget.dims == ButtonDims.medium) {
       height = 54;
       width = 200;
     } else
@@ -41,23 +42,29 @@ class _ButtonState extends State<Button> {
 
     if (widget.color != null)
       color = widget.color;
-    else if (widget.type == ButtonType.primarySolid)
+    else if (widget.type == ButtonType.primarySolid ||
+        widget.type == ButtonType.primaryStroke)
       color = Colors.black;
-    else if (widget.type == ButtonType.secondarySolid)
-      color = Color(0xFFA92217);
+    else if (widget.type == ButtonType.secondarySolid ||
+        widget.type == ButtonType.secondaryStroke) color = Color(0xFFA92217);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isTapped) color = color.withOpacity(0.5);
-    else color = color.withOpacity(1);
+    if (isTapped) 
+      opacity = 0.5;
+    else
+      opacity = 1;
 
-    return Container(
+    return Opacity(
+      opacity: opacity,
+      child:Container(
       padding: EdgeInsets.symmetric(horizontal: hPadding, vertical: 8),
       child: GestureDetector(
         onTapDown: (TapDownDetails details) => toogleTappedFlag(),
         onTapCancel: () => cancelTappedFlag(),
+        onTapUp: (TapUpDetails details) => cancelTappedFlag(),
         child: AnimatedContainer(
           width: width,
           height: height,
@@ -65,22 +72,29 @@ class _ButtonState extends State<Button> {
                   widget.type == ButtonType.secondarySolid ||
                   widget.type == null)
               ? BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(16),
-              )
-              : BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
                   color: color,
-                  width: 1,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: color,
+                    width: 2,
+                  ),
+                )
+              : BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: color,
+                    width: 2,
+                  ),
                 ),
-              ),
           child: Center(
             child: CText(
               '${widget.label}',
               size: 18,
-              color: Colors.white,
+              color: (widget.type == ButtonType.primaryStroke ||
+                      widget.type == ButtonType.secondaryStroke)
+                  ? Colors.black
+                  : Colors.white,
               weight: FontWeight.w800,
             ),
           ),
@@ -88,7 +102,7 @@ class _ButtonState extends State<Button> {
           curve: Curves.fastOutSlowIn,
         ),
       ),
-    );
+    ),);
   }
 
   toogleTappedFlag() {

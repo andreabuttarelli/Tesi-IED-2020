@@ -1,3 +1,4 @@
+import 'package:app/src/pages/auth/pre_login.dart';
 import 'package:app/src/pages/splash/splash.dart';
 /// MIT License
 /// by Andrea Buttarelli
@@ -40,7 +41,7 @@ class _AppState extends State<App> {
             return Home();
           }
           if (state is Unauthenticated) {
-            return Home();
+            return PreLogin();
           }
           return Splash();
         },
