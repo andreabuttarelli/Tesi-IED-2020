@@ -10,13 +10,44 @@ class CText extends StatelessWidget {
   final double size;
   final Color color;
   final FontWeight weight;
-  const CText(@required this.value, {Key key, this.size, this.weight, this.color}) : super(key: key);
+  final double hPadding;
+  final double vPadding;
+  final double top, bottom, left, right;
+  const CText(
+    @required this.value, {
+    Key key,
+    this.size,
+    this.weight,
+    this.color,
+    this.hPadding,
+    this.vPadding,
+    this.top,
+    this.bottom,
+    this.left,
+    this.right,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '$value',
-      style: TextStyle(color: color ?? Colors.black, fontSize: size ?? 16, fontWeight: weight ?? FontWeight.w500,),
+    return Container(
+      margin: EdgeInsets.only(
+        top: (top == null) ? 0 : top,
+        bottom: (bottom == null) ? 0 : bottom,
+        left: (left == null) ? 0 : left,
+        right: (right == null) ? 0 : right,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: (hPadding == null) ? 0 : hPadding,
+        vertical: (vPadding == null) ? 0 : vPadding,
+      ),
+      child: Text(
+        '$value',
+        style: TextStyle(
+          color: color ?? Colors.black,
+          fontSize: size ?? 16,
+          fontWeight: weight ?? FontWeight.w500,
+        ),
+      ),
     );
   }
 }

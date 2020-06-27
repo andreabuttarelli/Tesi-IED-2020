@@ -2,6 +2,7 @@ import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/design_system/textfield/textfield.dart';
 import 'package:flutter/material.dart';
 
 class PreLogin extends StatelessWidget {
@@ -9,12 +10,30 @@ class PreLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(child: Column(children: [
-      Spacer(),
-      CText('Parco Archeologico del Colosseo'),
-      Spacer(),
-      Button(label: 'Login', type: ButtonType.secondarySolid, dims: ButtonDims.large,),
-      Button(label: 'Join Now', type: ButtonType.primaryStroke, dims: ButtonDims.large,),
-    ],),));
+    return Scaffold(
+        body: SafeArea(
+      child: Column(
+        children: [
+          Spacer(),
+          CText('Parco Archeologico del Colosseo'),
+          Spacer(),
+          CTextField(
+            title: "Email",
+            isInitialError: false,
+            validationMessage: "message",
+          ),
+          Button(
+            label: 'Login',
+            type: ButtonType.secondarySolid,
+            dims: ButtonDims.large,
+          ),
+          Button(
+            label: 'Join Now',
+            type: ButtonType.primaryStroke,
+            dims: ButtonDims.large,
+          ),
+        ],
+      ),
+    ));
   }
 }
