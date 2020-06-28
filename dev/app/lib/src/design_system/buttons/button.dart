@@ -59,8 +59,10 @@ class _ButtonState extends State<Button> {
     else
       opacity = 1;
 
-    return Opacity(
+    return AnimatedOpacity(
       opacity: opacity,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOutCubic,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: hPadding, vertical: 8),
         child: GestureDetector(

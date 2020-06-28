@@ -70,24 +70,28 @@ class _ArticleWidgetState extends State<ArticleWidget> {
         opacity: opacity,
         duration: Duration(milliseconds: 300),
         curve: Curves.easeInOutCubic,
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+          color: (opacity == 1) ? Colors.transparent : Color(0xFFe7e7e7),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               (thumbnail != '')
-                  ? Container(
-                      height: 240,
-                      decoration: BoxDecoration(
-                        color: Colors.black45,
-                        image: DecorationImage(
-                          image: (widget.post.media.thumbnails.isNotEmpty)
-                              ? NetworkImage(
-                                  '${widget.post.media.thumbnails[0].url}')
-                              : NetworkImage('$thumbnail'),
-                          fit: BoxFit.cover,
+                  ? Hero(
+                      tag: widget.post.id,
+                      child: Container(
+                        height: 240,
+                        decoration: BoxDecoration(
+                          color: Colors.black45,
+                          image: DecorationImage(
+                            image: (widget.post.media.thumbnails.isNotEmpty)
+                                ? NetworkImage(
+                                    '${widget.post.media.thumbnails[0].url}')
+                                : NetworkImage('$thumbnail'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        borderRadius: BorderRadius.circular(16),
                       ),
                     )
                   : ContentPlaceholder(

@@ -1,116 +1,87 @@
-import 'package:app/src/design_system/buttons/button.dart';
-import 'package:app/src/design_system/buttons/dims.dart';
-import 'package:app/src/design_system/buttons/type.dart';
-import 'package:app/src/design_system/text.dart';
+import 'package:app/src/design_system/buttons/top_icon.dart';
+import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:share/share.dart';
 import 'package:webfeed/domain/atom_item.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:url_launcher/url_launcher.dart';
+import './content.dart';
 
 class Body extends StatefulWidget {
   AtomItem post;
-  double top;
-  Body({
-    Key key,
-    @required this.post,
-    this.top,
-  }) : super(key: key);
+  String thumbnail;
+  Body({Key key, @required this.post, this.thumbnail}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
+  var top = 0.0;
+  var topBody = 0.0;
+  var topPadding = 330;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (OverscrollIndicatorNotification overscroll) {
-          overscroll.disallowGlow();
+    final width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: Color(0xFFF1F1F1),
+      body: new NotificationListener(
+        onNotification: (v) {
+          if (v is ScrollUpdateNotification) {
+            setState(() => top -= v.scrollDelta / 2);
+            setState(() => topBody -= v.scrollDelta);
+          }
         },
-        child: ListView(
+        child: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: widget.top),
+            Positioned(
+              top: top + 84,
+              child: Hero(
+                tag: widget.post.id,
+                child: Container(
+                  width: width,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage('${widget.thumbnail}'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Content(
+              post: widget.post,
+              top: topBody + 84 + 290,
             ),
             Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.only(top: 16),
+              width: double.maxFinite,
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 16, bottom: 16),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: CText(
-                      '${widget.post.title}',
-                      size: 32,
-                      weight: FontWeight.w700,
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: TopIconBack(
+                      icon: FeatherIcons.arrowLeft,
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.only(right: 8),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 16),
-                          child: CText(
-                            '${widget.post.categories[0].term}',
-                            size: 14,
-                            weight: FontWeight.bold,
-                            color: Colors.black.withOpacity(0.8),
-                          ),
+                        TopIcon(
+                          icon: FeatherIcons.share,
+                          onClick: () => Share.share('${widget.post.id}',
+                              subject: '${widget.post.title}'),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, bottom: 16),
-                          child: CText(
-                            '${timeago.format(DateTime.parse(widget.post.published))}',
-                            size: 14,
-                            weight: FontWeight.w600,
-                            color: Colors.black54,
-                          ),
+                        TopIcon(
+                          icon: FeatherIcons.shield,
+                          onClick: () => Share.share('${widget.post.id}',
+                              subject: '${widget.post.title}'),
                         ),
                       ],
-                    ),
-                  ),
-                  Html(
-                    data: widget.post.content,
-                    style: {
-                      "div": Style(
-                        fontSize: FontSize(18),
-                        fontWeight: FontWeight.bold,
-                      ),
-                      "p": Style(
-                        fontSize: FontSize(18),
-                        fontWeight: FontWeight.bold,
-                      ),
-                      "blockquote p": Style(
-                        fontSize: FontSize(22),
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "GilroyMedium",
-                        color: Colors.black.withOpacity(0.8),
-                      ),
-                    },
-                    onLinkTap: (url) => onUrlTap(url),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24, bottom: 24),
-                    child: Button(
-                      label: 'Share',
-                      type: ButtonType.secondarySolid,
-                      dims: ButtonDims.medium,
-                      onClick: () {
-                        Share.share('${widget.post.id}',
-                            subject: '${widget.post.title}');
-                      },
                     ),
                   ),
                 ],
@@ -120,13 +91,5 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
-  }
-
-  onUrlTap(url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }
