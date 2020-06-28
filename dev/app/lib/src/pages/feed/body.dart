@@ -9,6 +9,7 @@ import 'package:content_placeholder/content_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/blocs/feed/index.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import './article.dart';
 import './bottom_loader.dart';
 import './header.dart';
@@ -64,12 +65,14 @@ class _BodyState extends State<Body> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 24),
                     child: Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 16),
-                          child:CircularProgressIndicator(),),
+                          child: CircularProgressIndicator(),
+                        ),
                         CText(
                           'Loading...',
                           size: 24,
@@ -87,15 +90,27 @@ class _BodyState extends State<Body> {
           );
         }
         if (state is FeedError) {
-          return ListView(
-            children: [
-              Header(),
-              Expanded(
-                child: Center(
-                  child: Text('failed to fetch posts'),
-                ),
+          return LiquidPullToRefresh(
+            onRefresh: _handleRefresh,
+            showChildOpacityTransition: false,
+            animSpeedFactor: 4,
+            color: Color(0xFFA92217),
+            height: 100,
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowGlow();
+              },
+              child: ListView(
+                children: [
+                  Header(),
+                  Expanded(
+                    child: Center(
+                      child: Text('failed to fetch posts'),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           );
         }
         if (state is FeedLoaded) {
@@ -111,17 +126,29 @@ class _BodyState extends State<Body> {
               ],
             );
           }
-          return ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) return Header();
-              return index >= state.posts.length
-                  ? BottomLoader()
-                  : ArticleWidget(post: state.posts[index]);
-            },
-            itemCount: state.hasReachedMax
-                ? state.posts.length
-                : state.posts.length + 1,
-            controller: _scrollController,
+          return LiquidPullToRefresh(
+            onRefresh: _handleRefresh,
+            showChildOpacityTransition: false,
+            animSpeedFactor: 4,
+            color: Color(0xFFA92217),
+            height: 100,
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowGlow();
+              },
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 0) return Header();
+                  return index >= state.posts.length
+                      ? BottomLoader()
+                      : ArticleWidget(post: state.posts[index]);
+                },
+                itemCount: state.hasReachedMax
+                    ? state.posts.length
+                    : state.posts.length + 1,
+                controller: _scrollController,
+              ),
+            ),
           );
         }
       },
@@ -140,5 +167,10 @@ class _BodyState extends State<Body> {
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _postBloc.add(Fetch());
     }
+  }
+
+  Future<void> _handleRefresh() async {
+    await Future.delayed(Duration(milliseconds: 500));
+    return;
   }
 }

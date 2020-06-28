@@ -1,3 +1,5 @@
+import 'package:app/src/blocs/feed/index.dart';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
@@ -10,6 +12,7 @@ import './src/bloc_delegate.dart';
 import './src/app.dart';
 import 'package:app/src/blocs/authentication/index.dart';
 import 'package:app/src/blocs/navigation/bloc.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +31,10 @@ void main() {
         ),
         BlocProvider(
           create: (context) => NavigationBloc(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              FeedBloc(httpClient: http.Client())..add(Fetch()),
         ),
       ],
       child: App(),

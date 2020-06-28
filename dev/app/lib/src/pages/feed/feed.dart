@@ -14,9 +14,6 @@ class Feed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FeedBloc(httpClient: http.Client())..add(Fetch()),
-      child: Body(),
-    );
+    return Body();
   }
 }

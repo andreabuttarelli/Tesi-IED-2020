@@ -39,6 +39,8 @@ dependencies:
   flutter_html: ^1.0.0
   webfeed: ^0.4.2
   timeago: ^2.0.26
+  liquid_pull_to_refresh: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
