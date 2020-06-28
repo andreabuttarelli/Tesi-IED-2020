@@ -21,6 +21,7 @@ class _ArticleState extends State<Article> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Color(0xFFF1F1F1),
       body: new NotificationListener(
         onNotification: (v) {
           if (v is ScrollUpdateNotification) {
@@ -53,8 +54,11 @@ class _ArticleState extends State<Article> {
               color: Colors.white,
               child: Row(
                 children: [
-                  TopIcon(
-                    icon: Icons.arrow_back,
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: TopIcon(
+                      icon: Icons.arrow_back,
+                    ),
                   ),
                 ],
               ),

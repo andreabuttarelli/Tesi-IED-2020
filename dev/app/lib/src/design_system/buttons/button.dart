@@ -8,12 +8,14 @@ class Button extends StatefulWidget {
   final Color color;
   final ButtonType type;
   final ButtonDims dims;
+  final Function onClick;
   Button({
     Key key,
     this.label,
     this.color,
     this.type,
     this.dims,
+    this.onClick,
   }) : super(key: key);
 
   @override
@@ -52,57 +54,59 @@ class _ButtonState extends State<Button> {
 
   @override
   Widget build(BuildContext context) {
-    if (isTapped) 
+    if (isTapped)
       opacity = 0.5;
     else
       opacity = 1;
 
     return Opacity(
       opacity: opacity,
-      child:Container(
-      padding: EdgeInsets.symmetric(horizontal: hPadding, vertical: 8),
-      child: GestureDetector(
-        onTapDown: (TapDownDetails details) => toogleTappedFlag(),
-        onTapCancel: () => cancelTappedFlag(),
-        onTapUp: (TapUpDetails details) => cancelTappedFlag(),
-        child: AnimatedContainer(
-          width: width,
-          height: height,
-          decoration: (widget.type == ButtonType.primarySolid ||
-                  widget.type == ButtonType.secondarySolid ||
-                  widget.type == null)
-              ? BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: hPadding, vertical: 8),
+        child: GestureDetector(
+          onTapDown: (TapDownDetails details) => toogleTappedFlag(),
+          onTapCancel: () => cancelTappedFlag(),
+          onTapUp: (TapUpDetails details) => cancelTappedFlag(),
+          onTap: () => widget.onClick(),
+          child: AnimatedContainer(
+            width: width,
+            height: height,
+            decoration: (widget.type == ButtonType.primarySolid ||
+                    widget.type == ButtonType.secondarySolid ||
+                    widget.type == null)
+                ? BoxDecoration(
                     color: color,
-                    width: 2,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: color,
+                      width: 2,
+                    ),
+                  )
+                : BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: color,
+                      width: 2,
+                    ),
                   ),
-                )
-              : BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: color,
-                    width: 2,
-                  ),
-                ),
-          child: Center(
-            child: CText(
-              '${widget.label}',
-              size: 18,
-              color: (widget.type == ButtonType.primaryStroke ||
-                      widget.type == ButtonType.secondaryStroke)
-                  ? Colors.black
-                  : Colors.white,
-              weight: FontWeight.w800,
+            child: Center(
+              child: CText(
+                '${widget.label}',
+                size: 18,
+                color: (widget.type == ButtonType.primaryStroke ||
+                        widget.type == ButtonType.secondaryStroke)
+                    ? Colors.black
+                    : Colors.white,
+                weight: FontWeight.w800,
+              ),
             ),
+            duration: Duration(milliseconds: 200),
+            curve: Curves.fastOutSlowIn,
           ),
-          duration: Duration(milliseconds: 200),
-          curve: Curves.fastOutSlowIn,
         ),
       ),
-    ),);
+    );
   }
 
   toogleTappedFlag() {
@@ -115,5 +119,9 @@ class _ButtonState extends State<Button> {
     setState(() {
       isTapped = false;
     });
+  }
+
+  func() {
+    widget.onClick();
   }
 }

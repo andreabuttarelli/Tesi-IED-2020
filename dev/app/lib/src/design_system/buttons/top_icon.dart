@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class TopIcon extends StatefulWidget {
   Color color;
   IconData icon;
-  TopIcon({Key key, this.color, @required this.icon}) : super(key: key);
+  Function voidCallback;
+  TopIcon({Key key, this.color, @required this.icon, this.voidCallback})
+      : super(key: key);
 
   @override
   _TopIconState createState() => _TopIconState();
@@ -25,7 +27,10 @@ class _TopIconState extends State<TopIcon> {
       child: Container(
         padding: EdgeInsets.only(top: 24, left: 24, bottom: 16, right: 16),
         child: GestureDetector(
-          onTapDown: (TapDownDetails details) => toogleTappedFlag(),
+          onTap: () {
+            Navigator.pop(context);
+            toogleTappedFlag();
+          },
           onTapCancel: () => cancelTappedFlag(),
           onTapUp: (TapUpDetails details) => cancelTappedFlag(),
           child: Container(

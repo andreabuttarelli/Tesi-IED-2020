@@ -1,7 +1,12 @@
+import 'package:app/src/design_system/buttons/button.dart';
+import 'package:app/src/design_system/buttons/dims.dart';
+import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_html/style.dart';
+import 'package:share/share.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -21,7 +26,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    print(widget.post.content);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: NotificationListener<OverscrollIndicatorNotification>(
@@ -34,9 +38,13 @@ class _BodyState extends State<Body> {
               padding: EdgeInsets.only(top: widget.top),
             ),
             Container(
-              color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 16, bottom: 16),
@@ -44,6 +52,7 @@ class _BodyState extends State<Body> {
                     child: CText(
                       '${widget.post.title}',
                       size: 32,
+                      weight: FontWeight.w700,
                     ),
                   ),
                   Container(
@@ -76,10 +85,32 @@ class _BodyState extends State<Body> {
                     data: widget.post.content,
                     style: {
                       "div": Style(
-                        fontSize: FontSize.large,
+                        fontSize: FontSize(18),
                         fontWeight: FontWeight.bold,
                       ),
+                      "p": Style(
+                        fontSize: FontSize(18),
+                        fontWeight: FontWeight.bold,
+                      ),
+                      "blockquote p": Style(
+                        fontSize: FontSize(22),
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "GilroyMedium",
+                        color: Colors.black.withOpacity(0.8),
+                      ),
                     },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24, bottom: 24),
+                    child: Button(
+                      label: 'Share',
+                      type: ButtonType.secondarySolid,
+                      dims: ButtonDims.medium,
+                      onClick: () {
+                        Share.share('${widget.post.id}',
+                            subject: '${widget.post.title}');
+                      },
+                    ),
                   ),
                 ],
               ),

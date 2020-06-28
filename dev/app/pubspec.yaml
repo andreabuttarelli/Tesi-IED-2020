@@ -40,6 +40,7 @@ dependencies:
   webfeed: ^0.4.2
   timeago: ^2.0.26
   liquid_pull_to_refresh: ^2.0.0
+  share: ^0.6.4+3
 
 
 dev_dependencies:
@@ -66,14 +67,20 @@ flutter:
   fonts:
     - family: Gilroy
       fonts:
-        - asset: assets/fonts/Gilroy/Gilroy-Light.ttf
+        - asset: assets/fonts/Gilroy-Light.ttf
           weight: 300
-        - asset: assets/fonts/Gilroy/Gilroy-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Gilroy/Gilroy-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Gilroy/Gilroy-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Gilroy/Gilroy-Heavy.ttf
+        - asset: assets/fonts/Gilroy-Heavy.ttf
           weight: 800
+    - family: GilroyRegular
+      fonts:
+        - asset: assets/fonts/Gilroy-Regular.ttf
+          weight: 400
+    - family: GilroyMedium
+      fonts:
+        - asset: assets/fonts/Gilroy-Medium.ttf
+          weight: 500
+    - family: GilroyBold
+      fonts:
+        - asset: assets/fonts/Gilroy-Bold.ttf
+          weight: 700
   

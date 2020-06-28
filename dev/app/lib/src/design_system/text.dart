@@ -29,6 +29,30 @@ class CText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String family;
+    double letterSpacing;
+    double height;
+    if (weight == FontWeight.w300) {
+      family = "Gilroy";
+      letterSpacing = 0;
+    } else if (weight == FontWeight.w400) {
+      family = "GilroyRegular";
+      letterSpacing = -0.3;
+    } else if (weight == FontWeight.w500) {
+      family = "GilroyMedium";
+      letterSpacing = -1.3;
+    } else if (weight == FontWeight.w700) {
+      family = "GilroyBold";
+      letterSpacing = -1.3;
+      height = size + 0;
+    } else if (weight == FontWeight.w800) {
+      family = "Gilroy";
+      letterSpacing = 0;
+    } else {
+      family = "GilroyMedium";
+      letterSpacing = -1.3;
+    }
+
     return Container(
       margin: EdgeInsets.only(
         top: (top == null) ? 0 : top,
@@ -46,6 +70,7 @@ class CText extends StatelessWidget {
           color: color ?? Colors.black,
           fontSize: size ?? 16,
           fontWeight: weight ?? FontWeight.w500,
+          fontFamily: family,
         ),
       ),
     );
