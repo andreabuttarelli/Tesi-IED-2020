@@ -41,6 +41,7 @@ dependencies:
   timeago: ^2.0.26
   liquid_pull_to_refresh: ^2.0.0
   share: ^0.6.4+3
+  url_launcher: ^5.4.11
 
 
 dev_dependencies:

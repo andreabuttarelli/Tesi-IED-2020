@@ -4,11 +4,11 @@ import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_html/style.dart';
 import 'package:share/share.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class Body extends StatefulWidget {
   AtomItem post;
@@ -99,6 +99,7 @@ class _BodyState extends State<Body> {
                         color: Colors.black.withOpacity(0.8),
                       ),
                     },
+                    onLinkTap: (url) => onUrlTap(url),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24, bottom: 24),
@@ -119,5 +120,13 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+
+  onUrlTap(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
