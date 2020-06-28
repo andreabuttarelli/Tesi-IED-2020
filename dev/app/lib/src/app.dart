@@ -43,7 +43,7 @@ class _AppState extends State<App> {
             return Home();
           }
           if (state is Unauthenticated) {
-            return Login();
+            return Home();
           }
           return Splash();
         },

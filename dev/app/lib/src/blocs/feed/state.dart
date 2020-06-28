@@ -1,9 +1,11 @@
 import 'package:app/src/objects/article.dart';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
 
 import 'package:equatable/equatable.dart';
+import 'package:webfeed/domain/atom_item.dart';
 
 abstract class FeedState extends Equatable {
   const FeedState();
@@ -17,7 +19,7 @@ class FeedUninitialized extends FeedState {}
 class FeedError extends FeedState {}
 
 class FeedLoaded extends FeedState {
-  final List<ArticleObject> posts;
+  final List<AtomItem> posts;
   final bool hasReachedMax;
 
   const FeedLoaded({
@@ -26,7 +28,7 @@ class FeedLoaded extends FeedState {
   });
 
   FeedLoaded copyWith({
-    List<ArticleObject> posts,
+    List<AtomItem> posts,
     bool hasReachedMax,
   }) {
     return FeedLoaded(

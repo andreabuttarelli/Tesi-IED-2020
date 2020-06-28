@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:app/src/objects/article.dart';
+import 'package:app/src/repositories/feed.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +15,7 @@ import './index.dart';
 
 class FeedBloc extends Bloc<FeedEvent, FeedState> {
   final http.Client httpClient;
+  int index = 1;
 
   FeedBloc({@required this.httpClient});
 
@@ -37,16 +39,18 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     if (event is Fetch && !_hasReachedMax(currentState)) {
       try {
         if (currentState is FeedUninitialized) {
-          final posts = await _fetchPosts(0, 20);
-          yield FeedLoaded(posts: posts, hasReachedMax: false);
+          final feed = await FeedRepositories().fetchPosts(index);
+          index++;
+          yield FeedLoaded(posts: feed.items, hasReachedMax: false);
           return;
         }
         if (currentState is FeedLoaded) {
-          final posts = await _fetchPosts(currentState.posts.length, 20);
-          yield posts.isEmpty
+          final feed = await FeedRepositories().fetchPosts(index);
+          index++;
+          yield feed.items.isEmpty
               ? currentState.copyWith(hasReachedMax: true)
               : FeedLoaded(
-                  posts: currentState.posts + posts,
+                  posts: currentState.posts + feed.items,
                   hasReachedMax: false,
                 );
         }
@@ -58,21 +62,4 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
   bool _hasReachedMax(FeedState state) =>
       state is FeedLoaded && state.hasReachedMax;
-
-  Future<List<ArticleObject>> _fetchPosts(int startIndex, int limit) async {
-    final response = await httpClient.get(
-        'https://jsonplaceholder.typicode.com/posts?_start=$startIndex&_limit=$limit');
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body) as List;
-      return data.map((rawPost) {
-        return ArticleObject(
-          id: rawPost['id'],
-          title: rawPost['title'],
-          body: rawPost['body'],
-        );
-      }).toList();
-    } else {
-      throw Exception('error fetching posts');
-    }
-  }
 }
