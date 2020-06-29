@@ -6,7 +6,7 @@ class CTextField extends StatefulWidget {
   String text;
   String title;
   String validationMessage;
-  bool isInitialError;
+  bool isError;
   bool autocorrect;
   bool autofocus;
   bool secure;
@@ -17,7 +17,7 @@ class CTextField extends StatefulWidget {
     this.text,
     this.title,
     this.validationMessage,
-    this.isInitialError,
+    this.isError,
     this.autocorrect,
     this.autofocus,
     this.secure,
@@ -42,8 +42,8 @@ class _TextFieldState extends State<CTextField> {
       hPadding = 0;
     else
       hPadding = widget.hpadding;
-    if (widget.isInitialError != null) {
-      if (widget.isInitialError)
+    if (widget.isError != null) {
+      if (widget.isError)
         isError = true;
       else
         isError = false;

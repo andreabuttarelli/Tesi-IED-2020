@@ -122,8 +122,4 @@ class _ButtonState extends State<Button> {
       isTapped = false;
     });
   }
-
-  func() {
-    widget.onClick();
-  }
 }

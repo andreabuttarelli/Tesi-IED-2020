@@ -1,4 +1,7 @@
+import 'package:app/src/blocs/authentication/index.dart';
+import 'package:app/src/blocs/login/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import './body.dart';
 
 class Login extends StatelessWidget {
@@ -7,7 +10,10 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: BlocProvider(
+        create: (context) => LoginBloc(userRepository: UserRepository()),
+        child: Body(),
+      ),
     );
   }
 }
