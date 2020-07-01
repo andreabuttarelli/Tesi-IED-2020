@@ -11,11 +11,13 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './index.dart';
 
 class FeedBloc extends Bloc<FeedEvent, FeedState> {
   final http.Client httpClient;
   int index = 1;
+  int lang = 1;
 
   FeedBloc({@required this.httpClient});
 
@@ -39,13 +41,16 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     if (event is Fetch && !_hasReachedMax(currentState)) {
       try {
         if (currentState is FeedUninitialized) {
-          final feed = await FeedRepositories().fetchPosts(index);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          lang = prefs.getInt('lang');
+          if (lang == null) lang = 1;
+          final feed = await FeedRepositories().fetchPosts(index, lang);
           index++;
           yield FeedLoaded(posts: feed.items, hasReachedMax: false);
           return;
         }
         if (currentState is FeedLoaded) {
-          final feed = await FeedRepositories().fetchPosts(index);
+          final feed = await FeedRepositories().fetchPosts(index, lang);
           index++;
           yield feed.items.isEmpty
               ? currentState.copyWith(hasReachedMax: true)

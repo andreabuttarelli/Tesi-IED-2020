@@ -9,11 +9,19 @@ import 'package:http/http.dart' as http;
 
 class FeedRepositories {
   final http.Client httpClient;
-  final _targetUrl = 'https://parcocolosseo.it/feed/atom?page=';
 
   FeedRepositories({this.httpClient});
 
-  Future<AtomFeed> fetchPosts(int index) async {
+  Future<AtomFeed> fetchPosts(int index, int lang) async {
+    print(lang);
+    var prefix = '';
+    if (lang == 1)
+      prefix = 'en/';
+    else if (lang == 2)
+      prefix = 'es/';
+    else if (lang == 3) prefix = 'zh-hans/';
+    var _targetUrl = 'https://parcocolosseo.it/${prefix}feed/atom?page=';
+
     return await http
         .read('$_targetUrl$index')
         .then((xmlString) => AtomFeed.parse(xmlString));

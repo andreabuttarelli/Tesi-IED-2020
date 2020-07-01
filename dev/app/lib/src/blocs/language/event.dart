@@ -17,6 +17,8 @@ abstract class LanguageEvent extends Equatable {
   String toString() => 'LanguageEvent { }';
 }
 
+class LanguageBlocStarted extends LanguageEvent {}
+
 class ChangeLanguage extends LanguageEvent {
   Language lang;
   ChangeLanguage({@required this.lang});
