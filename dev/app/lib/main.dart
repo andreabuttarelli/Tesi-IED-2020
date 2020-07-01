@@ -1,4 +1,5 @@
 import 'package:app/src/blocs/feed/index.dart';
+import 'package:app/src/blocs/language/bloc.dart';
 
 /// MIT License
 /// by Andrea Buttarelli
@@ -35,6 +36,9 @@ void main() {
         BlocProvider(
           create: (context) =>
               FeedBloc(httpClient: http.Client())..add(Fetch()),
+        ),
+        BlocProvider(
+          create: (context) => LanguageBloc(),
         ),
       ],
       child: App(),

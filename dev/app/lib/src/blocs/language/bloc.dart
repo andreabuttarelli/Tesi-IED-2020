@@ -11,7 +11,7 @@ class LanguageBloc extends Bloc<LanguageEvent, Language> {
   LanguageBloc();
 
   @override
-  Language get initialState => Language.en;
+  Language get initialState => Chinese();
 
   @override
   Stream<Language> mapEventToState(LanguageEvent event) async* {

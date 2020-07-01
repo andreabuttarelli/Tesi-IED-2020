@@ -1,3 +1,4 @@
+import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/design_system/text.dart';
 
 /// MIT License
@@ -6,6 +7,7 @@ import 'package:app/src/design_system/text.dart';
 /// aggiornato il 05/06/2020
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import './norms.dart';
 
 class Header extends StatelessWidget {
@@ -13,38 +15,42 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      margin: const EdgeInsets.only(bottom: 24),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 60),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: CText(
-                'News',
-                size: 48,
-                weight: FontWeight.w700,
-              ),
-            ),
-            Wrap(
+    return BlocBuilder<LanguageBloc, Language>(
+      builder: (context, lang) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          margin: const EdgeInsets.only(bottom: 24),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 60),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CText(
-                  'Tutte le ultime notizie, per te.',
-                  size: 20,
-                  weight: FontWeight.w700,
-                  color: Colors.black.withOpacity(0.7),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: CText(
+                    '${lang.script['feed_title']}', //News
+                    size: 48,
+                    weight: FontWeight.w700,
+                  ),
                 ),
-                NormsWidget(
-                  onClick: () {},
+                Wrap(
+                  children: [
+                    CText(
+                      '${lang.script['feed_subtitle']}', //Tutte le ultime notizie, per te.
+                      size: 20,
+                      weight: FontWeight.w700,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
+                    NormsWidget(
+                      onClick: () {},
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

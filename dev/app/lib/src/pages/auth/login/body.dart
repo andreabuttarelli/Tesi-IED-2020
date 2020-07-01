@@ -1,4 +1,6 @@
+import 'package:app/src/blocs/authentication/index.dart';
 import 'package:app/src/blocs/login/index.dart';
+import 'package:app/src/blocs/user/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
@@ -28,8 +30,42 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        if (state == LoginState.loading()) {}
-        if (state == LoginState.success()) {}
+        if (state == LoginState.loading()) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Logging In...'),
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            );
+        }
+        if (state == LoginState.success()) {
+          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
+          BlocProvider.of<UserBloc>(context).add(UserLogged());
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Container()),
+          );
+        }
+        if (state == LoginState.failure()) {
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('Login Failure'), Icon(Icons.error)],
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+        }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {

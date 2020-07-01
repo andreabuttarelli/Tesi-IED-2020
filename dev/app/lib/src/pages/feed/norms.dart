@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class NormsWidget extends StatefulWidget {
@@ -68,10 +70,14 @@ class _NormsWidgetState extends State<NormsWidget> {
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Wrap(
                         children: [
-                          CText(
-                            'Insieme ce la faremo',
-                            size: 20,
-                            weight: FontWeight.w700,
+                          BlocBuilder<LanguageBloc, Language>(
+                            builder: (context, lang) {
+                              return CText(
+                                '${lang.script['banner_covid_title']}',
+                                size: 20,
+                                weight: FontWeight.w700,
+                              );
+                            },
                           ),
                         ],
                       ),

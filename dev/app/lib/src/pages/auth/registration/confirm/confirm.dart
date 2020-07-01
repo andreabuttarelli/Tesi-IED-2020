@@ -31,10 +31,6 @@ class Confirm extends StatelessWidget {
               ),
             ],
           ),
-          CTextField(
-            title: 'Email',
-            placeholder: 'Enter email',
-          ),
           Spacer(),
           Button(
             type: ButtonType.secondarySolid,

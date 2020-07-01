@@ -1,3 +1,4 @@
+import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/feed/placeholder.dart';
 import 'package:content_placeholder/content_placeholder.dart';
@@ -60,10 +61,14 @@ class _BodyState extends State<Body> {
                           padding: const EdgeInsets.only(right: 16),
                           child: CircularProgressIndicator(),
                         ),
-                        CText(
-                          'Loading...',
-                          size: 24,
-                          weight: FontWeight.bold,
+                        BlocBuilder<LanguageBloc, Language>(
+                          builder: (context, lang) {
+                            return CText(
+                              '${lang.script['feed_loading']}',
+                              size: 24,
+                              weight: FontWeight.bold,
+                            );
+                          },
                         ),
                       ],
                     ),
