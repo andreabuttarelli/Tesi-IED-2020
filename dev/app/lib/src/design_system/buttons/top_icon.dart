@@ -1,4 +1,6 @@
+import 'package:app/src/blocs/accessibility/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TopIcon extends StatefulWidget {
   Color color;
@@ -22,24 +24,28 @@ class _TopIconState extends State<TopIcon> {
     else
       opacity = 1;
 
-    return Opacity(
-      opacity: opacity,
-      child: Container(
-        padding: EdgeInsets.only(top: 16, left: 16, bottom: 16, right: 16),
-        child: GestureDetector(
-          onTapDown: (detail) => toogleTappedFlag(),
-          onTapCancel: () => cancelTappedFlag(),
-          onTapUp: (TapUpDetails details) => cancelTappedFlag(),
-          onTap: () => widget.onClick(),
+    return BlocBuilder<AccessibilityBloc, bool>(
+      builder: (context, isAccessible) {
+        return Opacity(
+          opacity: opacity,
           child: Container(
-            child: Icon(
-              widget.icon,
-              size: 24,
-              color: widget.color,
+            padding: EdgeInsets.only(top: 16, left: 16, bottom: 16, right: 16),
+            child: GestureDetector(
+              onTapDown: (detail) => toogleTappedFlag(),
+              onTapCancel: () => cancelTappedFlag(),
+              onTapUp: (TapUpDetails details) => cancelTappedFlag(),
+              onTap: () => widget.onClick(),
+              child: Container(
+                child: Icon(
+                  widget.icon,
+                  size: (isAccessible) ? 24 * 1.2 : 24,
+                  color: widget.color,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

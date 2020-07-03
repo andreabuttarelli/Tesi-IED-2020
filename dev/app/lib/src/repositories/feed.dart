@@ -13,7 +13,6 @@ class FeedRepositories {
   FeedRepositories({this.httpClient});
 
   Future<AtomFeed> fetchPosts(int index, int lang) async {
-    print(lang);
     var prefix = '';
     if (lang == 1)
       prefix = 'en/';

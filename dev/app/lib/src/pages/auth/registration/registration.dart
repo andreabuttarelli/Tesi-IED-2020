@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import './body.dart';
+import './email/email.dart';
 
 class Registration extends StatelessWidget {
-  const Registration({Key key}) : super(key: key);
+  final Widget child;
+  const Registration({Key key, @required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Body(),);
+    return Scaffold(
+      body: child,
+    );
   }
 }

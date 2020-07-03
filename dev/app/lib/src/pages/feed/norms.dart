@@ -66,7 +66,8 @@ class _NormsWidgetState extends State<NormsWidget> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
+                    Container(
+                      width: 240,
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Wrap(
                         children: [

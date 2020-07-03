@@ -2,15 +2,16 @@ import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
 
 class CTextField extends StatefulWidget {
-  String placeholder;
-  String text;
-  String title;
-  String validationMessage;
+  final String placeholder;
+  final String text;
+  final String title;
+  final String validationMessage;
   bool isError;
-  bool autocorrect;
-  bool autofocus;
-  bool secure;
-  double hpadding;
+  final bool autocorrect;
+  final bool autofocus;
+  final bool secure;
+  final double hpadding;
+  final Function(String) callBack;
   CTextField({
     Key key,
     this.placeholder,
@@ -22,6 +23,7 @@ class CTextField extends StatefulWidget {
     this.autofocus,
     this.secure,
     this.hpadding,
+    this.callBack,
   }) : super(key: key);
 
   @override
@@ -33,34 +35,49 @@ class _TextFieldState extends State<CTextField> {
   double hPadding;
   bool isError;
   bool secure;
+  bool autofocus;
+  bool autocorrect;
 
   @override
   void initState() {
+    print(widget.callBack);
     controller = TextEditingController();
+    controller.addListener(() {
+      if (widget.callBack != null) widget.callBack(controller.text);
+    });
     if (widget.text != null) controller.text = widget.text;
     if (widget.hpadding == null)
       hPadding = 0;
     else
       hPadding = widget.hpadding;
-    if (widget.isError != null) {
-      if (widget.isError)
-        isError = true;
-      else
-        isError = false;
-    } else
+    if (widget.isError != null)
+      isError = widget.isError;
+    else
       isError = false;
-    if (widget.secure != null) {
-      if (widget.secure)
-        secure = true;
-      else
-        secure = false;
-    } else
+    if (widget.secure != null)
+      secure = widget.secure;
+    else
+      secure = false;
+    if (widget.autofocus != null)
+      autofocus = widget.autofocus;
+    else
+      secure = false;
+
+    if (widget.autocorrect != null)
+      autocorrect = widget.autocorrect;
+    else
       secure = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      if (widget.isError != null)
+        isError = widget.isError;
+      else
+        isError = false;
+    });
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: Column(
@@ -70,9 +87,13 @@ class _TextFieldState extends State<CTextField> {
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: CText(
-                    (isError) ? '*${widget.title}' : '${widget.title}',
+                    (isError && controller.text.length > 4)
+                        ? '*${widget.title}'
+                        : '${widget.title}',
                     size: 16,
-                    color: (isError) ? Color(0xFFA92217) : Colors.black,
+                    color: (isError && controller.text.length > 4)
+                        ? Color(0xFFA92217)
+                        : Colors.black,
                     weight: FontWeight.bold,
                   ),
                 )
@@ -99,16 +120,22 @@ class _TextFieldState extends State<CTextField> {
                 ),
               ),
             ),
-            obscureText: secure,
+            obscureText: widget.secure ?? false,
+            autofocus: autofocus ?? false,
+            autocorrect: autocorrect ?? false,
           ),
-          (widget.validationMessage != null && isError)
+          (widget.validationMessage != null &&
+                  isError &&
+                  controller.text.length > 4)
               ? Padding(
                   padding: const EdgeInsets.only(top: 8),
-                  child: CText(
-                    '${widget.title}',
-                    size: 14,
-                    color: Color(0xFFA92217),
-                    weight: FontWeight.bold,
+                  child: Center(
+                    child: CText(
+                      '${widget.validationMessage}',
+                      size: 14,
+                      color: Color(0xFFA92217),
+                      weight: FontWeight.w600,
+                    ),
                   ),
                 )
               : Container(),

@@ -1,9 +1,12 @@
+import 'package:app/src/blocs/accessibility/index.dart';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
 /// modificato il 05/06/2020
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CText extends StatelessWidget {
   final String value;
@@ -53,26 +56,34 @@ class CText extends StatelessWidget {
       letterSpacing = -1.3;
     }
 
-    return Container(
-      margin: EdgeInsets.only(
-        top: (top == null) ? 0 : top,
-        bottom: (bottom == null) ? 0 : bottom,
-        left: (left == null) ? 0 : left,
-        right: (right == null) ? 0 : right,
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: (hPadding == null) ? 0 : hPadding,
-        vertical: (vPadding == null) ? 0 : vPadding,
-      ),
-      child: Text(
-        '$value',
-        style: TextStyle(
-          color: color ?? Colors.black,
-          fontSize: size ?? 16,
-          fontWeight: weight ?? FontWeight.w500,
-          fontFamily: family,
-        ),
-      ),
+    return BlocBuilder<AccessibilityBloc, bool>(
+      builder: (context, isAccessible) {
+        double accessibleOffset = 1;
+        if (isAccessible) accessibleOffset = 1.2;
+        return Container(
+          margin: EdgeInsets.only(
+            top: (top == null) ? 0 : top,
+            bottom: (bottom == null) ? 0 : bottom,
+            left: (left == null) ? 0 : left,
+            right: (right == null) ? 0 : right,
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: (hPadding == null) ? 0 : hPadding,
+            vertical: (vPadding == null) ? 0 : vPadding,
+          ),
+          child: Text(
+            '$value',
+            style: TextStyle(
+              color: color ?? Colors.black,
+              fontSize: (size != null)
+                  ? (size * accessibleOffset)
+                  : (16 * accessibleOffset),
+              fontWeight: weight ?? FontWeight.w500,
+              fontFamily: family,
+            ),
+          ),
+        );
+      },
     );
   }
 }

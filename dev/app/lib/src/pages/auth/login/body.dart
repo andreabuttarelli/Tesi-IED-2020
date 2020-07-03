@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Body extends StatefulWidget {
-  Body({Key key}) : super(key: key);
+  final Widget destination;
+  Body({Key key, this.destination}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -91,7 +92,6 @@ class _BodyState extends State<Body> {
                     title: 'Email',
                     placeholder: 'Enter email',
                     autofocus: true,
-                    isError: state.isEmailValid,
                   ),
                   CTextField(
                     title: 'Password',

@@ -1,3 +1,4 @@
+import 'package:app/src/blocs/accessibility/bloc.dart';
 import 'package:app/src/blocs/feed/index.dart';
 import 'package:app/src/blocs/language/index.dart';
 
@@ -39,6 +40,9 @@ void main() {
         ),
         BlocProvider(
           create: (context) => LanguageBloc()..add(LanguageBlocStarted()),
+        ),
+        BlocProvider(
+          create: (context) => AccessibilityBloc(),
         ),
       ],
       child: App(),

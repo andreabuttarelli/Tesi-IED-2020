@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import './body.dart';
 
 class Login extends StatelessWidget {
-  const Login({Key key}) : super(key: key);
+  final Widget destination;
+  const Login({Key key, this.destination}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
