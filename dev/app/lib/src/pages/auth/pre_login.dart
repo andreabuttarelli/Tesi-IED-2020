@@ -24,13 +24,17 @@ class PreLogin extends StatelessWidget {
             icon: FeatherIcons.arrowLeft,
           ),
           Spacer(),
-          CText('Parco Archeologico del Colosseo'),
-          Spacer(),
-          CTextField(
-            title: "Email",
-            isError: false,
-            validationMessage: "message",
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Center(
+              child: CText(
+                'Parco Archeologico del Colosseo',
+                size: 28,
+                weight: FontWeight.bold,
+              ),
+            ),
           ),
+          Spacer(),
           Button(
             label: 'Login',
             type: ButtonType.secondarySolid,

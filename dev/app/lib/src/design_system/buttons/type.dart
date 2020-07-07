@@ -3,4 +3,6 @@ enum ButtonType {
   primaryStroke,
   secondarySolid,
   secondaryStroke,
+  thirdSolid,
+  thirdStroke,
 }

@@ -97,10 +97,18 @@ class _BodyState extends State<Body> {
                   Header(),
                   Expanded(
                     child: Center(
-                      child: Text('failed to fetch posts'),
+                      child: BlocBuilder<LanguageBloc, Language>(
+                          builder: (context, lang) {
+                            return CText(
+                              '${lang.script['feed_failed']}',
+                              size: 24,
+                              weight: FontWeight.bold,
+                            );
+                          },
+                        ),
                     ),
                   ),
-                ],
+                ], //failed to fetch posts
               ),
             ),
           );
@@ -112,7 +120,15 @@ class _BodyState extends State<Body> {
                 Header(),
                 Expanded(
                   child: Center(
-                    child: Text('no posts'),
+                    child: BlocBuilder<LanguageBloc, Language>(
+                          builder: (context, lang) {
+                            return CText(
+                              '${lang.script['feed_empty']}',
+                              size: 24,
+                              weight: FontWeight.bold,
+                            );
+                          },
+                        ), //no post
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/design_system/buttons/user_picture_button.dart';
 import 'package:app/src/design_system/text.dart';
 
 /// MIT License
@@ -21,10 +22,11 @@ class Header extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           margin: const EdgeInsets.only(bottom: 24),
           child: Padding(
-            padding: const EdgeInsets.only(top: 60),
+            padding: const EdgeInsets.only(top: 20), //68
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                UserProfileButton(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: CText(

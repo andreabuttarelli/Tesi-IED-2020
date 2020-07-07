@@ -48,7 +48,10 @@ class _ButtonState extends State<Button> {
         widget.type == ButtonType.primaryStroke)
       color = Colors.black;
     else if (widget.type == ButtonType.secondarySolid ||
-        widget.type == ButtonType.secondaryStroke) color = Color(0xFFA92217);
+        widget.type == ButtonType.secondaryStroke)
+      color = Color(0xFFA92217);
+    else if (widget.type == ButtonType.thirdSolid ||
+        widget.type == ButtonType.thirdStroke) color = Colors.white;
     super.initState();
   }
 
@@ -75,6 +78,7 @@ class _ButtonState extends State<Button> {
             height: height,
             decoration: (widget.type == ButtonType.primarySolid ||
                     widget.type == ButtonType.secondarySolid ||
+                    widget.type == ButtonType.thirdSolid ||
                     widget.type == null)
                 ? BoxDecoration(
                     color: color,
@@ -97,7 +101,8 @@ class _ButtonState extends State<Button> {
                 '${widget.label}',
                 size: 18,
                 color: (widget.type == ButtonType.primaryStroke ||
-                        widget.type == ButtonType.secondaryStroke)
+                        widget.type == ButtonType.secondaryStroke ||
+                        widget.type == ButtonType.thirdSolid)
                     ? Colors.black
                     : Colors.white,
                 weight: FontWeight.w800,

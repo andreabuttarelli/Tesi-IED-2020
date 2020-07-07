@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './email/email.dart';
+import './confirm/confirm.dart';
 
 class Registration extends StatelessWidget {
   final Widget child;

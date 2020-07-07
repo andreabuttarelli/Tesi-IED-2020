@@ -6,7 +6,7 @@ class AccessibilityBloc extends Bloc<AccessibilityEvent, bool> {
   AccessibilityBloc();
 
   @override
-  bool get initialState => true;
+  bool get initialState => false;
 
   @override
   Stream<bool> mapEventToState(AccessibilityEvent event) async* {

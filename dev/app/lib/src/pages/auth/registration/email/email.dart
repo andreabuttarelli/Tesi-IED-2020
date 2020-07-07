@@ -61,7 +61,7 @@ class _EmailState extends State<Email> {
               child: Button(
                 type: ButtonType.secondarySolid,
                 dims: ButtonDims.large,
-                label: 'Login',
+                label: 'Continue',
                 onClick: () {
                   Navigator.push(
                     context,
