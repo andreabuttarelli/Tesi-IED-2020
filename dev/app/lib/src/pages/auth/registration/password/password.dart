@@ -29,7 +29,7 @@ class _PasswordState extends State<Password> {
             color: Colors.black,
           ),
           CText(
-            'Nice to meet you!',
+            'Anyone has a little secret',
             size: 32,
             weight: FontWeight.bold,
             hPadding: 24,
@@ -37,17 +37,16 @@ class _PasswordState extends State<Password> {
             bottom: 24,
           ),
           CTextField(
-            title: 'Email',
-            placeholder: 'Enter email',
+            title: 'Password',
+            placeholder: 'Enter password',
             autofocus: true,
             callBack: (String text) {
-              print(!Validators.isValidEmail(text));
               setState(() {
                 isValid = !Validators.isValidEmail(text);
               });
             },
             isError: isValid,
-            validationMessage: 'Write a valid email',
+            validationMessage: 'Must be at least 6 characters',
           ),
           Spacer(),
           Button(

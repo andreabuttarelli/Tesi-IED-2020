@@ -2,8 +2,10 @@ import 'package:app/src/blocs/user/index.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/objects/user.dart';
 import 'package:app/src/pages/settings/settings.dart';
+import 'package:app/src/repositories/local_feed.dart';
 
 /// MIT License
 /// by Andrea Buttarelli
@@ -13,6 +15,7 @@ import 'package:app/src/pages/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import './article.dart';
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);
@@ -57,31 +60,40 @@ class _BodyState extends State<Body> {
             top: 8,
             bottom: 24,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              color: Color(0xFFF1F1F1),
-              child: BlocBuilder<UserBloc, UserObject>(
-                builder: (context, user) {
-                  if (user != null) {
-                    if (user is UserObject) {
-                      return Column(
-                        children: [],
-                      );
-                    }
-                  }
-                  return Center(
+          FutureBuilder(
+            future: LocalFeedRepository().getArticles(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<LocalArticle>> snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.length == 0) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: CText(
-                      'Sorry, something went wrong',
+                      'Here you can find all your pinned articles',
                       size: 16,
                       color: Colors.black,
                       weight: FontWeight.normal,
                     ),
                   );
-                },
-              ),
-            ),
+                }
+                return Column(
+                  children: snapshot.data
+                      .map((article) => ArticleWidget(
+                            post: article,
+                          ))
+                      .toList(),
+                );
+              } else {
+                return Center(
+                  child: CText(
+                    'Sorry, something went wrong',
+                    size: 16,
+                    color: Colors.black,
+                    weight: FontWeight.normal,
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

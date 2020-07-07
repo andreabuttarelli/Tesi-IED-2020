@@ -45,7 +45,6 @@ dependencies:
   flutter_feather_icons: ^1.0.3
   cloud_firestore: ^0.13.7
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

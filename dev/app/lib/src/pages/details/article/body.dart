@@ -1,5 +1,7 @@
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
+import 'package:app/src/objects/local_article.dart';
+import 'package:app/src/repositories/local_feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:share/share.dart';
@@ -7,7 +9,7 @@ import 'package:webfeed/domain/atom_item.dart';
 import './content.dart';
 
 class Body extends StatefulWidget {
-  AtomItem post;
+  LocalArticle post;
   String thumbnail;
   Body({Key key, @required this.post, this.thumbnail}) : super(key: key);
 
@@ -81,6 +83,12 @@ class _BodyState extends State<Body> {
                           onClick: () => Share.share('${widget.post.id}',
                               subject: '${widget.post.title}'),
                         ),
+                        TopIcon(
+                          icon: FeatherIcons.heart,
+                          onClick: () {
+                            insertLike();
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -91,5 +99,24 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
+  }
+
+  Future<bool> insertLike() async {
+    final article = LocalArticle(
+      id: widget.post.id,
+      title: widget.post.title,
+      image: widget.thumbnail,
+      category: '${widget.post.category}',
+      date: widget.post.date,
+      content: widget.post.content,
+      link: widget.post.id,
+    );
+    var result = await LocalFeedRepository().insert(article);
+    if (result == null)
+      return false;
+    else {
+      print('New Article inserted: $result');
+      return true;
+    }
   }
 }

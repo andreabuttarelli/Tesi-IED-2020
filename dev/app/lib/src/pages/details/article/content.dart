@@ -3,6 +3,7 @@ import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/objects/local_article.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -13,7 +14,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
 class Content extends StatefulWidget {
-  AtomItem post;
+  LocalArticle post;
   double top;
   Content({
     Key key,
@@ -69,7 +70,7 @@ class _ContentState extends State<Content> {
                               padding:
                                   const EdgeInsets.only(top: 8, bottom: 16),
                               child: CText(
-                                '${widget.post.categories[0].term}',
+                                '${widget.post.category}',
                                 size: 14,
                                 weight: FontWeight.bold,
                                 color: Colors.black.withOpacity(0.8),
@@ -79,7 +80,7 @@ class _ContentState extends State<Content> {
                               padding:
                                   const EdgeInsets.only(top: 8, bottom: 16),
                               child: CText(
-                                '${timeago.format(DateTime.parse(widget.post.published))}',
+                                '${timeago.format(DateTime.parse(widget.post.date))}',
                                 size: 14,
                                 weight: FontWeight.w600,
                                 color: Colors.black54,

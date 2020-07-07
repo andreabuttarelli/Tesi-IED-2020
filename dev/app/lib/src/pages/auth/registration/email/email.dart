@@ -20,6 +20,7 @@ class Email extends StatefulWidget {
 
 class _EmailState extends State<Email> {
   bool isValid = false;
+  int lenght = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,9 +44,9 @@ class _EmailState extends State<Email> {
             placeholder: 'Enter email',
             autofocus: true,
             callBack: (String text) {
-              print(!Validators.isValidEmail(text));
               setState(() {
-                isValid = !Validators.isValidEmail(text);
+                isValid = (!Validators.isValidEmail(text));
+                lenght = text.length;
               });
             },
             isError: isValid,
@@ -53,11 +54,11 @@ class _EmailState extends State<Email> {
           ),
           Spacer(),
           AnimatedOpacity(
-            opacity: (isValid) ? 1 : 0.5,
+            opacity: (!isValid && lenght > 4) ? 1 : 0.5,
             duration: Duration(milliseconds: 300),
             curve: Curves.easeInOutCubic,
             child: IgnorePointer(
-              ignoring: !isValid,
+              ignoring: (isValid && lenght > 4),
               child: Button(
                 type: ButtonType.secondarySolid,
                 dims: ButtonDims.large,
