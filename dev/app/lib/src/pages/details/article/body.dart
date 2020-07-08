@@ -85,8 +85,14 @@ class _BodyState extends State<Body> {
                         ),
                         TopIcon(
                           icon: FeatherIcons.heart,
-                          onClick: () {
-                            insertLike();
+                          onClick: () async {
+                            var result = await LocalFeedRepository()
+                                .getArticle(widget.post.id);
+                            print(result);
+                            if (result == null)
+                              insertLike();
+                            else
+                              removeLike();
                           },
                         ),
                       ],
@@ -116,6 +122,15 @@ class _BodyState extends State<Body> {
       return false;
     else {
       print('New Article inserted: $result');
+      return true;
+    }
+  }
+
+  Future<bool> removeLike() async {
+    var result = await LocalFeedRepository().delete(widget.post.id);
+    if (result == null) {
+    } else {
+      print('Pinned Article removed: $result');
       return true;
     }
   }

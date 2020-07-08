@@ -1,5 +1,6 @@
 import 'package:app/src/blocs/alert/index.dart';
 import 'package:app/src/blocs/authentication/index.dart';
+import 'package:app/src/pages/home/home.dart';
 import 'package:app/src/pages/settings/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,10 +47,8 @@ class _SettingsState extends State<Settings> {
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOutCubic,
                     child: Alert(
+                      title: "Are you sure?",
                       cta: "Exit",
-                      function: () {
-                        authenticationBloc..add(LoggedOut());
-                      },
                     ),
                   ),
                 ),

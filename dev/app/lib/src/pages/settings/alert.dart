@@ -5,16 +5,19 @@ import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/pages/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Alert extends StatefulWidget {
   Function function;
   String cta;
+  String title;
   Alert({
     Key key,
     this.function,
     this.cta,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -58,7 +61,7 @@ class _LogoutAlertState extends State<Alert> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: CText(
-                      'Are you sure?',
+                      '${widget.title}',
                       size: 32,
                       color: Colors.black,
                       weight: FontWeight.bold,
@@ -71,7 +74,11 @@ class _LogoutAlertState extends State<Alert> {
                     label: '${widget.cta}',
                     onClick: () {
                       alertBloc..add(Hide());
-                      widget.function;
+                      authBloc..add(LoggedOut());
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home()),
+                      );
                     },
                   ),
                   Button(

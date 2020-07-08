@@ -2,9 +2,12 @@ import 'package:app/src/blocs/alert/index.dart';
 import 'package:app/src/design_system/buttons/option.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/pages/settings/change.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import './change_email/email.dart';
+import './change_password/password.dart';
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);
@@ -48,9 +51,29 @@ class _BodyState extends State<Body> {
           ),
           Option(
             label: 'Change Email',
+            onClick: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Change(
+                    child: Email(),
+                  ),
+                ),
+              );
+            },
           ),
           Option(
             label: 'Change Password',
+            onClick: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Change(
+                    child: Password(),
+                  ),
+                ),
+              );
+            },
           ),
           Padding(
             padding: const EdgeInsets.only(top: 40),

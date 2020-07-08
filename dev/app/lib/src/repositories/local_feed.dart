@@ -40,7 +40,7 @@ create table ${columnNames.tableLocalFeed} (
     return id;
   }
 
-  Future<LocalArticle> getArticle(int id) async {
+  Future<LocalArticle> getArticle(String id) async {
     await open();
     List<Map> maps = await db.query(columnNames.tableLocalFeed,
         columns: [
@@ -71,7 +71,7 @@ create table ${columnNames.tableLocalFeed} (
     return articles;
   }
 
-  Future<int> delete(int id) async {
+  Future<int> delete(String id) async {
     await open();
     return await db.delete(columnNames.tableLocalFeed,
         where: '${columnNames.columnId} = ?', whereArgs: [id]);
