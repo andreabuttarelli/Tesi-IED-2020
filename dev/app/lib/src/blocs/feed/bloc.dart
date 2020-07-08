@@ -63,6 +63,18 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
         yield FeedError();
       }
     }
+
+    if (event is Restart) {
+      yield FeedUninitialized();
+      index = 0;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      lang = prefs.getInt('lang');
+      if (lang == null) lang = 1;
+      final feed = await FeedRepositories().fetchPosts(index, lang);
+      index++;
+      yield FeedLoaded(posts: feed.items, hasReachedMax: false);
+      return;
+    }
   }
 
   bool _hasReachedMax(FeedState state) =>

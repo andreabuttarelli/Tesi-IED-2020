@@ -54,7 +54,8 @@ class LanguageBloc extends Bloc<LanguageEvent, Language> {
       else if (event.lang is Chinese) index = 3;
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setInt('lang', index);
+      var result = await prefs.setInt('lang', index);
+      print("Saved changes language in local: $result");
       yield event.lang;
     }
   }

@@ -10,3 +10,5 @@ abstract class FeedEvent extends Equatable {
 }
 
 class Fetch extends FeedEvent {}
+
+class Restart extends FeedEvent {}

@@ -30,6 +30,7 @@ class Italian extends Language {
     "profile_title": "Profilo",
     "notes_title": "Prendi Nota",
     "notes_subtitle": "Perchè non è sempre possibile ricordarsi tutto.",
+    "change_language_title": "Cambia la lingua",
   };
 
   Italian();
@@ -51,6 +52,7 @@ class English extends Language {
     "profile_title": "Profile",
     "notes_title": "Notes",
     "notes_subtitle": "Perchè non è sempre possibile ricordarsi tutto.", //TODO
+    "change_language_title": "Change language",
   };
 
   English();
@@ -72,6 +74,7 @@ class Spanish extends Language {
     "profile_title": "Profilo", //TODO
     "notes_title": "Prendi Nota", //TODO
     "notes_subtitle": "Perchè non è sempre possibile ricordarsi tutto.", //TODO
+    "change_language_title": "Cambiar idioma",
   };
 
   Spanish();
@@ -93,6 +96,7 @@ class Chinese extends Language {
     "profile_title": "Profilo", //TODO
     "notes_title": "Prendi Nota", //TODO
     "notes_subtitle": "Perchè non è sempre possibile ricordarsi tutto.", //TODO
+    "change_language_title": "改变语言",
   };
 
   Chinese();

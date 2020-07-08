@@ -10,6 +10,7 @@ class Option extends StatefulWidget {
   final Color color;
   bool withIcon = true;
   final double fontSize;
+  final IconData icon;
   Option({
     Key key,
     this.label,
@@ -17,6 +18,7 @@ class Option extends StatefulWidget {
     this.color,
     this.withIcon,
     this.fontSize,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -70,13 +72,17 @@ class _ButtonState extends State<Option> {
                 (widget.withIcon != null)
                     ? (widget.withIcon)
                         ? Icon(
-                            FeatherIcons.chevronRight,
+                            (widget.icon != null)
+                                ? widget.icon
+                                : FeatherIcons.chevronRight,
                             size: 24,
                             color: widget.color,
                           )
                         : Container()
                     : Icon(
-                        FeatherIcons.chevronRight,
+                        (widget.icon != null)
+                            ? widget.icon
+                            : FeatherIcons.chevronRight,
                         size: 24,
                         color: widget.color,
                       ),

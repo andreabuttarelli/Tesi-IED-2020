@@ -98,14 +98,14 @@ class _BodyState extends State<Body> {
                   Expanded(
                     child: Center(
                       child: BlocBuilder<LanguageBloc, Language>(
-                          builder: (context, lang) {
-                            return CText(
-                              '${lang.script['feed_failed']}',
-                              size: 24,
-                              weight: FontWeight.bold,
-                            );
-                          },
-                        ),
+                        builder: (context, lang) {
+                          return CText(
+                            '${lang.script['feed_failed']}',
+                            size: 24,
+                            weight: FontWeight.bold,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ], //failed to fetch posts
@@ -121,14 +121,14 @@ class _BodyState extends State<Body> {
                 Expanded(
                   child: Center(
                     child: BlocBuilder<LanguageBloc, Language>(
-                          builder: (context, lang) {
-                            return CText(
-                              '${lang.script['feed_empty']}',
-                              size: 24,
-                              weight: FontWeight.bold,
-                            );
-                          },
-                        ), //no post
+                      builder: (context, lang) {
+                        return CText(
+                          '${lang.script['feed_empty']}',
+                          size: 24,
+                          weight: FontWeight.bold,
+                        );
+                      },
+                    ), //no post
                   ),
                 ),
               ],
@@ -178,6 +178,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _handleRefresh() async {
+    _postBloc..add(Restart());
     await Future.delayed(Duration(milliseconds: 500));
     return;
   }
