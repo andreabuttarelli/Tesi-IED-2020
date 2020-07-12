@@ -25,9 +25,8 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: Color(0xFFF1F1F1),
-      body: new NotificationListener(
+    return Container(
+      child: NotificationListener(
         onNotification: (v) {
           if (v is ScrollUpdateNotification) {
             setState(() => top -= v.scrollDelta / 2);

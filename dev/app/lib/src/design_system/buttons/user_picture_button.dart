@@ -4,6 +4,7 @@ import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class UserProfileButton extends StatefulWidget {
   UserProfileButton({Key key}) : super(key: key);
@@ -38,22 +39,28 @@ class _UserProfileButtonState extends State<UserProfileButton> {
                   onTapUp: (detail) => notTapped(),
                   onTapCancel: () => notTapped(),
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                    margin: const EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.only(
+                        left: 6, right: 10, top: 8, bottom: 8),
                     decoration: BoxDecoration(
-                      color: Color(0xFFA92217),
-                      borderRadius: BorderRadius.circular(24),
+                      color: Color(0xFFf1f1f1), //A92217
+                      borderRadius: BorderRadius.circular(40),
                     ),
-                    child: BlocBuilder<LanguageBloc, Language>(
+                    child: Icon(
+                      FeatherIcons.logIn,
+                      size: 24,
+                      color: Colors.black,
+                    ),
+                    /*BlocBuilder<LanguageBloc, Language>(
                       builder: (context, lang) {
                         return CText(
                           '${lang.script["feed_profile_notlogged"]}',
                           size: 16,
                           weight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                         );
                       },
-                    ),
+                    ),*/
                   ),
                 ),
               ],

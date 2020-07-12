@@ -1,5 +1,6 @@
 import 'package:app/src/pages/auth/login/login.dart';
 import 'package:app/src/pages/auth/pre_login.dart';
+import 'package:app/src/pages/camera/camera.dart';
 import 'package:app/src/pages/splash/splash.dart';
 
 /// MIT License
@@ -32,10 +33,22 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/images/Logo-min.jpg"), context);
+    precacheImage(AssetImage("assets/img/logo.jpeg"), context);
     return MaterialApp(
       title: 'Onda Gamma',
-      theme: ThemeData(fontFamily: 'Gilroy'),
+      theme: ThemeData(
+        fontFamily: 'Gilroy',
+        brightness: Brightness.light,
+        primaryColor: Colors.red,
+      ),
+      darkTheme: ThemeData(
+        fontFamily: 'Gilroy',
+        brightness: Brightness.dark,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/Camera': (context) => Camera(),
+      },
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is Authenticated) {

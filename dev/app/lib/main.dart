@@ -1,6 +1,7 @@
 import 'package:app/src/blocs/accessibility/bloc.dart';
 import 'package:app/src/blocs/feed/index.dart';
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/blocs/theme/index.dart';
 
 /// MIT License
 /// by Andrea Buttarelli
@@ -43,6 +44,14 @@ void main() {
         ),
         BlocProvider(
           create: (context) => AccessibilityBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ThemeBloc()
+            ..add(SwitchTheme(
+                theme: (MediaQuery.of(context).platformBrightness ==
+                        Brightness.dark)
+                    ? ThemeEnum.dark
+                    : ThemeEnum.light)),
         ),
       ],
       child: App(),

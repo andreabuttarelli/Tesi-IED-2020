@@ -16,43 +16,54 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageBloc, Language>(
-      builder: (context, lang) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          margin: const EdgeInsets.only(bottom: 24),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20), //68
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                UserProfileButton(),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: CText(
-                    '${lang.script['feed_title']}', //News
-                    size: 48,
-                    weight: FontWeight.w700,
+    return SafeArea(
+      child: BlocBuilder<LanguageBloc, Language>(
+        builder: (context, lang) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            margin: const EdgeInsets.only(bottom: 24),
+            child: Padding(
+              padding: EdgeInsets.only(top: 40), //68
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 64,
+                        child: Image.asset('assets/img/logo.jpeg'),
+                      ),
+                      UserProfileButton(),
+                    ],
                   ),
-                ),
-                Wrap(
-                  children: [
-                    CText(
-                      '${lang.script['feed_subtitle']}', //Tutte le ultime notizie, per te.
-                      size: 20,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24, bottom: 8),
+                    child: CText(
+                      '${lang.script['feed_title']}', //News
+                      size: 48,
                       weight: FontWeight.w700,
-                      color: Colors.black.withOpacity(0.7),
                     ),
-                    NormsWidget(
-                      onClick: () {},
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  Wrap(
+                    children: [
+                      CText(
+                        '${lang.script['feed_subtitle']}', //Tutte le ultime notizie, per te.
+                        size: 20,
+                        weight: FontWeight.w700,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
+                      NormsWidget(
+                        onClick: () {},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

@@ -57,7 +57,7 @@ class _ContentState extends State<Content> {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: CText(
                           '${widget.post.title}',
-                          size: 32,
+                          size: 24,
                           weight: FontWeight.w700,
                         ),
                       ),

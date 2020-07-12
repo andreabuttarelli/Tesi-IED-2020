@@ -1,4 +1,6 @@
 import 'package:app/src/blocs/accessibility/index.dart';
+import 'package:app/src/blocs/theme/index.dart';
+import 'package:app/src/design_system/palette.dart';
 
 /// MIT License
 /// by Andrea Buttarelli
@@ -11,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CText extends StatelessWidget {
   final String value;
   final double size;
-  final Color color;
+  final PaletteColor color;
   final FontWeight weight;
   final double hPadding;
   final double vPadding;
@@ -71,16 +73,22 @@ class CText extends StatelessWidget {
             horizontal: (hPadding == null) ? 0 : hPadding,
             vertical: (vPadding == null) ? 0 : vPadding,
           ),
-          child: Text(
-            '$value',
-            style: TextStyle(
-              color: color ?? Colors.black,
-              fontSize: (size != null)
-                  ? (size * accessibleOffset)
-                  : (16 * accessibleOffset),
-              fontWeight: weight ?? FontWeight.w500,
-              fontFamily: family,
-            ),
+          child: BlocBuilder<ThemeBloc, ThemeEnum>(
+            builder: (context, theme) {
+              return Text(
+                '$value',
+                style: TextStyle(
+                  color: color.color ?? (theme == ThemeEnum.dark)
+                      ? Colors.white
+                      : Colors.black,
+                  fontSize: (size != null)
+                      ? (size * accessibleOffset)
+                      : (16 * accessibleOffset),
+                  fontWeight: weight ?? FontWeight.w500,
+                  fontFamily: family,
+                ),
+              );
+            },
           ),
         );
       },

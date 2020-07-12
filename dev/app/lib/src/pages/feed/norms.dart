@@ -39,8 +39,8 @@ class _NormsWidgetState extends State<NormsWidget> {
             margin: const EdgeInsets.only(top: 24, bottom: 24),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
-              color: Color(0xFFffffff),
-              boxShadow: [
+              color: Color(0xFFf1f1f1),
+              /*boxShadow: [
                 BoxShadow(
                   color: (isTapped)
                       ? Colors.transparent
@@ -55,7 +55,7 @@ class _NormsWidgetState extends State<NormsWidget> {
                   blurRadius: (isTapped) ? 0 : 8,
                   offset: Offset(0, 2),
                 ),
-              ],
+              ],*/
               borderRadius: BorderRadius.circular(16),
             ),
             duration: Duration(milliseconds: 300),
@@ -67,7 +67,6 @@ class _NormsWidgetState extends State<NormsWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 240,
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Wrap(
                         children: [
@@ -75,7 +74,7 @@ class _NormsWidgetState extends State<NormsWidget> {
                             builder: (context, lang) {
                               return CText(
                                 '${lang.script['banner_covid_title']}',
-                                size: 20,
+                                size: 16,
                                 weight: FontWeight.w700,
                               );
                             },
