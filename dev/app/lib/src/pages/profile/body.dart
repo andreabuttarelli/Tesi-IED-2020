@@ -1,6 +1,8 @@
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/blocs/user/index.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/objects/user.dart';
@@ -25,8 +27,14 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool theme;
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
+
     return Container(
       child: ListView(
         padding: const EdgeInsets.all(0),
@@ -37,11 +45,15 @@ class _BodyState extends State<Body> {
               children: [
                 TopIconBack(
                   icon: FeatherIcons.arrowLeft,
-                  color: Colors.black,
+                  color: (!theme)
+                      ? LightPalette().colors["Palette.textPrimary"]
+                      : DarkPalette().colors["Palette.textPrimary"],
                 ),
                 TopIcon(
                   icon: FeatherIcons.settings,
-                  color: Colors.black,
+                  color: (!theme)
+                      ? LightPalette().colors["Palette.textPrimary"]
+                      : DarkPalette().colors["Palette.textPrimary"],
                   onClick: () {
                     Navigator.push(
                       context,
@@ -71,7 +83,7 @@ class _BodyState extends State<Body> {
                     child: CText(
                       'Here you can find all your pinned articles',
                       size: 16,
-                      color: Colors.black,
+                      color: Palette.textPrimary,
                       weight: FontWeight.normal,
                     ),
                   );
@@ -88,7 +100,7 @@ class _BodyState extends State<Body> {
                   child: CText(
                     'Sorry, something went wrong',
                     size: 16,
-                    color: Colors.black,
+                    color: Palette.textPrimary,
                     weight: FontWeight.normal,
                   ),
                 );

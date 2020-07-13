@@ -1,4 +1,5 @@
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/pages/home/bottombar/bottombar.dart';
 import 'package:app/src/pages/home/bottombar/body.dart';
@@ -13,6 +14,10 @@ class Home extends StatelessWidget {
     return BlocBuilder<LanguageBloc, Language>(
       builder: (context, lang) {
         return Scaffold(
+          backgroundColor:
+              (MediaQuery.of(context).platformBrightness == Brightness.dark)
+                  ? DarkPalette().colors["Palette.backgroundPrimary"]
+                  : LightPalette().colors["Palette.backgroundPrimary"],
           extendBody: true,
           body: Body(),
           floatingActionButtonLocation:

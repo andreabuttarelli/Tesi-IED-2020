@@ -1,6 +1,8 @@
 import 'package:app/src/blocs/authentication/index.dart';
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/pages/auth/pre_login.dart';
 import 'package:app/src/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,9 +17,13 @@ class UserProfileButton extends StatefulWidget {
 
 class _UserProfileButtonState extends State<UserProfileButton> {
   double opacity = 1;
+  bool theme;
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    });
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
         if (state is Unauthenticated) {
@@ -43,13 +49,18 @@ class _UserProfileButtonState extends State<UserProfileButton> {
                     padding: const EdgeInsets.only(
                         left: 6, right: 10, top: 8, bottom: 8),
                     decoration: BoxDecoration(
-                      color: Color(0xFFf1f1f1), //A92217
+                      color: (!theme)
+                          ? LightPalette().colors["Palette.backgroundSecondary"]
+                          : DarkPalette()
+                              .colors["Palette.backgroundSecondary"], //A92217
                       borderRadius: BorderRadius.circular(40),
                     ),
                     child: Icon(
                       FeatherIcons.logIn,
                       size: 24,
-                      color: Colors.black,
+                      color: (!theme)
+                          ? LightPalette().colors["Palette.textPrimary"]
+                          : DarkPalette().colors["Palette.textPrimary"],
                     ),
                     /*BlocBuilder<LanguageBloc, Language>(
                       builder: (context, lang) {

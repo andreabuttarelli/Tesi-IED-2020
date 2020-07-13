@@ -1,8 +1,11 @@
+import 'package:app/src/blocs/theme/index.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/pages/details/article/article.dart';
 import 'package:content_placeholder/content_placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
@@ -21,6 +24,7 @@ class ArticleWidget extends StatefulWidget {
 class _ArticleWidgetState extends State<ArticleWidget> {
   List<String> list = List();
   double opacity = 1;
+  bool theme;
 
   @override
   void initState() {
@@ -29,6 +33,9 @@ class _ArticleWidgetState extends State<ArticleWidget> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -100,7 +107,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                       '${widget.post.category}',
                       size: 14,
                       weight: FontWeight.bold,
-                      color: Colors.black.withOpacity(0.8),
+                      color: Palette.textSecondary80,
                     ),
                   ),
                   Padding(
@@ -109,7 +116,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                       '${timeago.format(DateTime.parse(widget.post.date))}',
                       size: 14,
                       weight: FontWeight.w600,
-                      color: Colors.black54,
+                      color: Palette.textSecondary50,
                     ),
                   ),
                 ],

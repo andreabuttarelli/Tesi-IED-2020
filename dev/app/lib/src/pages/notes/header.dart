@@ -1,6 +1,9 @@
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/user_picture_button.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Header extends StatelessWidget {
   const Header({Key key}) : super(key: key);
@@ -39,7 +42,7 @@ class Header extends StatelessWidget {
                   'Perchè non è sempre possibile ricordarsi tutto.',
                   size: 20,
                   weight: FontWeight.w700,
-                  color: Colors.black.withOpacity(0.7),
+                  color: Palette.textSecondary70,
                 ),
               ],
             ),

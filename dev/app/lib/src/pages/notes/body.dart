@@ -1,6 +1,7 @@
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 
 /// MIT License
 /// by Andrea Buttarelli

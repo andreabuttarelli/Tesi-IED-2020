@@ -1,11 +1,14 @@
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Button extends StatefulWidget {
   final String label;
-  final Color color;
+  final Palette color;
   final ButtonType type;
   final ButtonDims dims;
   final Function onClick;
@@ -42,16 +45,21 @@ class _ButtonState extends State<Button> {
     } else
       hPadding = 8;
 
-    if (widget.color != null)
-      color = widget.color;
-    else if (widget.type == ButtonType.primarySolid ||
+    bool theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+
+    if (widget.type == ButtonType.primarySolid ||
         widget.type == ButtonType.primaryStroke)
-      color = Colors.black;
+      color = (!theme)
+          ? LightPalette().colors["textPrimary"]
+          : DarkPalette().colors["textPrimary"];
     else if (widget.type == ButtonType.secondarySolid ||
         widget.type == ButtonType.secondaryStroke)
-      color = Color(0xFFA92217);
+      color = LightPalette().colors["accent"];
     else if (widget.type == ButtonType.thirdSolid ||
-        widget.type == ButtonType.thirdStroke) color = Colors.white;
+        widget.type == ButtonType.thirdStroke)
+      color = (!theme)
+          ? LightPalette().colors["textPrimaryInverse"]
+          : DarkPalette().colors["textPrimaryInverse"];
     super.initState();
   }
 
@@ -103,8 +111,8 @@ class _ButtonState extends State<Button> {
                 color: (widget.type == ButtonType.primaryStroke ||
                         widget.type == ButtonType.secondaryStroke ||
                         widget.type == ButtonType.thirdSolid)
-                    ? Colors.black
-                    : Colors.white,
+                    ? Palette.textPrimary
+                    : Palette.textPrimaryInverse,
                 weight: FontWeight.w800,
               ),
             ),

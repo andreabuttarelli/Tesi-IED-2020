@@ -45,14 +45,6 @@ void main() {
         BlocProvider(
           create: (context) => AccessibilityBloc(),
         ),
-        BlocProvider(
-          create: (context) => ThemeBloc()
-            ..add(SwitchTheme(
-                theme: (MediaQuery.of(context).platformBrightness ==
-                        Brightness.dark)
-                    ? ThemeEnum.dark
-                    : ThemeEnum.light)),
-        ),
       ],
       child: App(),
     ),

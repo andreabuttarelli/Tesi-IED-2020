@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ class NormsWidget extends StatefulWidget {
 class _NormsWidgetState extends State<NormsWidget> {
   double opacity = 0.0;
   bool isTapped = false;
+  bool theme;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,10 @@ class _NormsWidgetState extends State<NormsWidget> {
       opacity = 0.5;
     else
       opacity = 1;
+
+    setState(() {
+      theme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    });
 
     return AnimatedOpacity(
       opacity: 1,
@@ -39,7 +45,9 @@ class _NormsWidgetState extends State<NormsWidget> {
             margin: const EdgeInsets.only(top: 24, bottom: 24),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             decoration: BoxDecoration(
-              color: Color(0xFFf1f1f1),
+              color: (!theme)
+                  ? LightPalette().colors["Palette.backgroundSecondary"]
+                  : DarkPalette().colors["Palette.backgroundSecondary"],
               /*boxShadow: [
                 BoxShadow(
                   color: (isTapped)

@@ -1,3 +1,5 @@
+import 'package:app/src/blocs/theme/index.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 
 /// MIT License
@@ -9,6 +11,7 @@ import 'package:app/src/objects/article.dart';
 import 'package:app/src/pages/details/article/article.dart';
 import 'package:content_placeholder/content_placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
@@ -28,6 +31,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
   List<String> list = List();
   String thumbnail = '';
   double opacity = 1;
+  bool theme;
 
   void _getData() async {
     final response = await http.get('${widget.post.id}');
@@ -51,6 +55,10 @@ class _ArticleWidgetState extends State<ArticleWidget> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    });
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -73,7 +81,9 @@ class _ArticleWidgetState extends State<ArticleWidget> {
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
           decoration: BoxDecoration(
-            color: Color(0xFFF1F1F1),
+            color: (!theme)
+                ? LightPalette().colors["Palette.backgroundSecondary"]
+                : DarkPalette().colors["Palette.backgroundSecondary"],
             borderRadius: BorderRadius.circular(16),
           ),
           child: ClipRRect(
@@ -132,7 +142,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                         '${widget.post.categories[0].term}',
                         size: 14,
                         weight: FontWeight.w500,
-                        color: Colors.black.withOpacity(0.8),
+                        color: Palette.textSecondary80,
                       ),
                     ),
                     Padding(
@@ -142,7 +152,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                         '${timeago.format(DateTime.parse(widget.post.published))}',
                         size: 14,
                         weight: FontWeight.w500,
-                        color: Colors.black54,
+                        color: Palette.textSecondary50,
                       ),
                     ),
                   ],

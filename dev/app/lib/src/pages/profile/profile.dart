@@ -1,3 +1,5 @@
+import 'package:app/src/design_system/palette.dart';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
@@ -12,6 +14,10 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          (MediaQuery.of(context).platformBrightness == Brightness.dark)
+              ? DarkPalette().colors["Palette.backgroundPrimary"]
+              : LightPalette().colors["Palette.backgroundPrimary"],
       body: Body(),
     );
   }

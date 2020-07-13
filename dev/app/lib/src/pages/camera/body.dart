@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +40,7 @@ class _BodyState extends State<Body> {
                         '${lang.script["camera_title"]}',
                         size: 32,
                         weight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Palette.white,
                         hPadding: 24,
                         top: 24,
                         bottom: 24,

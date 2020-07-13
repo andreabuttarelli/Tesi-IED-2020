@@ -1,6 +1,8 @@
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/pages/auth/login/login.dart';
 import 'package:app/src/pages/auth/pre_login.dart';
 import 'package:app/src/pages/camera/camera.dart';
+import 'package:app/src/pages/home/example.dart';
 import 'package:app/src/pages/splash/splash.dart';
 
 /// MIT License
@@ -24,6 +26,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   UserBloc userBloc;
+  ThemeBloc themeBloc;
 
   @override
   void initState() {

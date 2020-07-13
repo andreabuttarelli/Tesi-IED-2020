@@ -1,8 +1,10 @@
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
 import 'package:app/src/objects/validators.dart';
@@ -40,7 +42,7 @@ class _ConfirmState extends State<Confirm> {
               hPadding: 24,
               top: 8,
               bottom: 24,
-              color: Colors.white,
+              color: Palette.white,
             ),
             Spacer(),
             Button(

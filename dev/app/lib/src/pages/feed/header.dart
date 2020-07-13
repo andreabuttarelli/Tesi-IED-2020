@@ -1,5 +1,7 @@
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/user_picture_button.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 
 /// MIT License
@@ -51,7 +53,7 @@ class Header extends StatelessWidget {
                         '${lang.script['feed_subtitle']}', //Tutte le ultime notizie, per te.
                         size: 20,
                         weight: FontWeight.w700,
-                        color: Colors.black.withOpacity(0.7),
+                        color: Palette.textSecondary70,
                       ),
                       NormsWidget(
                         onClick: () {},

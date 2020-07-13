@@ -10,7 +10,7 @@ abstract class ThemeEvent extends Equatable {
 }
 
 class SwitchTheme extends ThemeEvent {
-  ThemeEnum theme;
+  final ThemeEnum theme;
 
   SwitchTheme({@required this.theme});
 }

@@ -1,9 +1,11 @@
 import 'package:app/src/blocs/alert/index.dart';
 import 'package:app/src/blocs/authentication/bloc.dart';
 import 'package:app/src/blocs/authentication/event.dart';
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/home/home.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +65,7 @@ class _LogoutAlertState extends State<Alert> {
                     child: CText(
                       '${widget.title}',
                       size: 32,
-                      color: Colors.black,
+                      color: Palette.textPrimary,
                       weight: FontWeight.bold,
                     ),
                   ),

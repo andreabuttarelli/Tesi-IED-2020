@@ -1,7 +1,9 @@
 import 'package:app/src/blocs/feed/index.dart';
 import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/option.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/settings/alert.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +53,8 @@ class _LanguageState extends State<LanguageBody> {
               ),
               Option(
                 color: (lang == Italian())
-                    ? Colors.black
-                    : Colors.black.withOpacity(0.7),
+                    ? Palette.textPrimary
+                    : Palette.textSecondary70,
                 label: '🇮🇹 Italiano',
                 withIcon: (lang == Italian()),
                 icon: FeatherIcons.check,
@@ -63,8 +65,8 @@ class _LanguageState extends State<LanguageBody> {
               ),
               Option(
                 color: (lang == English())
-                    ? Colors.black
-                    : Colors.black.withOpacity(0.7),
+                    ? Palette.textPrimary
+                    : Palette.textSecondary70,
                 label: '🇬🇧 English',
                 withIcon: (lang == English()),
                 icon: FeatherIcons.check,
@@ -75,8 +77,8 @@ class _LanguageState extends State<LanguageBody> {
               ),
               Option(
                 color: (lang == Spanish())
-                    ? Colors.black
-                    : Colors.black.withOpacity(0.7),
+                    ? Palette.textPrimary
+                    : Palette.textSecondary70,
                 label: '🇪🇸 Español',
                 withIcon: (lang == Spanish()),
                 icon: FeatherIcons.check,
@@ -87,8 +89,8 @@ class _LanguageState extends State<LanguageBody> {
               ),
               Option(
                 color: (lang == Chinese())
-                    ? Colors.black
-                    : Colors.black.withOpacity(0.7),
+                    ? Palette.textPrimary
+                    : Palette.textSecondary70,
                 label: '🇨🇳 中文',
                 withIcon: (lang == Chinese()),
                 icon: FeatherIcons.check,

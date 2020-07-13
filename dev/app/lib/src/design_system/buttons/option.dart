@@ -1,5 +1,7 @@
+import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -7,7 +9,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 class Option extends StatefulWidget {
   final String label;
   final Function onClick;
-  final Color color;
+  final Palette color;
   bool withIcon = true;
   final double fontSize;
   final IconData icon;
@@ -36,6 +38,11 @@ class _ButtonState extends State<Option> {
 
   @override
   void initState() {
+    bool theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    if (theme)
+      color = LightPalette().colors["${widget.color}"];
+    else
+      color = DarkPalette().colors["${widget.color}"];
     super.initState();
   }
 
@@ -76,7 +83,7 @@ class _ButtonState extends State<Option> {
                                 ? widget.icon
                                 : FeatherIcons.chevronRight,
                             size: 24,
-                            color: widget.color,
+                            color: color,
                           )
                         : Container()
                     : Icon(
@@ -84,7 +91,7 @@ class _ButtonState extends State<Option> {
                             ? widget.icon
                             : FeatherIcons.chevronRight,
                         size: 24,
-                        color: widget.color,
+                        color: color,
                       ),
               ],
             ),
