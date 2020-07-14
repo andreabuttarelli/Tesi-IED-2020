@@ -15,7 +15,7 @@ class Button extends StatefulWidget {
   Button({
     Key key,
     this.label,
-    this.color,
+    @required this.color,
     this.type,
     this.dims,
     this.onClick,
@@ -33,6 +33,7 @@ class _ButtonState extends State<Button> {
   Color color;
   BoxDecoration decoration;
   double opacity;
+  bool theme;
 
   @override
   void initState() {
@@ -44,22 +45,6 @@ class _ButtonState extends State<Button> {
       width = 200;
     } else
       hPadding = 8;
-
-    bool theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
-
-    if (widget.type == ButtonType.primarySolid ||
-        widget.type == ButtonType.primaryStroke)
-      color = (!theme)
-          ? LightPalette().colors["textPrimary"]
-          : DarkPalette().colors["textPrimary"];
-    else if (widget.type == ButtonType.secondarySolid ||
-        widget.type == ButtonType.secondaryStroke)
-      color = LightPalette().colors["accent"];
-    else if (widget.type == ButtonType.thirdSolid ||
-        widget.type == ButtonType.thirdStroke)
-      color = (!theme)
-          ? LightPalette().colors["textPrimaryInverse"]
-          : DarkPalette().colors["textPrimaryInverse"];
     super.initState();
   }
 
@@ -69,6 +54,24 @@ class _ButtonState extends State<Button> {
       opacity = 0.5;
     else
       opacity = 1;
+
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+
+      /*if (widget.type == ButtonType.primarySolid ||
+          widget.type == ButtonType.primaryStroke)
+        color = (!theme)
+            ? LightPalette().colors["textPrimary"]
+            : DarkPalette().colors["textPrimary"];
+      else if (widget.type == ButtonType.secondarySolid ||
+          widget.type == ButtonType.secondaryStroke)
+        color = LightPalette().colors["accent"];
+      else if (widget.type == ButtonType.thirdSolid ||
+          widget.type == ButtonType.thirdStroke)
+        color = (!theme)
+            ? LightPalette().colors["textPrimaryInverse"]
+            : DarkPalette().colors["textPrimaryInverse"];*/
+    });
 
     return AnimatedOpacity(
       opacity: opacity,
@@ -89,10 +92,14 @@ class _ButtonState extends State<Button> {
                     widget.type == ButtonType.thirdSolid ||
                     widget.type == null)
                 ? BoxDecoration(
-                    color: color,
+                    color: (!theme)
+                        ? LightPalette().colors["${widget.color}"]
+                        : DarkPalette().colors["${widget.color}"],
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: color,
+                      color: (!theme)
+                          ? LightPalette().colors["${widget.color}"]
+                          : DarkPalette().colors["${widget.color}"],
                       width: 2,
                     ),
                   )
@@ -100,7 +107,9 @@ class _ButtonState extends State<Button> {
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: color,
+                      color: (!theme)
+                          ? LightPalette().colors["${widget.color}"]
+                          : DarkPalette().colors["${widget.color}"],
                       width: 2,
                     ),
                   ),
@@ -108,11 +117,15 @@ class _ButtonState extends State<Button> {
               child: CText(
                 '${widget.label}',
                 size: 18,
-                color: (widget.type == ButtonType.primaryStroke ||
-                        widget.type == ButtonType.secondaryStroke ||
-                        widget.type == ButtonType.thirdSolid)
-                    ? Palette.textPrimary
-                    : Palette.textPrimaryInverse,
+                color: (widget.color == Palette.white)
+                    ? widget.color
+                    : (widget.type == ButtonType.primaryStroke ||
+                            widget.type == ButtonType.secondaryStroke ||
+                            widget.type == ButtonType.thirdSolid)
+                        ? Palette.textPrimary
+                        : (widget.type == ButtonType.secondarySolid)
+                            ? Palette.white
+                            : Palette.textPrimaryInverse,
                 weight: FontWeight.w800,
               ),
             ),

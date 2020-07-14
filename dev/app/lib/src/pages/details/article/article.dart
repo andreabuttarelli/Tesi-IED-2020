@@ -1,3 +1,4 @@
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/objects/local_article.dart';
 import 'package:flutter/material.dart';
 import 'package:webfeed/domain/atom_item.dart';
@@ -21,6 +22,7 @@ class Article extends StatefulWidget {
 
 class _ArticleState extends State<Article> {
   LocalArticle post = LocalArticle();
+  bool theme;
 
   @override
   void initState() {
@@ -43,8 +45,15 @@ class _ArticleState extends State<Article> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
     return Scaffold(
-      backgroundColor: Color(0xFFF1F1F1),
+      backgroundColor: (!theme)
+          ? LightPalette().colors["${Palette.backgroundSecondary}"]
+          : DarkPalette()
+              .colors["${Palette.backgroundSecondary}"]
+              .withOpacity(0.6),
       body: Stack(
         children: [
           Body(

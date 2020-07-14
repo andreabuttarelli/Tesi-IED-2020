@@ -1,5 +1,6 @@
 import 'package:app/src/blocs/alert/index.dart';
 import 'package:app/src/blocs/authentication/index.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/pages/home/home.dart';
 import 'package:app/src/pages/settings/alert.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,10 @@ class _SettingsState extends State<Settings> {
     return BlocProvider(
       create: (context) => AlertBloc(),
       child: Scaffold(
+        backgroundColor:
+            (MediaQuery.of(context).platformBrightness == Brightness.dark)
+                ? DarkPalette().colors["Palette.backgroundPrimary"]
+                : LightPalette().colors["Palette.backgroundPrimary"],
         body: BlocBuilder<AlertBloc, bool>(
           builder: (context, flagVisible) {
             /*if (flagVisible)
@@ -36,7 +41,6 @@ class _SettingsState extends State<Settings> {
               });
             else
               hideAlert();*/
-
             return Stack(
               children: [
                 Body(),

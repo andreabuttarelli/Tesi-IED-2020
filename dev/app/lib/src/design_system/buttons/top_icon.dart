@@ -1,4 +1,5 @@
 import 'package:app/src/blocs/accessibility/bloc.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +40,10 @@ class _TopIconState extends State<TopIcon> {
                 child: Icon(
                   widget.icon,
                   size: (isAccessible) ? 24 * 1.2 : 24,
-                  color: widget.color,
+                  color: (MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark)
+                      ? DarkPalette().colors["${Palette.textPrimary}"]
+                      : LightPalette().colors["${Palette.textPrimary}"],
                 ),
               ),
             ),

@@ -23,6 +23,7 @@ class _LanguageState extends State<LanguageBody> {
   String email = '';
   LanguageBloc languageBloc;
   FeedBloc feedBloc;
+  bool theme;
 
   @override
   void initState() {
@@ -33,6 +34,9 @@ class _LanguageState extends State<LanguageBody> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
     return BlocBuilder<LanguageBloc, Language>(
       builder: (context, lang) {
         return SafeArea(
@@ -41,7 +45,9 @@ class _LanguageState extends State<LanguageBody> {
             children: [
               TopIconBack(
                 icon: Icons.arrow_back,
-                color: Colors.black,
+                color: (!theme)
+                    ? LightPalette().colors["${Palette.textPrimary}"]
+                    : DarkPalette().colors["${Palette.textPrimary}"],
               ),
               CText(
                 '${lang.script["change_language_title"]}',

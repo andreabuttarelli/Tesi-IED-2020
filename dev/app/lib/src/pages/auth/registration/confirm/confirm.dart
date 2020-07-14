@@ -46,7 +46,8 @@ class _ConfirmState extends State<Confirm> {
             ),
             Spacer(),
             Button(
-              type: ButtonType.thirdStroke,
+              color: Palette.white,
+              type: ButtonType.primaryStroke,
               dims: ButtonDims.large,
               label: 'Start Now',
               onClick: () {

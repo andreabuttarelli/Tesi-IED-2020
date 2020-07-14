@@ -38,11 +38,6 @@ class _ButtonState extends State<Option> {
 
   @override
   void initState() {
-    bool theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
-    if (theme)
-      color = LightPalette().colors["${widget.color}"];
-    else
-      color = DarkPalette().colors["${widget.color}"];
     super.initState();
   }
 
@@ -52,6 +47,12 @@ class _ButtonState extends State<Option> {
       opacity = 0.5;
     else
       opacity = 1;
+
+    bool theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    if (theme)
+      color = LightPalette().colors["${widget.color}"];
+    else
+      color = DarkPalette().colors["${widget.color}"];
 
     return AnimatedOpacity(
       opacity: opacity,
@@ -91,7 +92,9 @@ class _ButtonState extends State<Option> {
                             ? widget.icon
                             : FeatherIcons.chevronRight,
                         size: 24,
-                        color: color,
+                        color: (!theme)
+                            ? LightPalette().colors["Palette.textPrimary"]
+                            : DarkPalette().colors["Palette.textPrimary"],
                       ),
               ],
             ),

@@ -6,6 +6,7 @@ import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/option.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/settings/alert.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class Accessiblity extends StatefulWidget {
 
 class _AccessiblityState extends State<Accessiblity> {
   AccessibilityBloc accessibilityBloc;
+  bool theme;
 
   @override
   void initState() {
@@ -30,6 +32,9 @@ class _AccessiblityState extends State<Accessiblity> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
     return BlocBuilder<AccessibilityBloc, bool>(
       builder: (context, isAccessible) {
         return SafeArea(
@@ -39,7 +44,9 @@ class _AccessiblityState extends State<Accessiblity> {
                 children: [
                   TopIconBack(
                     icon: Icons.arrow_back,
-                    color: Colors.black,
+                    color: (!theme)
+                        ? LightPalette().colors["Palette.textPrimary"]
+                        : DarkPalette().colors["Palette.textPrimary"],
                   ),
                 ],
               ),
@@ -68,10 +75,17 @@ class _AccessiblityState extends State<Accessiblity> {
                   width: double.maxFinite,
                   height: 180,
                   decoration: BoxDecoration(
-                    color:
-                        (!isAccessible) ? Color(0xFFe7e7e7) : Color(0xFFf1f1f1),
+                    color: (!theme)
+                        ? LightPalette().colors["Palette.backgroundSecondary"]
+                        : DarkPalette().colors["Palette.backgroundSecondary"],
                     border: (!isAccessible)
-                        ? Border.all(color: Colors.black45, width: 4)
+                        ? Border.all(
+                            color: (!theme)
+                                ? LightPalette()
+                                    .colors["Palette.textSecondary50"]
+                                : DarkPalette()
+                                    .colors["Palette.textSecondary50"],
+                            width: 4)
                         : Border.all(
                             color: Colors.black.withOpacity(0.0), width: 0),
                     borderRadius: BorderRadius.circular(25),
@@ -111,10 +125,17 @@ class _AccessiblityState extends State<Accessiblity> {
                   width: double.maxFinite,
                   height: 180,
                   decoration: BoxDecoration(
-                    color:
-                        (isAccessible) ? Color(0xFFe7e7e7) : Color(0xFFf1f1f1),
+                    color: (!theme)
+                        ? LightPalette().colors["Palette.backgroundSecondary"]
+                        : DarkPalette().colors["Palette.backgroundSecondary"],
                     border: (isAccessible)
-                        ? Border.all(color: Colors.black45, width: 4)
+                        ? Border.all(
+                            color: (!theme)
+                                ? LightPalette()
+                                    .colors["Palette.textSecondary50"]
+                                : DarkPalette()
+                                    .colors["Palette.textSecondary50"],
+                            width: 4)
                         : Border.all(
                             color: Colors.black.withOpacity(0.0), width: 0),
                     borderRadius: BorderRadius.circular(25),

@@ -2,6 +2,7 @@ import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
 import 'package:app/src/objects/validators.dart';
@@ -26,7 +27,6 @@ class _PasswordState extends State<Password> {
         children: [
           TopIconBack(
             icon: Icons.arrow_back,
-            color: Colors.black,
           ),
           CText(
             'Anyone has a little secret',
@@ -50,6 +50,7 @@ class _PasswordState extends State<Password> {
           ),
           Spacer(),
           Button(
+            color: Palette.accent,
             type: ButtonType.secondarySolid,
             dims: ButtonDims.large,
             label: 'Continue',

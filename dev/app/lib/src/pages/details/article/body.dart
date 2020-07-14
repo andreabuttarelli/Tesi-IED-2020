@@ -1,5 +1,6 @@
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/repositories/local_feed.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,13 @@ class _BodyState extends State<Body> {
   var top = 0.0;
   var topBody = 0.0;
   var topPadding = 330;
+  bool theme;
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
     final width = MediaQuery.of(context).size.width;
     return Container(
       child: NotificationListener(
@@ -53,12 +58,14 @@ class _BodyState extends State<Body> {
             ),
             Content(
               post: widget.post,
-              top: topBody + 84 + 290,
+              top: (84 + 290.0),
             ),
             Container(
               padding: const EdgeInsets.only(top: 16),
               width: double.maxFinite,
-              color: Colors.white,
+              color: (!theme)
+                  ? LightPalette().colors["${Palette.backgroundPrimary}"]
+                  : DarkPalette().colors["${Palette.backgroundPrimary}"],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

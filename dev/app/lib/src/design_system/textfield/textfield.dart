@@ -40,6 +40,7 @@ class _TextFieldState extends State<CTextField> {
   bool secure;
   bool autofocus;
   bool autocorrect;
+  bool theme;
 
   @override
   void initState() {
@@ -80,77 +81,77 @@ class _TextFieldState extends State<CTextField> {
         isError = widget.isError;
       else
         isError = false;
+      theme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     });
-    return BlocBuilder<ThemeBloc, ThemeEnum>(
-      builder: (context, theme) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              (widget.title != null)
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: CText(
-                        (isError && controller.text.length > 4)
-                            ? '*${widget.title}'
-                            : '${widget.title}',
-                        size: 16,
-                        color: (isError && controller.text.length > 4)
-                            ? Palette.textAccent
-                            : Palette.textPrimary,
-                        weight: FontWeight.bold,
-                      ),
-                    )
-                  : Container(),
-              TextFormField(
-                controller: controller,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                decoration: InputDecoration(
-                  hintText: "${widget.placeholder}",
-                  fillColor: Colors.black,
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    borderSide: BorderSide(
-                      color: PaletteColor(
-                        theme: theme,
-                        type: Palette.textPrimary,
-                      ).color,
-                    ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          (widget.title != null)
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: CText(
+                    (isError && controller.text.length > 4)
+                        ? '*${widget.title}'
+                        : '${widget.title}',
+                    size: 16,
+                    color: (isError && controller.text.length > 4)
+                        ? Palette.textAccent
+                        : Palette.textPrimary,
+                    weight: FontWeight.bold,
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                    borderSide: BorderSide(
-                      color: Colors.black.withOpacity(0.25),
-                      width: 2.0,
-                    ),
-                  ),
+                )
+              : Container(),
+          TextFormField(
+            controller: controller,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+            decoration: InputDecoration(
+              hintText: "${widget.placeholder}",
+              fillColor: (!theme)
+                  ? LightPalette().colors["Palette.textPrimary"]
+                  : DarkPalette().colors["Palette.textPrimary"],
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: BorderSide(
+                  color: (!theme)
+                      ? LightPalette().colors["Palette.textPrimary"]
+                      : DarkPalette().colors["Palette.textPrimary"],
                 ),
-                obscureText: widget.secure ?? false,
-                autofocus: autofocus ?? false,
-                autocorrect: autocorrect ?? false,
               ),
-              (widget.validationMessage != null &&
-                      isError &&
-                      controller.text.length > 4)
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Center(
-                        child: CText(
-                          '${widget.validationMessage}',
-                          size: 14,
-                          color: Palette.accent,
-                          weight: FontWeight.w600,
-                        ),
-                      ),
-                    )
-                  : Container(),
-            ],
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                borderSide: BorderSide(
+                  color: (!theme)
+                      ? LightPalette().colors["Palette.textSecondary30"]
+                      : DarkPalette().colors["Palette.textSecondary30"],
+                  width: 2.0,
+                ),
+              ),
+            ),
+            obscureText: widget.secure ?? false,
+            autofocus: autofocus ?? false,
+            autocorrect: autocorrect ?? false,
           ),
-        );
-      },
+          (widget.validationMessage != null &&
+                  isError &&
+                  controller.text.length > 4)
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Center(
+                    child: CText(
+                      '${widget.validationMessage}',
+                      size: 14,
+                      color: Palette.accent,
+                      weight: FontWeight.w600,
+                    ),
+                  ),
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 }

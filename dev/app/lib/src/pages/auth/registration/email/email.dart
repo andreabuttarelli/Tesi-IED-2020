@@ -3,6 +3,7 @@ import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
 import 'package:app/src/objects/validators.dart';
@@ -60,6 +61,7 @@ class _EmailState extends State<Email> {
             child: IgnorePointer(
               ignoring: (isValid && lenght > 4),
               child: Button(
+                color: Palette.accent,
                 type: ButtonType.secondarySolid,
                 dims: ButtonDims.large,
                 label: 'Continue',

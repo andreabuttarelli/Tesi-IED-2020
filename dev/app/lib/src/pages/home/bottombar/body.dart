@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020
@@ -69,12 +71,29 @@ class _BodyState extends State<BottomBarBody> {
 
     return BottomAppBar(
       shape: CircularNotchedRectangle(),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: items,
+      clipBehavior: Clip.antiAlias,
+      child: ClipRect(
+        child: Container(
+          color: Color(0xFF0000FF).withOpacity(0.25),
+          child: Container(
+            color: Color(0xFF00FF00).withOpacity(0.25),
+            child: Container(
+              color: widget.backgroundColor.withOpacity(0.8),
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: items,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
-      color: widget.backgroundColor,
+      color: Color(0xFFFF0000).withOpacity(0.25),
     );
   }
 
@@ -102,7 +121,8 @@ class _BodyState extends State<BottomBarBody> {
     int index,
     ValueChanged<int> onPressed,
   }) {
-    Color color = selectedIndex == index ? widget.color : widget.color.withOpacity(0.55);
+    Color color =
+        selectedIndex == index ? widget.color : widget.color.withOpacity(0.55);
     return Expanded(
       child: SizedBox(
         height: widget.height,

@@ -111,15 +111,18 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                       )
                     : ContentPlaceholder(
                         height: 240,
-                        bgColor: Colors.black45,
+                        bgColor: (!theme)
+                            ? LightPalette()
+                                .colors["${Palette.backgroundSecondary}"]
+                            : DarkPalette()
+                                .colors["${Palette.backgroundSecondary}"],
                         highlightColor: Colors.white,
                         spacing: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 0),
+                            vertical: 0, horizontal: 0),
                         child: Container(
                           height: 240,
                           decoration: BoxDecoration(
                             color: Colors.black54,
-                            borderRadius: BorderRadius.circular(24),
                           ),
                         ),
                       ),

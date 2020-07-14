@@ -25,6 +25,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   AlertBloc alertBloc;
+  bool theme;
 
   @override
   void initState() {
@@ -34,6 +35,9 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
     return Container(
       child: ListView(
         children: [
@@ -43,7 +47,9 @@ class _BodyState extends State<Body> {
               SafeArea(
                 child: TopIconBack(
                   icon: FeatherIcons.arrowLeft,
-                  color: Colors.black,
+                  color: (!theme)
+                      ? LightPalette().colors["Palette.textPrimary"]
+                      : DarkPalette().colors["Palette.textPrimary"],
                 ),
               ),
             ],
@@ -58,6 +64,7 @@ class _BodyState extends State<Body> {
           ),
           Option(
             label: 'Change Email',
+            color: Palette.textPrimary,
             onClick: () {
               Navigator.push(
                 context,
@@ -71,6 +78,7 @@ class _BodyState extends State<Body> {
           ),
           Option(
             label: 'Change Password',
+            color: Palette.textPrimary,
             onClick: () {
               Navigator.push(
                 context,
@@ -84,6 +92,7 @@ class _BodyState extends State<Body> {
           ),
           Option(
             label: 'Change Language',
+            color: Palette.textPrimary,
             onClick: () {
               Navigator.push(
                 context,
@@ -113,7 +122,9 @@ class _BodyState extends State<Body> {
               ),
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Color(0xFFf1f1f1),
+                color: (!theme)
+                    ? LightPalette().colors["Palette.backgroundSecondary"]
+                    : DarkPalette().colors["Palette.backgroundSecondary"],
                 borderRadius: BorderRadius.circular(25),
               ),
               child: Column(
@@ -134,11 +145,11 @@ class _BodyState extends State<Body> {
                     top: 8,
                     bottom: 24,
                   ),
-                  Button(
+                  /*Button(
                     type: ButtonType.primaryStroke,
                     dims: ButtonDims.medium,
                     label: 'Try it now',
-                  )
+                  )*/
                 ],
               ),
             ),

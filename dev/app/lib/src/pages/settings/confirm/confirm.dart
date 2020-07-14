@@ -36,7 +36,7 @@ class _ConfirmState extends State<Confirm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFA92217),
+      backgroundColor: LightPalette().colors["accent"],
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,6 +65,7 @@ class _ConfirmState extends State<Confirm> {
             ),
             Spacer(),
             Button(
+              color: Palette.white,
               type: ButtonType.thirdStroke,
               dims: ButtonDims.large,
               label: '${widget.cta}',

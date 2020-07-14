@@ -33,7 +33,7 @@ class Home extends StatelessWidget {
           ),
           bottomNavigationBar: BottomBar(
             color: Colors.white,
-            bgColor: Colors.black,
+            bgColor: Color(0xFF1D1D1D).withOpacity(0.8),
             items: [
               BottomAppBarItem(
                   iconData: Icons.menu, text: '${lang.script["feed_title"]}'),

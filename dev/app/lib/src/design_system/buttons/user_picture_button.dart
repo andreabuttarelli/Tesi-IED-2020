@@ -38,7 +38,7 @@ class _UserProfileButtonState extends State<UserProfileButton> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Profile()),
+                      MaterialPageRoute(builder: (context) => PreLogin()),
                     );
                   },
                   onTapDown: (detail) => tapped(),

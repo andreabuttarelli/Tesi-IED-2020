@@ -5,6 +5,7 @@ import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/buttons/type.dart';
+import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,10 @@ class _BodyState extends State<Body> {
                 children: [
                   TopIconBack(
                     icon: Icons.arrow_back,
-                    color: Colors.black,
+                    color: (MediaQuery.of(context).platformBrightness ==
+                            Brightness.dark)
+                        ? DarkPalette().colors["${Palette.backgroundPrimary}"]
+                        : LightPalette().colors["${Palette.backgroundPrimary}"],
                   ),
                   CText(
                     'Bentornato',
@@ -100,6 +104,7 @@ class _BodyState extends State<Body> {
                   ),
                   Spacer(),
                   Button(
+                    color: Palette.accent,
                     type: ButtonType.secondarySolid,
                     dims: ButtonDims.large,
                     label: 'Login',
