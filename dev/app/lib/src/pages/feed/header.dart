@@ -31,10 +31,14 @@ class Header extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         width: 64,
-                        child: Image.asset('assets/img/logo.jpeg'),
+                        child: (MediaQuery.of(context).platformBrightness ==
+                                Brightness.dark)
+                            ? Image.asset('assets/img/logo.png')
+                            : Image.asset('assets/img/logo.jpeg'),
                       ),
                       UserProfileButton(),
                     ],

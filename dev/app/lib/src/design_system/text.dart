@@ -53,17 +53,17 @@ class _CTextState extends State<CText> {
       letterSpacing = -0.3;
     } else if (widget.weight == FontWeight.w500) {
       family = "GilroyMedium";
-      letterSpacing = -1.3;
+      letterSpacing = -0.3;
     } else if (widget.weight == FontWeight.w700) {
       family = "GilroyBold";
-      letterSpacing = -1.3;
+      letterSpacing = -0.3;
       height = widget.size + 0;
     } else if (widget.weight == FontWeight.w800) {
       family = "Gilroy";
       letterSpacing = 0;
     } else {
       family = "GilroyMedium";
-      letterSpacing = -1.3;
+      letterSpacing = -0.3;
     }
     super.initState();
   }
@@ -108,6 +108,7 @@ class _CTextState extends State<CText> {
                   : (16 * accessibleOffset),
               fontWeight: widget.weight ?? FontWeight.w500,
               fontFamily: family,
+              letterSpacing: 1,
             ),
           ),
         );

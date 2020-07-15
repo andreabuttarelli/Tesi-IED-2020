@@ -19,6 +19,8 @@ abstract class Language extends Equatable {
 
 class Italian extends Language {
   Map<String, String> script = {
+    "close": "Chiudi",
+    "back": "Indietro",
     "feed_title": "Notizie",
     "feed_subtitle": "Tutte le ultime notizie, per te.",
     "feed_loading": "Caricamento",
@@ -31,9 +33,10 @@ class Italian extends Language {
     "notes_title": "Prendi Nota",
     "notes_subtitle": "Perchè non è sempre possibile ricordarsi tutto.",
     "change_language_title": "Cambia la lingua",
-    "camera_title": "Camera",
-    "camera_inside": "Sono dentro al Parco",
-    "camera_outside": "Sono fuori dal Parco",
+    "noar_arcore":
+        "Siamo spiacenti, il tuo telefono non supporta le funzionalità di ArCore",
+    "noar_arkit":
+        "Siamo spiacenti, il tuo telefono non supporta le funzionalità di ArKit",
   };
 
   Italian();
@@ -44,6 +47,8 @@ class Italian extends Language {
 
 class English extends Language {
   Map<String, String> script = {
+    "close": "Close",
+    "back": "Back",
     "feed_title": "News",
     "feed_subtitle": "All the latest news, for you.",
     "feed_loading": "Loading",
@@ -56,9 +61,8 @@ class English extends Language {
     "notes_title": "Notes",
     "notes_subtitle": "It is not always possible to remember everything.",
     "change_language_title": "Change language",
-    "camera_title": "Camera",
-    "camera_inside": "I'm am inside the Parco", //TODO
-    "camera_outside": "I'm outside the Parco", //TODO
+    "noar_arcore": "Sorry, your phone doesn't support ArCore features",
+    "noar_arkit": "Sorry, your phone doesn't support ArKit features",
   };
 
   English();
@@ -69,6 +73,8 @@ class English extends Language {
 
 class Spanish extends Language {
   Map<String, String> script = {
+    "close": "Cierra",
+    "back": "Atras",
     "feed_title": "News",
     "feed_subtitle": "Todas las últimas noticias, para ti.",
     "feed_loading": "Cargando",
@@ -81,9 +87,10 @@ class Spanish extends Language {
     "notes_title": "Tomar nota",
     "notes_subtitle": "Porque no siempre es posible recordarlo todo.",
     "change_language_title": "Cambiar idioma",
-    "camera_title": "Cámara",
-    "camera_inside": "Sono dentro la Parco", //TODO
-    "camera_outside": "Sono fuori dal Parco", //TODO
+    "noar_arcore":
+        "Lo sentimos, su teléfono no es compatible con las funciones de ArCore",
+    "noar_arkit":
+        "Lo sentimos, su teléfono no es compatible con las funciones de ArKit",
   };
 
   Spanish();
@@ -94,6 +101,8 @@ class Spanish extends Language {
 
 class Chinese extends Language {
   Map<String, String> script = {
+    "close": "关闭",
+    "back": "背部",
     "feed_title": "新闻",
     "feed_subtitle": "所有最新消息，为您服务。",
     "feed_loading": "载入中",
@@ -106,9 +115,8 @@ class Chinese extends Language {
     "notes_title": "做记录",
     "notes_subtitle": "因为并非总是能够记住所有事情",
     "change_language_title": "改变语言",
-    "camera_title": "相机",
-    "camera_inside": "Sono dentro la Parco", //TODO
-    "camera_outside": "Sono fuori dal Parco", //TODO
+    "noar_arcore": "抱歉，您的手机不支持ArCore功能",
+    "noar_arkit": "抱歉，您的手机不支持ArKit功能",
   };
 
   Chinese();

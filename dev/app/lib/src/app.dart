@@ -1,6 +1,8 @@
 import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/pages/auth/login/login.dart';
 import 'package:app/src/pages/auth/pre_login.dart';
+import 'package:app/src/pages/camera/android/scanner.dart';
+import 'package:app/src/pages/camera/android/hello_world.dart';
 import 'package:app/src/pages/camera/camera.dart';
 import 'package:app/src/pages/home/example.dart';
 import 'package:app/src/pages/splash/splash.dart';
@@ -51,6 +53,7 @@ class _AppState extends State<App> {
       initialRoute: '/',
       routes: {
         '/Camera': (context) => Camera(),
+        '/Memories': (context) => HelloWorld(),
       },
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {

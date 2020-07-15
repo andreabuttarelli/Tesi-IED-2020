@@ -79,10 +79,7 @@ class _BodyState extends State<Body> {
                 children: [
                   TopIconBack(
                     icon: Icons.arrow_back,
-                    color: (MediaQuery.of(context).platformBrightness ==
-                            Brightness.dark)
-                        ? DarkPalette().colors["${Palette.backgroundPrimary}"]
-                        : LightPalette().colors["${Palette.backgroundPrimary}"],
+                    color: Colors.black,
                   ),
                   CText(
                     'Bentornato',

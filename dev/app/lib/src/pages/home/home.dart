@@ -23,6 +23,7 @@ class Home extends StatelessWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
+            heroTag: 'FAB',
             backgroundColor: Colors.black,
             onPressed: () {
               Navigator.pushNamed(context, "/Camera");

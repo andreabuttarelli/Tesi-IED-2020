@@ -1,4 +1,5 @@
 import 'package:app/src/blocs/accessibility/bloc.dart';
+import 'package:app/src/blocs/camera/bloc.dart';
 import 'package:app/src/blocs/feed/index.dart';
 import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/blocs/theme/index.dart';
@@ -45,6 +46,9 @@ void main() {
         BlocProvider(
           create: (context) => AccessibilityBloc(),
         ),
+        BlocProvider(
+          create: (context) => CameraBloc(),
+        )
       ],
       child: App(),
     ),

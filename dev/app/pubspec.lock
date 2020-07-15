@@ -4,10 +4,21 @@ packages:
   arcore_flutter_plugin:
     dependency: "direct main"
     description:
-      name: arcore_flutter_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: a28282bfc403b58792d86cb0a5076681ead5e827
+      url: "https://github.com/giandifra/arcore_flutter_plugin.git"
+    source: git
     version: "0.0.5+1"
+  arkit_plugin:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: cac0a82698ae3afa11c31949a30fd9cdf80328ad
+      url: "https://github.com/olexale/arkit_flutter_plugin.git"
+    source: git
+    version: "0.5.2"
   async:
     dependency: transitive
     description:
@@ -289,6 +300,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1+1"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   liquid_pull_to_refresh:
     dependency: "direct main"
     description:

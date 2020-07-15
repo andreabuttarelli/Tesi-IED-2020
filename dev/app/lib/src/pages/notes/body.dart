@@ -3,11 +3,6 @@ import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/palette.dart';
 
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-/// modificato il 05/06/2020
-
 import 'package:flutter/material.dart';
 
 class Body extends StatefulWidget {
@@ -27,6 +22,7 @@ class _BodyState extends State<Body> {
         children: [
           Button(
             label: 'New Note',
+            color: Palette.accent,
             type: ButtonType.secondarySolid,
             dims: ButtonDims.medium,
           ),

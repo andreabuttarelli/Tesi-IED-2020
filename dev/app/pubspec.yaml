@@ -32,7 +32,12 @@ dependencies:
   url_launcher: ^5.4.11
   flutter_feather_icons: ^1.0.3
   cloud_firestore: ^0.13.7
-  arcore_flutter_plugin: ^0.0.5+1
+  arcore_flutter_plugin:
+    git:
+      url: https://github.com/giandifra/arcore_flutter_plugin.git
+  arkit_plugin:
+    git:
+      url: https://github.com/olexale/arkit_flutter_plugin.git
 
 
 dev_dependencies:
@@ -55,6 +60,10 @@ flutter:
   assets:
     - assets/img/norms.png
     - assets/img/logo.jpeg
+    - assets/img/logo.png
+    - assets/earth.jpg
+    - assets/earth_augmented_image.jpg
+    - assets/square_picture.jpg
 
   fonts:
     - family: Gilroy
