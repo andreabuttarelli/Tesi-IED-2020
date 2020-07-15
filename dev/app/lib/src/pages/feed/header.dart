@@ -60,7 +60,9 @@ class Header extends StatelessWidget {
                         color: Palette.textSecondary70,
                       ),
                       NormsWidget(
-                        onClick: () {},
+                        onClick: () {
+                          Navigator.pushNamed(context, '/Norms');
+                        },
                       ),
                     ],
                   ),

@@ -1,22 +1,12 @@
 import 'package:app/src/blocs/theme/index.dart';
-import 'package:app/src/pages/auth/login/login.dart';
-import 'package:app/src/pages/auth/pre_login.dart';
-import 'package:app/src/pages/camera/android/scanner.dart';
 import 'package:app/src/pages/camera/android/hello_world.dart';
 import 'package:app/src/pages/camera/camera.dart';
-import 'package:app/src/pages/home/example.dart';
+import 'package:app/src/pages/details/norms/norms.dart';
 import 'package:app/src/pages/splash/splash.dart';
-
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-/// modificato il 05/06/2020
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/src/blocs/authentication/index.dart';
 import 'package:app/src/pages/home/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/src/blocs/user/index.dart';
 
 class App extends StatefulWidget {
@@ -54,6 +44,7 @@ class _AppState extends State<App> {
       routes: {
         '/Camera': (context) => Camera(),
         '/Memories': (context) => HelloWorld(),
+        '/Norms': (context) => Norms(),
       },
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
