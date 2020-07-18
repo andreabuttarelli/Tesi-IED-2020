@@ -1,5 +1,5 @@
 import 'package:app/src/blocs/theme/index.dart';
-import 'package:app/src/pages/camera/android/hello_world.dart';
+import 'package:app/src/pages/augmented_reality/camera.dart';
 import 'package:app/src/pages/camera/camera.dart';
 import 'package:app/src/pages/details/norms/norms.dart';
 import 'package:app/src/pages/splash/splash.dart';
@@ -43,7 +43,7 @@ class _AppState extends State<App> {
       initialRoute: '/',
       routes: {
         '/Camera': (context) => Camera(),
-        '/Memories': (context) => HelloWorld(),
+        '/AugmentedReality': (context) => AugmentedReality(),
         '/Norms': (context) => Norms(),
       },
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(

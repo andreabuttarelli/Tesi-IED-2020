@@ -145,11 +145,14 @@ class _BodyState extends State<Body> {
                 overscroll.disallowGlow();
               },
               child: ListView.builder(
+                addAutomaticKeepAlives: true,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) return Header();
                   return index >= state.posts.length
                       ? BottomLoader()
-                      : ArticleWidget(post: state.posts[index]);
+                      : ArticleWidget(
+                          post: state.posts[index],
+                        );
                 },
                 itemCount: state.hasReachedMax
                     ? state.posts.length

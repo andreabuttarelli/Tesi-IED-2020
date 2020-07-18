@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:app/src/blocs/authentication/index.dart';
+import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/blocs/login/index.dart';
 import 'package:app/src/blocs/user/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
@@ -8,6 +11,7 @@ import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
+import 'package:app/src/pages/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +25,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   LoginBloc loginBloc;
+  String email, password;
 
   @override
   void initState() {
@@ -50,9 +55,11 @@ class _BodyState extends State<Body> {
         if (state == LoginState.success()) {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
           BlocProvider.of<UserBloc>(context).add(UserLogged());
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Container()),
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
           );
         }
         if (state == LoginState.failure()) {
@@ -69,8 +76,8 @@ class _BodyState extends State<Body> {
             );
         }
       },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
+      child: BlocBuilder<LanguageBloc, Language>(
+        builder: (context, lang) {
           return SafeArea(
             bottom: false,
             child: Container(
@@ -93,11 +100,23 @@ class _BodyState extends State<Body> {
                     title: 'Email',
                     placeholder: 'Enter email',
                     autofocus: true,
+                    callBack: (text) {
+                      setState(() {
+                        email = text;
+                      });
+                      loginBloc..add(EmailChanged(email: text));
+                    },
                   ),
                   CTextField(
                     title: 'Password',
                     placeholder: 'Enter password',
                     secure: true,
+                    callBack: (text) {
+                      setState(() {
+                        password = text;
+                      });
+                      loginBloc..add(PasswordChanged(password: text));
+                    },
                   ),
                   Spacer(),
                   Button(
@@ -105,6 +124,15 @@ class _BodyState extends State<Body> {
                     type: ButtonType.secondarySolid,
                     dims: ButtonDims.large,
                     label: 'Login',
+                    onClick: () {
+                      loginBloc
+                        ..add(
+                          LoginWithCredentialsPressed(
+                            email: email,
+                            password: password,
+                          ),
+                        );
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 24),

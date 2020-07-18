@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "894381008486",
+    "firebase_url": "https://tesi-ied-2020.firebaseio.com",
+    "project_id": "tesi-ied-2020",
+    "storage_bucket": "tesi-ied-2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894381008486:android:7261317f7fa824366cefa7",
+        "android_client_info": {
+          "package_name": "com.andreabuttarelli.tesi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894381008486-bv8vb1iud8g31qmvg48ef4u2lgejiepp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7rQD_JYcfPlMD-Kh4WVC65qdC9v1sHz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "894381008486-bv8vb1iud8g31qmvg48ef4u2lgejiepp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

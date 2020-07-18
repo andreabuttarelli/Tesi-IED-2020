@@ -15,10 +15,14 @@ class Looking extends StatefulWidget {
 }
 
 class _LookingState extends State<Looking> {
+  bool theme;
   bool isFound = false;
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+    });
     return BlocBuilder<LanguageBloc, Language>(
       builder: (context, lang) {
         return Stack(

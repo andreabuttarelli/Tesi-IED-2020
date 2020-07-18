@@ -3,6 +3,7 @@ import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/user_picture_button.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/pages/feed/header/position.dart';
 
 /// MIT License
 /// by Andrea Buttarelli
@@ -64,6 +65,7 @@ class Header extends StatelessWidget {
                           Navigator.pushNamed(context, '/Norms');
                         },
                       ),
+                      PositionWidget(),
                     ],
                   ),
                 ],

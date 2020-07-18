@@ -1,6 +1,5 @@
+import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
-import '../../objects/post.dart';
 
 abstract class CameraState extends Equatable {
   CameraState();
@@ -9,15 +8,16 @@ abstract class CameraState extends Equatable {
   List<Object> get props => [];
 }
 
-class LookingForMarker extends CameraState {}
+class Undefined extends CameraState {}
 
-class MarkerFound extends CameraState {}
+class Avaiable extends CameraState {
+  List<CameraDescription> cameras = [];
 
-class PostsLoading extends CameraState {}
+  Avaiable({this.cameras});
 
-class PostsError extends CameraState {}
+  @override
+  List<Object> get props => [];
 
-class PostsLoaded extends CameraState {
-  final List<Post> posts;
-  PostsLoaded({@required this.posts});
+  @override
+  String toString() => 'Avaiable { n. camera(s): ${cameras.length} }';
 }

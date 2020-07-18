@@ -28,23 +28,33 @@ class ArticleWidget extends StatefulWidget {
 }
 
 class _ArticleWidgetState extends State<ArticleWidget> {
+  GlobalKey key =
+      GlobalKey(); //add key to your widget, which position you need to find
   List<String> list = List();
   String thumbnail = '';
   double opacity = 1;
   bool theme;
+  bool flagSecureFrame = false;
 
   void _getData() async {
-    final response = await http.get('${widget.post.id}');
-    dom.Document document = parser.parse(response.body);
-    final elements = document.getElementsByClassName('wp-post-image');
+    if (widget.post.media.thumbnails.length == 0) {
+      ;
+      final response = await http.get('${widget.post.id}');
+      dom.Document document = parser.parse(response.body);
+      final elements = document.getElementsByClassName('wp-post-image');
 
-    print(elements.length);
+      print(elements.length);
 
-    var image = elements.map((element) => element.attributes["src"]).toList();
-    setState(() {
-      thumbnail = image[0];
-      widget.post.media.thumbnails.add(Thumbnail(url: thumbnail));
-    });
+      var image = elements.map((element) => element.attributes["src"]).toList();
+      setState(() {
+        thumbnail = image[0];
+        widget.post.media.thumbnails.add(Thumbnail(url: thumbnail));
+      });
+    } else {
+      thumbnail = widget.post.media.thumbnails[0].url;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
   }
 
   @override
@@ -58,6 +68,8 @@ class _ArticleWidgetState extends State<ArticleWidget> {
     setState(() {
       theme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     });
+
+    findPosition();
 
     return GestureDetector(
       onTap: () {
@@ -95,6 +107,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                     ? Hero(
                         tag: widget.post.id,
                         child: Container(
+                          key: key,
                           height: 240,
                           decoration: BoxDecoration(
                             color: Colors.black45,
@@ -177,6 +190,21 @@ class _ArticleWidgetState extends State<ArticleWidget> {
       setState(() {
         opacity = 1;
       });
+    }
+  }
+
+  void _afterLayout(Duration duration) {
+    setState(() {
+      flagSecureFrame = true;
+    });
+  }
+
+  findPosition() {
+    if (flagSecureFrame) {
+      RenderBox box = key.currentContext.findRenderObject();
+      Offset position = box.localToGlobal(Offset.zero);
+      double y = position.dy;
+      print(y);
     }
   }
 }

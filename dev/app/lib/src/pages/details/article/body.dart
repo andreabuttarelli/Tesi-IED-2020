@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
@@ -41,7 +43,7 @@ class _BodyState extends State<Body> {
         child: Stack(
           children: [
             Positioned(
-              top: top + 84,
+              top: top + 120,
               child: Hero(
                 tag: widget.post.id,
                 child: Container(
@@ -58,53 +60,62 @@ class _BodyState extends State<Body> {
             ),
             Content(
               post: widget.post,
-              top: (84 + 290.0),
+              top: (110 + 290.0),
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 16),
-              width: double.maxFinite,
-              color: (!theme)
-                  ? LightPalette().colors["${Palette.backgroundPrimary}"]
-                  : DarkPalette().colors["${Palette.backgroundPrimary}"],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: TopIconBack(
-                      icon: FeatherIcons.arrowLeft,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(right: 8),
+            ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                child: Container(
+                  padding: const EdgeInsets.only(top: 16),
+                  width: double.maxFinite,
+                  color: (!theme)
+                      ? LightPalette().colors["${Palette.backgroundPrimary}"]
+                      : DarkPalette()
+                          .colors["${Palette.backgroundPrimary}"]
+                          .withOpacity(0.4),
+                  child: SafeArea(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TopIcon(
-                          icon: FeatherIcons.share,
-                          onClick: () => Share.share('${widget.post.id}',
-                              subject: '${widget.post.title}'),
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: TopIconBack(
+                            icon: FeatherIcons.arrowLeft,
+                          ),
                         ),
-                        TopIcon(
-                          icon: FeatherIcons.shield,
-                          onClick: () => Share.share('${widget.post.id}',
-                              subject: '${widget.post.title}'),
-                        ),
-                        TopIcon(
-                          icon: FeatherIcons.heart,
-                          onClick: () async {
-                            var result = await LocalFeedRepository()
-                                .getArticle(widget.post.id);
-                            print(result);
-                            if (result == null)
-                              insertLike();
-                            else
-                              removeLike();
-                          },
+                        Container(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Row(
+                            children: [
+                              TopIcon(
+                                icon: FeatherIcons.share,
+                                onClick: () => Share.share('${widget.post.id}',
+                                    subject: '${widget.post.title}'),
+                              ),
+                              TopIcon(
+                                icon: FeatherIcons.shield,
+                                onClick: () => Share.share('${widget.post.id}',
+                                    subject: '${widget.post.title}'),
+                              ),
+                              TopIcon(
+                                icon: FeatherIcons.heart,
+                                onClick: () async {
+                                  var result = await LocalFeedRepository()
+                                      .getArticle(widget.post.id);
+                                  print(result);
+                                  if (result == null)
+                                    insertLike();
+                                  else
+                                    removeLike();
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],

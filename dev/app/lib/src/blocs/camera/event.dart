@@ -1,15 +1,13 @@
-import 'package:app/src/pages/camera/camera.dart';
+import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CameraEvent extends Equatable {
-  CameraEvent();
-
   @override
   List<Object> get props => [];
 }
 
-class LoadPosts extends CameraEvent {}
+class UpdateCameras extends CameraEvent {
+  List<CameraDescription> cameras = [];
 
-class ShowPosts extends CameraEvent {}
-
-class OpenCamera extends CameraEvent {}
+  UpdateCameras({this.cameras});
+}

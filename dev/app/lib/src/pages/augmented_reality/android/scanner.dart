@@ -1,8 +1,13 @@
-import 'package:app/src/blocs/camera/index.dart';
+import 'dart:async';
+
+import 'package:app/src/blocs/augmented_reality/index.dart';
+import 'package:app/src/blocs/token/index.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 class AndroidScanner extends StatefulWidget {
@@ -15,11 +20,13 @@ class AndroidScanner extends StatefulWidget {
 class _ScannerState extends State<AndroidScanner> {
   ArCoreController arCoreController;
   Map<int, ArCoreAugmentedImage> augmentedImagesMap = Map();
-  CameraBloc cameraBloc;
+  ARBloc cameraBloc;
+  TokenBloc tokenBloc;
 
   @override
   void initState() {
-    cameraBloc = BlocProvider.of<CameraBloc>(context);
+    cameraBloc = BlocProvider.of<ARBloc>(context);
+    tokenBloc = BlocProvider.of<TokenBloc>(context);
     super.initState();
   }
 
@@ -59,9 +66,37 @@ class _ScannerState extends State<AndroidScanner> {
   _handleOnTrackingImage(ArCoreAugmentedImage augmentedImage) {
     if (!augmentedImagesMap.containsKey(augmentedImage.index)) {
       augmentedImagesMap[augmentedImage.index] = augmentedImage;
-      cameraBloc..add(LoadPosts());
+      tempListen();
       //Navigator.pushNamed(context, '/Memories');
     }
+  }
+
+  tempListen() async {
+    //only with simulators
+    Position position = Position(latitude: 41.8853658, longitude: 12.4966204);
+    await Future.delayed(Duration(milliseconds: 400));
+    tokenBloc
+      ..add(UpdateTokenPosition(geopoint: GeoPoint(41.8853658, 12.4966204)));
+    goForward();
+  }
+
+  listen() async {
+    var geolocator = Geolocator();
+    var locationOptions =
+        LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+
+    StreamSubscription<Position> positionStream =
+        geolocator.getPositionStream(locationOptions).listen(
+      (Position position) {
+        tokenBloc
+          ..add(UpdateTokenPosition(
+              geopoint: GeoPoint(position.latitude, position.longitude)));
+      },
+    );
+  }
+
+  goForward() {
+    cameraBloc..add(LoadPosts());
   }
 
   /*Future _addSphere(ArCoreAugmentedImage augmentedImage) async {

@@ -1,5 +1,5 @@
-import 'package:app/src/blocs/camera/bloc.dart';
-import 'package:app/src/blocs/camera/event.dart';
+import 'package:app/src/blocs/augmented_reality/bloc.dart';
+import 'package:app/src/blocs/augmented_reality/event.dart';
 import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,11 +14,11 @@ class AndroidPosts extends StatefulWidget {
 
 class _AndroidPostsState extends State<AndroidPosts> {
   ArCoreController arCoreController;
-  CameraBloc cameraBloc;
+  ARBloc cameraBloc;
 
   @override
   void initState() {
-    cameraBloc = BlocProvider.of<CameraBloc>(context);
+    cameraBloc = BlocProvider.of<ARBloc>(context);
     super.initState();
   }
 
@@ -68,7 +68,7 @@ class _AndroidPostsState extends State<AndroidPosts> {
   }
 
   void confirm() {
-    cameraBloc..add(ShowPosts());
+    cameraBloc..add(ReadyToShowPost());
   }
 
   @override

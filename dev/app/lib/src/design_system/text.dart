@@ -79,7 +79,6 @@ class _CTextState extends State<CText> {
     else
       finalColor = LightPalette().colors["${widget.color}"];
 
-    print('theme: $theme, color: ${widget.color}, finalColor: $finalColor');
     return BlocBuilder<AccessibilityBloc, bool>(
       builder: (context, isAccessible) {
         double accessibleOffset = 1;

@@ -37,6 +37,7 @@ class Italian extends Language {
         "Siamo spiacenti, il tuo telefono non supporta le funzionalità di ArCore",
     "noar_arkit":
         "Siamo spiacenti, il tuo telefono non supporta le funzionalità di ArKit",
+    "open_camera": "Apri la fotocamera",
   };
 
   Italian();
@@ -63,6 +64,7 @@ class English extends Language {
     "change_language_title": "Change language",
     "noar_arcore": "Sorry, your phone doesn't support ArCore features",
     "noar_arkit": "Sorry, your phone doesn't support ArKit features",
+    "open_camera": "Open camera",
   };
 
   English();
@@ -91,6 +93,7 @@ class Spanish extends Language {
         "Lo sentimos, su teléfono no es compatible con las funciones de ArCore",
     "noar_arkit":
         "Lo sentimos, su teléfono no es compatible con las funciones de ArKit",
+    "open_camera": "Apri la fotocamera", //TODO
   };
 
   Spanish();
@@ -117,6 +120,7 @@ class Chinese extends Language {
     "change_language_title": "改变语言",
     "noar_arcore": "抱歉，您的手机不支持ArCore功能",
     "noar_arkit": "抱歉，您的手机不支持ArKit功能",
+    "open_camera": "Apri la fotocamera", //TODO
   };
 
   Chinese();

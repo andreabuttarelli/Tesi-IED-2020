@@ -6,21 +6,14 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
   CameraBloc();
 
   @override
-  CameraState get initialState => LookingForMarker();
+  CameraState get initialState => Undefined();
 
   @override
   Stream<CameraState> mapEventToState(CameraEvent event) async* {
-    if (event is LoadPosts) {
-      yield MarkerFound();
-      await Future.delayed(Duration(milliseconds: 800));
-      yield PostsLoading();
-    }
-    if (event is OpenCamera) {
-      yield PostsLoading();
-    }
-    if (event is ShowPosts) {
-      await Future.delayed(Duration(milliseconds: 1200));
-      yield PostsLoaded(posts: []);
+    if (event is UpdateCameras) {
+      yield (event.cameras.length != 0)
+          ? Avaiable(cameras: event.cameras)
+          : Undefined();
     }
   }
 }

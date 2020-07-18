@@ -7,6 +7,7 @@ import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
 import 'package:app/src/pages/auth/login/login.dart';
 import 'package:app/src/pages/auth/registration/email/email.dart';
+import 'package:app/src/pages/auth/registration/name/name.dart';
 import 'package:app/src/pages/auth/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -62,7 +63,7 @@ class PreLogin extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Registration(
-                        child: Email(),
+                        child: Name(),
                       ),
                     ),
                   );

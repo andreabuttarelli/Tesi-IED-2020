@@ -20,7 +20,7 @@ dependencies:
   firebase_core: ^0.4.0+9
   google_sign_in: ^4.1.0
   firebase_auth: ^0.15.0+1
-  sqflite: 
+  sqflite:
   path:
   rxdart: ^0.24.1
   content_placeholder: ^0.1.0
@@ -38,19 +38,21 @@ dependencies:
   arkit_plugin:
     git:
       url: https://github.com/olexale/arkit_flutter_plugin.git
-
+  camera:
+  video_player: ^0.10.0
+  path_provider: ^0.5.0
+  geolocator:
+  latlong: ^0.6.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -61,9 +63,15 @@ flutter:
     - assets/img/norms.png
     - assets/img/logo.jpeg
     - assets/img/logo.png
+    - assets/img/near_location_light.png
+    - assets/img/near_location_dark.png
     - assets/earth.jpg
     - assets/earth_augmented_image.jpg
     - assets/square_picture.jpg
+    - assets/pittograms/colosseo.png
+    - assets/pittograms/palatino.png
+    - assets/pittograms/foro_romano.png
+    - assets/pittograms/domus_aurea.png
 
   fonts:
     - family: Gilroy
@@ -84,4 +92,3 @@ flutter:
       fonts:
         - asset: assets/fonts/Gilroy-Bold.ttf
           weight: 700
-  

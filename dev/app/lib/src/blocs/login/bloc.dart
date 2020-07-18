@@ -75,6 +75,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     String email,
     String password,
   }) async* {
+    print('loading');
     yield LoginState.loading();
     try {
       await _userRepository.signInWithCredentials(email, password);

@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
             heroTag: 'FAB',
             backgroundColor: Colors.black,
             onPressed: () {
-              Navigator.pushNamed(context, "/Camera");
+              Navigator.pushNamed(context, "/AugmentedReality");
             },
             tooltip: '${lang.script["camera_title"]}',
             child: Icon(Icons.add, color: Colors.white),

@@ -6,6 +6,7 @@ import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/objects/user.dart';
+import 'package:app/src/pages/profile/pittograms.dart';
 import 'package:app/src/pages/settings/settings.dart';
 import 'package:app/src/repositories/local_feed.dart';
 
@@ -72,6 +73,7 @@ class _BodyState extends State<Body> {
             top: 8,
             bottom: 24,
           ),
+          Pittograms(),
           FutureBuilder(
             future: LocalFeedRepository().getArticles(),
             builder: (BuildContext context,
