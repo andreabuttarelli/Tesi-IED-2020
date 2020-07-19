@@ -1,13 +1,13 @@
 import 'package:app/src/blocs/language/index.dart';
-import 'package:app/src/blocs/notes/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/feed/placeholder.dart';
 import 'package:content_placeholder/content_placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:app/src/blocs/new_note/index.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import './note.dart';
+import './place.dart';
 import './bottom_loader.dart';
 import './header.dart';
 
@@ -21,14 +21,14 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
-  NotesBloc newNoteBloc;
+  NewNoteBloc newNoteBloc;
   List<Widget> placeholderWidgets;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    newNoteBloc = BlocProvider.of<NotesBloc>(context);
+    newNoteBloc = BlocProvider.of<NewNoteBloc>(context);
 
     placeholderWidgets = List();
     for (int i = 0; i < 10; i++) {
@@ -38,9 +38,9 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NotesBloc, NotesState>(
+    return BlocBuilder<NewNoteBloc, NewNoteState>(
       builder: (context, state) {
-        if (state is NotesUninitialized) {
+        if (state is Uninitialized) {
           return ListView(
             children: [
               Header(),
@@ -76,7 +76,7 @@ class _BodyState extends State<Body> {
             ],
           );
         }
-        if (state is NotesError) {
+        if (state is Error) {
           return LiquidPullToRefresh(
             onRefresh: _handleRefresh,
             showChildOpacityTransition: false,
@@ -108,28 +108,22 @@ class _BodyState extends State<Body> {
             ),
           );
         }
-        if (state is NotesLoaded) {
-          if (state.notes.isEmpty) {
+        if (state is Loaded) {
+          if (state.places.isEmpty) {
             return ListView(
               children: [
                 Header(),
                 Expanded(
-                  child: BlocBuilder<LanguageBloc, Language>(
-                    builder: (context, lang) {
-                      return Container(
-                        child: Wrap(
-                          children: [
-                            CText(
-                              '${lang.script['feed_empty']}',
-                              size: 24,
-                              weight: FontWeight.bold,
-                              top: 16,
-                              hPadding: 24,
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                  child: Center(
+                    child: BlocBuilder<LanguageBloc, Language>(
+                      builder: (context, lang) {
+                        return CText(
+                          '${lang.script['feed_empty']}',
+                          size: 24,
+                          weight: FontWeight.bold,
+                        );
+                      },
+                    ), //no post
                   ),
                 ),
               ],
@@ -163,15 +157,15 @@ class _BodyState extends State<Body> {
                         ),
                       ],
                     );
-                  return index >= state.notes.length
+                  return index >= state.places.length
                       ? BottomLoader()
-                      : NoteWidget(
-                          note: state.notes[index],
+                      : PlaceWidget(
+                          place: state.places[index],
                         );
                 },
                 itemCount: state.hasReachedMax
-                    ? state.notes.length
-                    : state.notes.length + 1,
+                    ? state.places.length
+                    : state.places.length + 1,
                 controller: _scrollController,
               ),
             ),

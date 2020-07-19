@@ -4,6 +4,7 @@ class Place {
   String id;
   String name;
   GeoPoint geoPoint;
+  String image;
 
   Place({this.id, this.name, this.geoPoint});
 
@@ -15,6 +16,7 @@ class Place {
       json["coords"].latitude,
       json["coords"].longitude,
     );
+    image = json['image'] ?? null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +24,7 @@ class Place {
     data['id'] = this.id;
     data['name'] = this.name;
     data['coords'] = this.geoPoint;
+    data['image'] = this.image;
     return data;
   }
 

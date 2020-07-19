@@ -1,4 +1,7 @@
 import 'package:app/src/blocs/theme/index.dart';
+import 'package:app/src/design_system/buttons/button.dart';
+import 'package:app/src/design_system/buttons/dims.dart';
+import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/buttons/user_picture_button.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
@@ -23,7 +26,10 @@ class Header extends StatelessWidget {
               children: [
                 Container(
                   width: 64,
-                  child: Image.asset('assets/img/logo.jpeg'),
+                  child: (MediaQuery.of(context).platformBrightness ==
+                          Brightness.dark)
+                      ? Image.asset('assets/img/logo.png')
+                      : Image.asset('assets/img/logo.jpeg'),
                 ),
                 UserProfileButton(),
               ],
@@ -43,8 +49,18 @@ class Header extends StatelessWidget {
                   size: 20,
                   weight: FontWeight.w700,
                   color: Palette.textSecondary70,
+                  bottom: 24,
                 ),
               ],
+            ),
+            Button(
+              label: 'New Note',
+              color: Palette.accent,
+              type: ButtonType.secondarySolid,
+              dims: ButtonDims.medium,
+              onClick: () {
+                Navigator.pushNamed(context, "/NewNote");
+              },
             ),
           ],
         ),

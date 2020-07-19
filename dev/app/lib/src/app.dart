@@ -2,6 +2,8 @@ import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/pages/augmented_reality/camera.dart';
 import 'package:app/src/pages/camera/camera/camera.dart';
 import 'package:app/src/pages/details/norms/norms.dart';
+import 'package:app/src/pages/notes/editor/editor.dart';
+import 'package:app/src/pages/notes/new/new_note.dart';
 import 'package:app/src/pages/profile/treasure_hunt/treasure_hunt.dart';
 import 'package:app/src/pages/splash/splash.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,8 @@ class _AppState extends State<App> {
       ),
       initialRoute: '/',
       routes: {
+        '/NewNote': (context) => NewNote(),
+        '/Editor': (context) => Editor(),
         '/Camera': (context) => Camera(),
         '/AugmentedReality': (context) => AugmentedReality(),
         '/Norms': (context) => Norms(),
@@ -55,7 +59,7 @@ class _AppState extends State<App> {
             return Home();
           }
           if (state is Unauthenticated) {
-            return Camera();
+            return Home();
           }
           return Splash();
         },

@@ -44,6 +44,11 @@ dependencies:
   geolocator:
   latlong: ^0.6.1
   gallery_saver:
+  zefyr:
+    git:
+      url: https://github.com/masewo/zefyr.git
+      path: packages/zefyr/
+  quill_delta: ^1.0.2
 
 dev_dependencies:
   flutter_test:

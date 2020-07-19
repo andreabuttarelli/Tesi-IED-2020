@@ -1,33 +1,35 @@
+import 'package:app/src/blocs/editor/bloc.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/objects/local_article.dart';
+import 'package:app/src/objects/local_note.dart';
+import 'package:app/src/objects/place.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import 'body.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class Article extends StatefulWidget {
-  AtomItem post;
-  LocalArticle localArticle;
-  String thumbnail;
-  Article({
+class Editor extends StatefulWidget {
+  Place place;
+  LocalNote localNote;
+  Editor({
     Key key,
-    this.post,
-    this.thumbnail,
-    this.localArticle,
+    this.place,
+    this.localNote,
   }) : super(key: key);
 
   @override
-  _ArticleState createState() => _ArticleState();
+  _EditorState createState() => _EditorState();
 }
 
-class _ArticleState extends State<Article> {
-  LocalArticle post = LocalArticle();
+class _EditorState extends State<Editor> {
+  LocalNote note = LocalNote();
   bool theme;
 
   @override
   void initState() {
-    if (widget.post != null) {
-      post = LocalArticle(
+    /*if (widget.localNote != null) {
+      local+ = LocalArticle(
         id: widget.post.id,
         title: widget.post.title,
         image: widget.thumbnail,
@@ -39,7 +41,7 @@ class _ArticleState extends State<Article> {
     }
     if (widget.localArticle != null) {
       post = widget.localArticle;
-    }
+    }*/
     super.initState();
   }
 
@@ -48,17 +50,19 @@ class _ArticleState extends State<Article> {
     setState(() {
       theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
     });
-    return Scaffold(
-      backgroundColor: (!theme)
-          ? LightPalette().colors["${Palette.backgroundSecondary}"]
-          : Color(0xFF333333).withOpacity(0.6),
-      body: Stack(
-        children: [
-          Body(
-            post: post,
-            thumbnail: widget.thumbnail,
-          ),
-        ],
+    return BlocProvider(
+      create: (context) => EditorBloc(),
+      child: Scaffold(
+        backgroundColor: (!theme)
+            ? LightPalette().colors["${Palette.backgroundSecondary}"]
+            : Color(0xFF333333).withOpacity(0.6),
+        body: Stack(
+          children: [
+            Body(
+              place: widget.place,
+            ),
+          ],
+        ),
       ),
     );
   }
