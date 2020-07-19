@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'dart:async';
 import 'package:app/src/blocs/augmented_reality/index.dart';
 import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/blocs/token/bloc.dart';
@@ -81,6 +81,7 @@ class _FoundState extends State<Found> {
 
               return BlocBuilder<LanguageBloc, Language>(
                 builder: (context, lang) {
+                  showPosts();
                   return SafeArea(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -179,6 +180,7 @@ class _FoundState extends State<Found> {
   }
 
   showPosts() async {
-    arBloc..add(ShowPosts());
+    const oneSec = const Duration(milliseconds: 300);
+    new Timer.periodic(oneSec, (Timer t) => arBloc..add(ShowPosts()));
   }
 }

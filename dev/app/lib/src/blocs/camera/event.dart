@@ -6,8 +6,13 @@ abstract class CameraEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UpdateCameras extends CameraEvent {
-  List<CameraDescription> cameras = [];
+class Take extends CameraEvent {
+  final String url;
+  final bool isImage;
 
-  UpdateCameras({this.cameras});
+  Take({this.url, this.isImage});
 }
+
+class Save extends CameraEvent {}
+
+class Send extends CameraEvent {}

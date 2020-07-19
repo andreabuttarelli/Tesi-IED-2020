@@ -10,14 +10,12 @@ abstract class CameraState extends Equatable {
 
 class Undefined extends CameraState {}
 
-class Avaiable extends CameraState {
-  List<CameraDescription> cameras = [];
+class Content extends CameraState {
+  String url;
+  bool isImage;
+  bool isSaved;
 
-  Avaiable({this.cameras});
+  Content({this.url, this.isImage, this.isSaved});
 
-  @override
-  List<Object> get props => [];
-
-  @override
-  String toString() => 'Avaiable { n. camera(s): ${cameras.length} }';
+  String toString() => 'Content { url: $url, isImage: $isImage }';
 }

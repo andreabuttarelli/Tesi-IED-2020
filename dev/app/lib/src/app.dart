@@ -1,7 +1,8 @@
 import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/pages/augmented_reality/camera.dart';
-import 'package:app/src/pages/camera/camera.dart';
+import 'package:app/src/pages/camera/camera/camera.dart';
 import 'package:app/src/pages/details/norms/norms.dart';
+import 'package:app/src/pages/profile/treasure_hunt/treasure_hunt.dart';
 import 'package:app/src/pages/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,7 @@ class _AppState extends State<App> {
         '/Camera': (context) => Camera(),
         '/AugmentedReality': (context) => AugmentedReality(),
         '/Norms': (context) => Norms(),
+        '/TreasureHunt': (context) => TreasureHunt(),
       },
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
@@ -53,7 +55,7 @@ class _AppState extends State<App> {
             return Home();
           }
           if (state is Unauthenticated) {
-            return Home();
+            return Camera();
           }
           return Splash();
         },

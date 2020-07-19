@@ -1,11 +1,12 @@
 import 'dart:ui';
-
+import 'package:app/src/blocs/accessibility/index.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/repositories/local_feed.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:share/share.dart';
 import 'package:webfeed/domain/atom_item.dart';
@@ -25,6 +26,15 @@ class _BodyState extends State<Body> {
   var topBody = 0.0;
   var topPadding = 330;
   bool theme;
+  bool isLiked = false;
+  bool isFirstTime = true;
+  AccessibilityBloc accessibilityBloc;
+
+  @override
+  void initState() {
+    accessibilityBloc = BlocProvider.of<AccessibilityBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,23 +102,50 @@ class _BodyState extends State<Body> {
                                 onClick: () => Share.share('${widget.post.id}',
                                     subject: '${widget.post.title}'),
                               ),
-                              TopIcon(
-                                icon: FeatherIcons.shield,
-                                onClick: () => Share.share('${widget.post.id}',
-                                    subject: '${widget.post.title}'),
-                              ),
-                              TopIcon(
-                                icon: FeatherIcons.heart,
-                                onClick: () async {
-                                  var result = await LocalFeedRepository()
-                                      .getArticle(widget.post.id);
-                                  print(result);
-                                  if (result == null)
-                                    insertLike();
-                                  else
-                                    removeLike();
+                              BlocBuilder<AccessibilityBloc, bool>(
+                                builder: (context, isAccessible) {
+                                  return TopIcon(
+                                      icon: FeatherIcons.shield,
+                                      color:
+                                          (isAccessible) ? Colors.blue : null,
+                                      onClick: (isAccessible)
+                                          ? () {
+                                              accessibilityBloc
+                                                ..add(ChangeAccessibleMode(
+                                                    false));
+                                            }
+                                          : () {
+                                              accessibilityBloc
+                                                ..add(
+                                                    ChangeAccessibleMode(true));
+                                            });
                                 },
                               ),
+                              FutureBuilder(
+                                future: LocalFeedRepository()
+                                    .getArticle(widget.post.id),
+                                builder: (context, snapshot) {
+                                  return TopIcon(
+                                    icon: FeatherIcons.heart,
+                                    color: (isLiked || snapshot.hasData)
+                                        ? Colors.red
+                                        : (!theme)
+                                            ? LightPalette().colors[
+                                                '${Palette.textPrimary}']
+                                            : DarkPalette().colors[
+                                                '${Palette.textPrimary}'],
+                                    onClick: () async {
+                                      var result = await LocalFeedRepository()
+                                          .getArticle(widget.post.id);
+                                      print(result);
+                                      if (result == null)
+                                        insertLike();
+                                      else
+                                        removeLike();
+                                    },
+                                  );
+                                },
+                              )
                             ],
                           ),
                         ),
@@ -135,10 +172,18 @@ class _BodyState extends State<Body> {
       link: widget.post.id,
     );
     var result = await LocalFeedRepository().insert(article);
-    if (result == null)
+    if (result == null) {
+      setState(() {
+        isLiked = false;
+        isFirstTime = false;
+      });
       return false;
-    else {
+    } else {
       print('New Article inserted: $result');
+      setState(() {
+        isLiked = true;
+        isFirstTime = false;
+      });
       return true;
     }
   }
@@ -148,6 +193,10 @@ class _BodyState extends State<Body> {
     if (result == null) {
     } else {
       print('Pinned Article removed: $result');
+      setState(() {
+        isLiked = false;
+        isFirstTime = false;
+      });
       return true;
     }
   }

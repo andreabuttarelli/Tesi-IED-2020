@@ -43,6 +43,7 @@ dependencies:
   path_provider: ^0.5.0
   geolocator:
   latlong: ^0.6.1
+  gallery_saver:
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,8 @@ flutter:
     - assets/pittograms/palatino.png
     - assets/pittograms/foro_romano.png
     - assets/pittograms/domus_aurea.png
+    - assets/ar/AR_image.jpg
+    - assets/ar/AR_video.jpg
 
   fonts:
     - family: Gilroy

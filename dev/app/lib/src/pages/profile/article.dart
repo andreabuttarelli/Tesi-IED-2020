@@ -15,7 +15,9 @@ import 'package:webfeed/domain/media/thumbnail.dart';
 
 class ArticleWidget extends StatefulWidget {
   final LocalArticle post;
-  ArticleWidget({Key key, @required this.post}) : super(key: key);
+  final Function callBack;
+  ArticleWidget({Key key, @required this.post, this.callBack})
+      : super(key: key);
 
   @override
   _ArticleWidgetState createState() => _ArticleWidgetState();
@@ -46,7 +48,9 @@ class _ArticleWidgetState extends State<ArticleWidget> {
               thumbnail: widget.post.image,
             ),
           ),
-        );
+        ).then((value) {
+          widget.callBack();
+        });
       },
       onTapDown: (details) => toogleOpacity(),
       onTapCancel: () => toogleOpacity(),
@@ -81,7 +85,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                               image: NetworkImage('${widget.post.image}'),
                               fit: BoxFit.cover,
                             ),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(0),
                           ),
                         ),
                       )
@@ -144,7 +148,7 @@ class _ArticleWidgetState extends State<ArticleWidget> {
   toogleOpacity() {
     if (opacity == 1) {
       setState(() {
-        opacity = 0.8;
+        opacity = 0.6;
       });
     } else {
       setState(() {

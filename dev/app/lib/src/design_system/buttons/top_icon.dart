@@ -40,10 +40,12 @@ class _TopIconState extends State<TopIcon> {
                 child: Icon(
                   widget.icon,
                   size: (isAccessible) ? 24 * 1.2 : 24,
-                  color: (MediaQuery.of(context).platformBrightness ==
-                          Brightness.dark)
-                      ? DarkPalette().colors["${Palette.textPrimary}"]
-                      : LightPalette().colors["${Palette.textPrimary}"],
+                  color: (widget.color != null)
+                      ? widget.color
+                      : (MediaQuery.of(context).platformBrightness ==
+                              Brightness.dark)
+                          ? DarkPalette().colors["${Palette.textPrimary}"]
+                          : LightPalette().colors["${Palette.textPrimary}"],
                 ),
               ),
             ),

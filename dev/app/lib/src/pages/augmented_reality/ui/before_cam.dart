@@ -55,6 +55,7 @@ class _BeforeCameraState extends State<BeforeCamera> {
                           flagAction = true;
                         });
                         arBloc..add(OpenCamera());
+                        Navigator.pushNamed(context, "/Camera");
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(

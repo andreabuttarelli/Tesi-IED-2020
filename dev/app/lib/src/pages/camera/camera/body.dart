@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:app/src/blocs/camera/index.dart';
+import 'package:app/src/pages/augmented_reality/ui/looking.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);
@@ -37,6 +40,9 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
   VideoPlayerController videoController;
   VoidCallback videoPlayerListener;
   bool enableAudio = true;
+  List<CameraDescription> cameras = [];
+  bool cameraTaken = false;
+  bool audioEnabled = true;
 
   @override
   void initState() {
@@ -69,46 +75,42 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    try {
+      loadCameras();
+    } catch (e) {
+      print(e);
+    }
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Camera example'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Center(
-                  child: _cameraPreviewWidget(),
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  color: controller != null && controller.value.isRecordingVideo
-                      ? Colors.redAccent
-                      : Colors.grey,
-                  width: 3.0,
-                ),
-              ),
-            ),
-          ),
-          _captureControlRowWidget(),
-          _toggleAudioWidget(),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+      body: (cameras.length == 0)
+          ? Container()
+          : Stack(
               children: <Widget>[
-                //_cameraTogglesRowWidget(),
-                _thumbnailWidget(),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: Center(
+                      child: _cameraPreviewWidget(),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                  ),
+                ),
+                _captureControlRowWidget(),
+                _toggleAudioWidget(),
+                /*Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      //_cameraTogglesRowWidget(),
+                      //_thumbnailWidget(),
+                    ],
+                  ),
+                ),*/
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -124,8 +126,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
         ),
       );
     } else {
-      return AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
+      return Container(
         child: CameraPreview(controller),
       );
     }
@@ -133,21 +134,16 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
 
   /// Toggle recording audio
   Widget _toggleAudioWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25),
-      child: Row(
-        children: <Widget>[
-          const Text('Enable Audio:'),
-          Switch(
-            value: enableAudio,
-            onChanged: (bool value) {
-              enableAudio = value;
-              if (controller != null) {
-                onNewCameraSelected(controller.description);
-              }
-            },
+    return Positioned(
+      right: 24,
+      top: 24,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Icon(
+            FeatherIcons.mic,
           ),
-        ],
+        ),
       ),
     );
   }
@@ -188,11 +184,17 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
 
   /// Display the control bar with buttons to take pictures and record videos.
   Widget _captureControlRowWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        IconButton(
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 24),
+        child: Column(
+          children: [
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                /*IconButton(
           icon: const Icon(Icons.camera_alt),
           color: Colors.blue,
           onPressed: controller != null &&
@@ -200,8 +202,67 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                   !controller.value.isRecordingVideo
               ? onTakePictureButtonPressed
               : null,
-        ),
-        IconButton(
+        ),*/
+                Stack(
+                  children: [
+                    ClipPath(
+                      clipper: InvertedCircleClipper(),
+                      child: new Container(
+                        width: 84,
+                        height: 84,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(42),
+                        ),
+                        child: Container(
+                          width: 84,
+                          height: 84,
+                          color: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          print("picture");
+                          if (controller != null &&
+                              controller.value.isInitialized &&
+                              !controller.value.isRecordingVideo)
+                            onTakePictureButtonPressed();
+                        },
+                        onLongPress: () {
+                          print("onLongPress");
+                          if (controller != null &&
+                              controller.value.isInitialized &&
+                              !controller.value.isRecordingVideo)
+                            onVideoRecordButtonPressed();
+                        },
+                        onLongPressEnd: (details) {
+                          print("onLongPressEnd");
+                          if (controller != null &&
+                              controller.value.isInitialized &&
+                              controller.value.isRecordingVideo)
+                            onStopButtonPressed();
+                        },
+                        onLongPressUp: () {
+                          print("onLongPressUp");
+                          if (controller != null &&
+                              controller.value.isInitialized &&
+                              controller.value
+                                  .isRecordingVideo) if (controller != null &&
+                              controller.value.isRecordingPaused)
+                            onResumeButtonPressed();
+                          else
+                            onPauseButtonPressed();
+                        },
+                        child: Container(
+                          width: 84,
+                          height: 84,
+                          color: Colors.transparent,
+                        )),
+                  ],
+                )
+
+                /*IconButton(
           icon: const Icon(Icons.videocam),
           color: Colors.blue,
           onPressed: controller != null &&
@@ -231,42 +292,34 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                   controller.value.isRecordingVideo
               ? onStopButtonPressed
               : null,
-        )
-      ],
+        )*/
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).
-  Future<Widget> _cameraTogglesRowWidget() {
-    BlocBuilder<CameraBloc, CameraState>(
-      builder: (context, state) {
-        if (state is Undefined ||
-            state is Avaiable && state.cameras.length == 0)
-          return Text('No camera found');
-        if (state is Avaiable) {
-          print(state.cameras);
-          final List<Widget> toggles = <Widget>[];
-          for (CameraDescription cameraDescription in state.cameras) {
-            toggles.add(
-              SizedBox(
-                width: 90.0,
-                child: RadioListTile<CameraDescription>(
-                  title:
-                      Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-                  groupValue: controller?.description,
-                  value: cameraDescription,
-                  onChanged:
-                      controller != null && controller.value.isRecordingVideo
-                          ? null
-                          : onNewCameraSelected,
-                ),
-              ),
-            );
-          }
-          return Row(children: toggles);
-        }
-      },
-    );
+  Widget _cameraTogglesRowWidget() {
+    /*final List<Widget> toggles = <Widget>[];*/
+    /*for (CameraDescription cameraDescription in cameras) {
+      toggles.add(
+        SizedBox(
+          width: 90.0,
+          child: RadioListTile<CameraDescription>(
+            title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
+            groupValue: controller?.description,
+            value: cameraDescription,
+            onChanged: controller != null && controller.value.isRecordingVideo
+                ? null
+                : onNewCameraSelected,
+          ),
+        ),
+      );
+    }
+    return Row(children: toggles);*/
   }
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
@@ -313,6 +366,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
           videoController = null;
         });
         if (filePath != null) showInSnackBar('Picture saved to $filePath');
+        GallerySaver.saveImage('$filePath').then((path) => print('$path'));
       }
     });
   }
@@ -328,6 +382,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
     stopVideoRecording().then((_) {
       if (mounted) setState(() {});
       showInSnackBar('Video recorded to: $videoPath');
+      GallerySaver.saveVideo('$videoPath').then((path) => print('$path'));
     });
   }
 
@@ -432,7 +487,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
         videoController = vcontroller;
       });
     }
-    await vcontroller.play();
+    //await vcontroller.play();
   }
 
   Future<String> takePicture() async {
@@ -462,5 +517,21 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
   void _showCameraException(CameraException e) {
     logError(e.code, e.description);
     showInSnackBar('Error: ${e.code}\n${e.description}');
+  }
+
+  loadCameras() async {
+    final camera = await availableCameras();
+    setState(() {
+      cameras = camera;
+    });
+    if (!cameraTaken) {
+      if (controller != null && controller.value.isRecordingVideo) {
+      } else {
+        onNewCameraSelected(cameras[0]);
+        setState(() {
+          cameraTaken = true;
+        });
+      }
+    }
   }
 }

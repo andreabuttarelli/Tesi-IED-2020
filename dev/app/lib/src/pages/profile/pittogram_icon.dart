@@ -11,12 +11,14 @@ class PittogramIcon extends StatelessWidget {
     return Container(
         width: 64,
         height: 64,
+        margin: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           color: (MediaQuery.of(context).platformBrightness == Brightness.dark)
-              ? DarkPalette().colors["Palette.backgroundSecondary"]
-              : LightPalette().colors["Palette.backgroundSecondary"],
+              ? DarkPalette().colors["Palette.white"].withOpacity(0.4)
+              : LightPalette().colors["Palette.black"].withOpacity(0.4),
         ),
-        child: Image.asset('$img'));
+        padding: const EdgeInsets.all(12),
+        child: Image.asset('assets/pittograms/$img'));
   }
 }

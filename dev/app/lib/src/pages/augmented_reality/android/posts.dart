@@ -37,27 +37,28 @@ class _AndroidPostsState extends State<AndroidPosts> {
     arCoreController = controller;
 
     await Future.wait([
-      _addCube(arCoreController, vector.Vector3(-0.5, 0.5, 3.5)),
-      _addCube(arCoreController, vector.Vector3(-1, -0.2, 2.0)),
-      _addCube(arCoreController, vector.Vector3(3.1, 0.2, 1.5)),
-      _addCube(arCoreController, vector.Vector3(1.5, 0.5, 1)),
-      _addCube(arCoreController, vector.Vector3(0, -0.2, 3.5)),
-      _addCube(arCoreController, vector.Vector3(2, 0.2, 1.5)),
+      _addCube(arCoreController, vector.Vector3(-0.5, 0.5, 3.5), "image"),
+      _addCube(arCoreController, vector.Vector3(-1, -0.2, 2.0), "image"),
+      _addCube(arCoreController, vector.Vector3(3.1, 0.2, 1.5), "video"),
+      _addCube(arCoreController, vector.Vector3(1.5, 0.5, 1), "image"),
+      _addCube(arCoreController, vector.Vector3(0, -0.2, 3.5), "video"),
+      _addCube(arCoreController, vector.Vector3(2, 0.2, 1.5), "image"),
     ]).then((List response) => confirm()).catchError((e) => print(e));
   }
 
   Future<bool> _addCube(
-      ArCoreController controller, vector.Vector3 position) async {
-    final ByteData textureBytes =
-        await rootBundle.load('assets/square_picture.jpg');
+      ArCoreController controller, vector.Vector3 position, String type) async {
+    final ByteData textureBytes = await rootBundle.load((type == "image")
+        ? 'assets/ar/AR_image.jpg'
+        : 'assets/ar/AR_video.jpg');
 
     final material = ArCoreMaterial(
       color: Color.fromARGB(120, 66, 134, 244),
       textureBytes: textureBytes.buffer.asUint8List(),
     );
-    final cube = ArCoreCube(
+    final cube = ArCoreSphere(
       materials: [material],
-      size: vector.Vector3(0.5, 0.5, 0.5),
+      radius: 0.3,
     );
     final node = ArCoreNode(
       shape: cube,

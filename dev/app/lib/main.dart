@@ -20,13 +20,6 @@ import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  List<CameraDescription> cameras = [];
-  try {
-    cameras = await availableCameras();
-    print(cameras);
-  } catch (e) {
-    print(e);
-  }
 
   BlocSupervisor.delegate = SimpleBlocDelegate();
   UserRepository userRepository = UserRepository();
@@ -58,8 +51,7 @@ void main() async {
           create: (context) => ARBloc(),
         ),
         BlocProvider(
-          create: (context) =>
-              CameraBloc()..add(UpdateCameras(cameras: cameras)),
+          create: (context) => CameraBloc(),
         ),
         BlocProvider(
           create: (context) => PositionBloc()..add(UpdatePosition()),
