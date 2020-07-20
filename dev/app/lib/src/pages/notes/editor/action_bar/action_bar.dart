@@ -53,16 +53,7 @@ class _ActionBarState extends State<ActionBar> {
                     Spacer(),
                     ActionIcon(
                       icon: FeatherIcons.type,
-                      onClick: () {
-                        editorBloc
-                          ..add(
-                            AddElement(
-                              TextFormField(
-                                autofocus: true,
-                              ),
-                            ),
-                          );
-                      },
+                      onClick: () {},
                     ),
                     ActionIcon(
                       icon: FeatherIcons.image,

@@ -1,4 +1,4 @@
-import 'package:app/src/blocs/editor/bloc.dart';
+import 'package:app/src/blocs/editor/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/objects/local_note.dart';
@@ -11,11 +11,9 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class Editor extends StatefulWidget {
   Place place;
-  LocalNote localNote;
   Editor({
     Key key,
     this.place,
-    this.localNote,
   }) : super(key: key);
 
   @override
@@ -23,7 +21,6 @@ class Editor extends StatefulWidget {
 }
 
 class _EditorState extends State<Editor> {
-  LocalNote note = LocalNote();
   bool theme;
 
   @override
@@ -51,7 +48,7 @@ class _EditorState extends State<Editor> {
       theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
     });
     return BlocProvider(
-      create: (context) => EditorBloc(),
+      create: (context) => EditorBloc()..add(Update(widget.place)),
       child: Scaffold(
         backgroundColor: (!theme)
             ? LightPalette().colors["${Palette.backgroundSecondary}"]

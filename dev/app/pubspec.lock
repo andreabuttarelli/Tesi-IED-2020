@@ -406,7 +406,7 @@ packages:
     source: hosted
     version: "0.0.4"
   notus:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: notus
       url: "https://pub.dartlang.org"
@@ -732,15 +732,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.7.0"
-  zefyr:
-    dependency: "direct main"
-    description:
-      path: "packages/zefyr/"
-      ref: HEAD
-      resolved-ref: "20b890b7714fd54ccd0028da5b354d3d8ac68251"
-      url: "https://github.com/masewo/zefyr.git"
-    source: git
-    version: "0.11.0"
 sdks:
   dart: ">=2.9.0-14.0.dev <3.0.0"
   flutter: ">=1.17.0 <2.0.0"

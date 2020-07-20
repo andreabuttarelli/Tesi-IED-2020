@@ -1,3 +1,4 @@
+import 'package:app/src/objects/place.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -8,16 +9,11 @@ abstract class EditorEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UpdateList extends EditorEvent {
-  List<Widget> list;
+class Update extends EditorEvent {
+  final Place place;
 
-  UpdateList(this.list);
+  Update(this.place);
+
+  @override
+  String toString() => 'Update { place: $place }';
 }
-
-class AddElement extends EditorEvent {
-  Widget element;
-
-  AddElement(this.element);
-}
-
-class RemoveElement extends EditorEvent {}

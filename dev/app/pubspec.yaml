@@ -44,11 +44,8 @@ dependencies:
   geolocator:
   latlong: ^0.6.1
   gallery_saver:
-  zefyr:
-    git:
-      url: https://github.com/masewo/zefyr.git
-      path: packages/zefyr/
   quill_delta: ^1.0.2
+  notus: ^0.1.5
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +53,11 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+# zefyr:
+#    git:
+#      url: https://github.com/masewo/zefyr.git
+#      path: packages/zefyr/
 
 # The following section is specific to Flutter.
 flutter:

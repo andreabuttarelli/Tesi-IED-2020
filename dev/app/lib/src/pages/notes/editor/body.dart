@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:app/src/blocs/accessibility/index.dart';
+import 'package:app/src/components/zefyr/zefyr.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
@@ -10,9 +12,11 @@ import 'package:app/src/repositories/local_feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:quill_delta/quill_delta.dart';
 import 'package:share/share.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import './content.dart';
+import 'dart:convert';
 
 class Body extends StatefulWidget {
   Place place;
@@ -37,6 +41,16 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
+  Future<NotusDocument> loadDocument() async {
+    final file = File(Directory.systemTemp.path + "/quick_start.json");
+    if (await file.exists()) {
+      final contents = await file.readAsString();
+      return NotusDocument.fromJson(jsonDecode(contents));
+    }
+    final Delta delta = Delta()..insert("${widget.place.name}\n");
+    return NotusDocument.fromDelta(delta);
+  }
+
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -44,78 +58,68 @@ class _BodyState extends State<Body> {
     });
     final width = MediaQuery.of(context).size.width;
     return Container(
-      child: NotificationListener(
-        onNotification: (v) {
-          if (v is ScrollUpdateNotification) {
-            setState(() => top -= v.scrollDelta / 2);
-            setState(() => topBody -= v.scrollDelta);
-          }
-        },
-        child: Stack(
-          children: [
-            Positioned(
-              top: top + 120,
-              child: Hero(
-                tag: widget.place.name,
-                child: Container(
-                  width: width,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage('${widget.place.image}'),
-                        fit: BoxFit.cover,
-                      ),
-                      color: (!theme)
-                          ? LightPalette().colors["${Palette.textSecondary70}"]
-                          : DarkPalette().colors["${Palette.textSecondary70}"]),
+      child: FutureBuilder<NotusDocument>(
+        //initialData: initDoc,
+        future: loadDocument(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || snapshot.hasError) {
+            return Center(
+              child: Text(
+                'Loading',
+                style: TextStyle(
+                  fontSize: 24,
                 ),
               ),
-            ),
-            Content(
-              place: widget.place,
-              top: (110 + 190.0),
-            ),
-            ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                child: Container(
-                  padding: const EdgeInsets.only(top: 16),
-                  width: double.maxFinite,
-                  color: (!theme)
-                      ? LightPalette().colors["${Palette.backgroundPrimary}"]
-                      : DarkPalette()
-                          .colors["${Palette.backgroundPrimary}"]
-                          .withOpacity(0.4),
-                  child: SafeArea(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: TopIconBack(
-                            icon: FeatherIcons.arrowLeft,
+            );
+          }
+          return Stack(
+            children: [
+              Content(
+                place: widget.place,
+                document: snapshot.data,
+              ),
+              ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 16),
+                    width: double.maxFinite,
+                    color: (!theme)
+                        ? LightPalette().colors["${Palette.backgroundPrimary}"]
+                        : DarkPalette()
+                            .colors["${Palette.backgroundPrimary}"]
+                            .withOpacity(0.4),
+                    child: SafeArea(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: TopIconBack(
+                              icon: FeatherIcons.arrowLeft,
+                            ),
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: Row(
-                            children: [
-                              TopIcon(
-                                icon: FeatherIcons.share,
-                                onClick: () {},
-                              ),
-                            ],
+                          Container(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: Row(
+                              children: [
+                                TopIcon(
+                                  icon: FeatherIcons.share,
+                                  onClick: () {},
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            //ActionBar(),
-          ],
-        ),
+              //ActionBar(),
+            ],
+          );
+        },
       ),
     );
   }
