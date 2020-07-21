@@ -198,14 +198,14 @@ class _RawZefyrButtonState extends State<RawZefyrButton> {
             color: widget.isToggled
                 ? ((MediaQuery.of(context).platformBrightness ==
                         Brightness.dark))
-                    ? DarkPalette().colors["${Palette.backgroundPrimary}"]
-                    : LightPalette().colors["${Palette.backgroundPrimary}"]
+                    ? DarkPalette().colors["${Palette.textSecondary40}"]
+                    : LightPalette().colors["${Palette.textSecondary40}"]
                 : ((MediaQuery.of(context).platformBrightness ==
                         Brightness.dark))
                     ? DarkPalette().colors["${Palette.textSecondary20}"]
                     : LightPalette().colors["${Palette.textSecondary20}"],
           ),
-          child: widget.child,
+          child: Center(child: widget.child),
         ),
       ),
     );
@@ -213,9 +213,17 @@ class _RawZefyrButtonState extends State<RawZefyrButton> {
     /*RawMaterialButton(
         shape: RoundedRectangleBorder(borderRadius: radius),
         elevation: 0.0,
-        fillColor: color,
+        fillColor: widget.isToggled
+            ? ((MediaQuery.of(context).platformBrightness == Brightness.dark))
+                ? DarkPalette().colors["${Palette.backgroundPrimary}"]
+                : LightPalette().colors["${Palette.backgroundPrimary}"]
+            : ((MediaQuery.of(context).platformBrightness == Brightness.dark))
+                ? DarkPalette().colors["${Palette.textSecondary20}"]
+                : LightPalette().colors["${Palette.textSecondary20}"],
         constraints: constraints,
-        onPressed: onPressed,*/
+        onPressed: widget.onPressed,
+        child: widget.child,
+      ),*/
   }
 }
 

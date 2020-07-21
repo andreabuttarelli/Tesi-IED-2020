@@ -158,21 +158,25 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Hero(
-                tag: '${place.name}',
-                child: Container(
-                  width: double.maxFinite,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage('${place.image}'),
-                        fit: BoxFit.cover,
-                      ),
-                      color: (MediaQuery.of(context).platformBrightness ==
-                              Brightness.dark)
-                          ? DarkPalette().colors["${Palette.textSecondary70}"]
-                          : LightPalette()
-                              .colors["${Palette.textSecondary70}"]),
+              SafeArea(
+                bottom: false,
+                child: Hero(
+                  tag: '${place.name}',
+                  child: Container(
+                    width: double.maxFinite,
+                    height: 200,
+                    margin: const EdgeInsets.only(top: 72),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage('${place.image}'),
+                          fit: BoxFit.cover,
+                        ),
+                        color: (MediaQuery.of(context).platformBrightness ==
+                                Brightness.dark)
+                            ? DarkPalette().colors["${Palette.textSecondary70}"]
+                            : LightPalette()
+                                .colors["${Palette.textSecondary70}"]),
+                  ),
                 ),
               ),
               CText(
@@ -206,7 +210,7 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
     body = SingleChildScrollView(
       physics: widget.physics,
       controller: _scrollController,
-      padding: const EdgeInsets.only(top: 104),
+      padding: const EdgeInsets.only(top: 0),
       child: body,
     );
 

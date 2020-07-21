@@ -51,8 +51,8 @@ class _EditorState extends State<Editor> {
       create: (context) => EditorBloc()..add(Update(widget.place)),
       child: Scaffold(
         backgroundColor: (!theme)
-            ? LightPalette().colors["${Palette.backgroundSecondary}"]
-            : Color(0xFF333333).withOpacity(0.6),
+            ? LightPalette().colors["${Palette.backgroundPrimary}"]
+            : DarkPalette().colors["${Palette.backgroundPrimary}"],
         body: Stack(
           children: [
             Body(

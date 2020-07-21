@@ -53,6 +53,7 @@ class _BodyState extends State<Body> {
             padding: const EdgeInsets.all(0),
             children: [
               SafeArea(
+                bottom: false,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

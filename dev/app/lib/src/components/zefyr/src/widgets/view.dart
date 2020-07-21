@@ -67,11 +67,12 @@ class ZefyrViewState extends State<ZefyrView> {
       data: _themeData,
       child: ZefyrScopeAccess(
         scope: _scope,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: _buildChildren(context),
+        child: SafeArea(
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: _buildChildren(context),
+            ),
           ),
         ),
       ),

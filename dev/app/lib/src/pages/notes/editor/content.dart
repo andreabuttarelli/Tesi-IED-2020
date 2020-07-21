@@ -73,7 +73,6 @@ class _MzefyrEditorState extends State<MzefyrEditor> {
         controller: _controller,
         focusNode: _focusNode,
         mode: ZefyrMode.edit,
-        toolbarDelegate: MDZefyrToolbarDelegate(),
       ),
     );
   }

@@ -79,38 +79,43 @@ class _BodyState extends State<Body> {
                 document: snapshot.data,
               ),
               ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 16),
-                    width: double.maxFinite,
-                    color: (!theme)
-                        ? LightPalette().colors["${Palette.backgroundPrimary}"]
-                        : DarkPalette()
-                            .colors["${Palette.backgroundPrimary}"]
-                            .withOpacity(0.4),
-                    child: SafeArea(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: TopIconBack(
-                              icon: FeatherIcons.arrowLeft,
+                child: Container(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 16),
+                      width: double.maxFinite,
+                      color: (!theme)
+                          ? LightPalette()
+                              .colors["${Palette.backgroundSecondary}"]
+                              .withOpacity(0.8)
+                          : DarkPalette()
+                              .colors["${Palette.backgroundSecondary}"]
+                              .withOpacity(0.8),
+                      child: SafeArea(
+                        bottom: false,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              child: TopIconBack(
+                                icon: FeatherIcons.arrowLeft,
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: Row(
-                              children: [
-                                TopIcon(
-                                  icon: FeatherIcons.share,
-                                  onClick: () {},
-                                ),
-                              ],
+                            Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Row(
+                                children: [
+                                  TopIcon(
+                                    icon: FeatherIcons.share,
+                                    onClick: () {},
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

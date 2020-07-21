@@ -1,3 +1,8 @@
+import 'package:app/src/blocs/language/bloc.dart';
+import 'package:app/src/blocs/language/index.dart';
+import 'package:app/src/pages/home/bottombar/body.dart';
+import 'package:app/src/pages/home/bottombar/bottombar.dart';
+
 /// MIT License
 /// by Andrea Buttarelli
 /// creato il 04/02/2020

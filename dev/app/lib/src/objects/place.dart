@@ -9,7 +9,6 @@ class Place {
   Place({this.id, this.name, this.geoPoint});
 
   Place.fromJson(Map<String, dynamic> json) {
-    print(json['coords']);
     id = json['id'];
     name = json['name'];
     geoPoint = GeoPoint(
@@ -17,6 +16,7 @@ class Place {
       json["coords"].longitude,
     );
     image = json['image'] ?? null;
+    print(json['image']);
   }
 
   Map<String, dynamic> toJson() {
@@ -26,9 +26,5 @@ class Place {
     data['coords'] = this.geoPoint;
     data['image'] = this.image;
     return data;
-  }
-
-  GeoPoint parseGeoPoint(Map<String, dynamic> json) {
-    print(json);
   }
 }

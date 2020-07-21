@@ -26,7 +26,6 @@ enum ZefyrToolbarAction {
   headingLevel3,
   bulletList,
   numberList,
-  code,
   quote,
   horizontalRule,
   image,
@@ -47,9 +46,7 @@ final kZefyrToolbarAttributeActions = <ZefyrToolbarAction, NotusAttributeKey>{
   ZefyrToolbarAction.headingLevel3: NotusAttribute.heading.level3,
   ZefyrToolbarAction.bulletList: NotusAttribute.block.bulletList,
   ZefyrToolbarAction.numberList: NotusAttribute.block.numberList,
-  ZefyrToolbarAction.code: NotusAttribute.block.code,
   ZefyrToolbarAction.quote: NotusAttribute.block.quote,
-  ZefyrToolbarAction.horizontalRule: NotusAttribute.embed.horizontalRule,
 };
 
 /// Allows customizing appearance of [ZefyrToolbar].
@@ -89,21 +86,19 @@ class ZefyrToolbarScaffold extends StatelessWidget {
       children.add(toolbar.buildButton(context, ZefyrToolbarAction.close));
     }
     return Container(
-      height: 120,
       child: ClipRect(
         child: BackdropFilter(
-          filter: ui.ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+          filter: ui.ImageFilter.blur(sigmaX: 24, sigmaY: 24),
           child: Container(
-              padding: const EdgeInsets.only(bottom: 0, top: 0),
+              padding: const EdgeInsets.only(
+                bottom: 4,
+                top: 4,
+              ),
               width: double.maxFinite,
               color: ((MediaQuery.of(context).platformBrightness ==
                       Brightness.dark))
-                  ? DarkPalette()
-                      .colors["${Palette.backgroundSecondary}"]
-                      .withOpacity(0.8)
-                  : LightPalette()
-                      .colors["${Palette.backgroundSecondary}"]
-                      .withOpacity(0.4),
+                  ? DarkPalette().colors["${Palette.backgroundSecondary}"]
+                  : LightPalette().colors["${Palette.backgroundSecondary}"],
               child: Row(children: children)),
         ),
       ),
@@ -113,7 +108,7 @@ class ZefyrToolbarScaffold extends StatelessWidget {
 
 /// Toolbar for [ZefyrEditor].
 class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
-  static const kToolbarHeight = 50.0;
+  static const kToolbarHeight = 64.0;
 
   const ZefyrToolbar({
     Key key,
@@ -250,7 +245,7 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
         opacity: _overlayAnimation,
         child: widget,
       );
-      layers.add(overlay);
+      //layers.add(overlay);
     }
 
     final constraints =
@@ -258,8 +253,17 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
     return _ZefyrToolbarScope(
       toolbar: this,
       child: Container(
-        constraints: constraints,
-        child: Stack(children: layers),
+        color: ((MediaQuery.of(context).platformBrightness == Brightness.dark))
+            ? DarkPalette().colors["${Palette.backgroundSecondary}"]
+            : LightPalette().colors["${Palette.backgroundSecondary}"],
+        child: SafeArea(
+          bottom: true,
+          top: false,
+          child: Container(
+            constraints: constraints,
+            child: Stack(children: layers),
+          ),
+        ),
       ),
     );
   }
@@ -268,13 +272,12 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
     final buttons = <Widget>[
       buildButton(context, ZefyrToolbarAction.bold),
       buildButton(context, ZefyrToolbarAction.italic),
-      LinkButton(),
-      HeadingButton(),
-      buildButton(context, ZefyrToolbarAction.bulletList),
+      //LinkButton(),
+      buildButton(context, ZefyrToolbarAction.headingLevel1),
+      buildButton(context, ZefyrToolbarAction.headingLevel2),
+      buildButton(context, ZefyrToolbarAction.headingLevel3),
       buildButton(context, ZefyrToolbarAction.numberList),
       buildButton(context, ZefyrToolbarAction.quote),
-      buildButton(context, ZefyrToolbarAction.code),
-      buildButton(context, ZefyrToolbarAction.horizontalRule),
       (editor.imageDelegate != null) ? ImageButton() : Container(),
     ];
     return buttons;
@@ -364,7 +367,6 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     ZefyrToolbarAction.heading: Icons.format_size,
     ZefyrToolbarAction.bulletList: Icons.format_list_bulleted,
     ZefyrToolbarAction.numberList: Icons.format_list_numbered,
-    ZefyrToolbarAction.code: Icons.code,
     ZefyrToolbarAction.quote: Icons.format_quote,
     ZefyrToolbarAction.horizontalRule: Icons.remove,
     ZefyrToolbarAction.image: Icons.photo,
