@@ -5,22 +5,25 @@ import 'package:app/src/components/zefyr/zefyr.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
+import 'package:app/src/design_system/text.dart';
 import 'package:app/src/objects/local_article.dart';
+import 'package:app/src/objects/local_note.dart';
 import 'package:app/src/objects/place.dart';
 import 'package:app/src/pages/notes/editor/action_bar/action_bar.dart';
 import 'package:app/src/repositories/local_feed.dart';
+import 'package:app/src/repositories/notes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:share/share.dart';
 import 'package:webfeed/domain/atom_item.dart';
-import './content.dart';
 import 'dart:convert';
 
 class Body extends StatefulWidget {
   Place place;
-  Body({Key key, @required this.place}) : super(key: key);
+  LocalNote note;
+  Body({Key key, this.place, this.note}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -34,21 +37,45 @@ class _BodyState extends State<Body> {
   bool isLiked = false;
   bool isFirstTime = true;
   AccessibilityBloc accessibilityBloc;
+  ZefyrController _controller;
+  FocusNode _focusNode;
+  Place place;
 
   @override
   void initState() {
     accessibilityBloc = BlocProvider.of<AccessibilityBloc>(context);
+    _focusNode = FocusNode();
+    if (widget.note != null)
+      place = Place(
+          id: widget.note.id,
+          name: widget.note.title,
+          image: widget.note.image);
+    else
+      place = widget.place;
     super.initState();
   }
 
   Future<NotusDocument> loadDocument() async {
-    final file = File(Directory.systemTemp.path + "/quick_start.json");
-    if (await file.exists()) {
-      final contents = await file.readAsString();
-      return NotusDocument.fromJson(jsonDecode(contents));
+    if (widget.note != null) {
+      return NotusDocument.fromJson(jsonDecode(widget.note.content));
     }
-    final Delta delta = Delta()..insert("${widget.place.name}\n");
+    final Delta delta = Delta()..insert("Write here\n");
     return NotusDocument.fromDelta(delta);
+  }
+
+  void _saveDocument(BuildContext context) async {
+    final contents = jsonEncode(_controller.document);
+    final note = LocalNote(
+        id: place.id,
+        title: place.name,
+        image: place.image,
+        content: contents,
+        date: DateTime.now().toString());
+    final id = (widget.note == null)
+        ? await LocalNotesRepository().insert(note)
+        : await LocalNotesRepository().update(note);
+    widget.note.content = note.content;
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text("Saved.")));
   }
 
   @override
@@ -72,18 +99,22 @@ class _BodyState extends State<Body> {
               ),
             );
           }
+          _controller = ZefyrController(snapshot.data);
           return Stack(
             children: [
-              Content(
-                place: widget.place,
-                document: snapshot.data,
+              ZefyrScaffold(
+                child: ZefyrEditor(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  mode: ZefyrMode.edit,
+                ),
               ),
               ClipRect(
                 child: Container(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
                     child: Container(
-                      padding: const EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.only(top: 0),
                       width: double.maxFinite,
                       color: (!theme)
                           ? LightPalette()
@@ -108,8 +139,10 @@ class _BodyState extends State<Body> {
                               child: Row(
                                 children: [
                                   TopIcon(
-                                    icon: FeatherIcons.share,
-                                    onClick: () {},
+                                    icon: FeatherIcons.save,
+                                    onClick: () {
+                                      _saveDocument(context);
+                                    },
                                   ),
                                 ],
                               ),
@@ -121,7 +154,6 @@ class _BodyState extends State<Body> {
                   ),
                 ),
               ),
-              //ActionBar(),
             ],
           );
         },

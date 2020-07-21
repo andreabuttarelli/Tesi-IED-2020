@@ -165,7 +165,7 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
                   child: Container(
                     width: double.maxFinite,
                     height: 200,
-                    margin: const EdgeInsets.only(top: 72),
+                    margin: const EdgeInsets.only(top: 56),
                     decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage('${place.image}'),

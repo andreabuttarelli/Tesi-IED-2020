@@ -37,7 +37,7 @@ class _PlaceWidgetState extends State<PlaceWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: '${widget.place.id}',
+              tag: '${widget.place.name}',
               child: Container(
                 width: double.maxFinite,
                 height: 200,

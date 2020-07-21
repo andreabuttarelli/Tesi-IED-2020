@@ -9,7 +9,7 @@ class TokenRepository {
     await Firestore.instance.collection('locations').getDocuments().then(
           (data) => data.documents.forEach(
             (doc) {
-              var place = Place.fromJson(doc.data);
+              var place = Place.fromJson(doc.data, doc.documentID);
               places.add(place);
             },
           ),

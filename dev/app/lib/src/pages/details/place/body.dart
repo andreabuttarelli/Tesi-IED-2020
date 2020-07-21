@@ -3,19 +3,18 @@ import 'package:app/src/blocs/accessibility/index.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
-import 'package:app/src/objects/local_article.dart';
-import 'package:app/src/repositories/local_feed.dart';
+import 'package:app/src/objects/place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:share/share.dart';
-import 'package:webfeed/domain/atom_item.dart';
 import './content.dart';
 
 class Body extends StatefulWidget {
-  LocalArticle post;
-  String thumbnail;
-  Body({Key key, @required this.post, this.thumbnail}) : super(key: key);
+  Place place;
+  Body({
+    Key key,
+    @required this.place,
+  }) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -26,6 +25,7 @@ class _BodyState extends State<Body> {
   var topBody = 0.0;
   var topPadding = 330;
   bool theme;
+  double height;
   bool isLiked = false;
   bool isFirstTime = true;
   AccessibilityBloc accessibilityBloc;
@@ -40,6 +40,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     setState(() {
       theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
+      height = MediaQuery.of(context).size.height * 0.7;
     });
     final width = MediaQuery.of(context).size.width;
     return Container(
@@ -53,15 +54,15 @@ class _BodyState extends State<Body> {
         child: Stack(
           children: [
             Positioned(
-              top: top + 120,
+              top: top,
               child: Hero(
-                tag: widget.post.id,
+                tag: widget.place.id,
                 child: Container(
-                  width: width,
-                  height: 300,
+                  width: width * 2,
+                  height: height + 48,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage('${widget.thumbnail}'),
+                      image: NetworkImage('${widget.place.image}'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -69,17 +70,19 @@ class _BodyState extends State<Body> {
               ),
             ),
             Content(
-              post: widget.post,
-              top: (110 + 290.0),
+              place: widget.place,
+              top: height,
             ),
             ClipRect(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
                 child: Container(
                   padding: const EdgeInsets.only(top: 16),
                   width: double.maxFinite,
                   color: (!theme)
-                      ? LightPalette().colors["${Palette.backgroundPrimary}"]
+                      ? LightPalette()
+                          .colors["${Palette.backgroundPrimary}"]
+                          .withOpacity(0.4)
                       : DarkPalette()
                           .colors["${Palette.backgroundPrimary}"]
                           .withOpacity(0.4),
@@ -101,11 +104,6 @@ class _BodyState extends State<Body> {
                           padding: const EdgeInsets.only(right: 8),
                           child: Row(
                             children: [
-                              TopIcon(
-                                icon: FeatherIcons.share,
-                                onClick: () => Share.share('${widget.post.id}',
-                                    subject: '${widget.post.title}'),
-                              ),
                               BlocBuilder<AccessibilityBloc, bool>(
                                 builder: (context, isAccessible) {
                                   return TopIcon(
@@ -125,31 +123,6 @@ class _BodyState extends State<Body> {
                                             });
                                 },
                               ),
-                              FutureBuilder(
-                                future: LocalFeedRepository()
-                                    .getArticle(widget.post.id),
-                                builder: (context, snapshot) {
-                                  return TopIcon(
-                                    icon: FeatherIcons.heart,
-                                    color: (isLiked || snapshot.hasData)
-                                        ? Colors.red
-                                        : (!theme)
-                                            ? LightPalette().colors[
-                                                '${Palette.textPrimary}']
-                                            : DarkPalette().colors[
-                                                '${Palette.textPrimary}'],
-                                    onClick: () async {
-                                      var result = await LocalFeedRepository()
-                                          .getArticle(widget.post.id);
-                                      print(result);
-                                      if (result == null)
-                                        insertLike();
-                                      else
-                                        removeLike();
-                                    },
-                                  );
-                                },
-                              )
                             ],
                           ),
                         ),
@@ -165,43 +138,8 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future<bool> insertLike() async {
-    final article = LocalArticle(
-      id: widget.post.id,
-      title: widget.post.title,
-      image: widget.thumbnail,
-      category: '${widget.post.category}',
-      date: widget.post.date,
-      content: widget.post.content,
-      link: widget.post.id,
-    );
-    var result = await LocalFeedRepository().insert(article);
-    if (result == null) {
-      setState(() {
-        isLiked = false;
-        isFirstTime = false;
-      });
-      return false;
-    } else {
-      print('New Article inserted: $result');
-      setState(() {
-        isLiked = true;
-        isFirstTime = false;
-      });
-      return true;
-    }
-  }
-
-  Future<bool> removeLike() async {
-    var result = await LocalFeedRepository().delete(widget.post.id);
-    if (result == null) {
-    } else {
-      print('Pinned Article removed: $result');
-      setState(() {
-        isLiked = false;
-        isFirstTime = false;
-      });
-      return true;
-    }
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

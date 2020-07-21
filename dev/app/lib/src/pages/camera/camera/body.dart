@@ -126,8 +126,23 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
         ),
       );
     } else {
-      return Container(
-        child: CameraPreview(controller),
+      final size = MediaQuery.of(context).size;
+
+      // calculate scale for aspect ratio widget
+      var scale = controller.value.aspectRatio / size.aspectRatio;
+
+      // check if adjustments are needed...
+      if (controller.value.aspectRatio < size.aspectRatio) {
+        scale = 1 / scale;
+      }
+      return Transform.scale(
+        scale: scale,
+        child: Center(
+          child: AspectRatio(
+            aspectRatio: controller.value.aspectRatio,
+            child: CameraPreview(controller),
+          ),
+        ),
       );
     }
   }

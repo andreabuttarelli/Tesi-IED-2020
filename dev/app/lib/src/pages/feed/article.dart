@@ -1,12 +1,6 @@
 import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
-
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 05/06/2020
-/// modificato il 05/06/2020
-
 import 'package:app/src/objects/article.dart';
 import 'package:app/src/pages/details/article/article.dart';
 import 'package:content_placeholder/content_placeholder.dart';
@@ -18,6 +12,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:webfeed/domain/media/thumbnail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ArticleWidget extends StatefulWidget {
   final AtomItem post;
@@ -114,7 +109,8 @@ class _ArticleWidgetState extends State<ArticleWidget> {
                             image: DecorationImage(
                               image: (widget.post.media.thumbnails.isNotEmpty)
                                   ? NetworkImage(
-                                      '${widget.post.media.thumbnails[0].url}')
+                                      '${widget.post.media.thumbnails[0].url}',
+                                    )
                                   : NetworkImage('$thumbnail'),
                               fit: BoxFit.cover,
                             ),

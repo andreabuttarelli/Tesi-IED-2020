@@ -6,10 +6,10 @@ class Place {
   GeoPoint geoPoint;
   String image;
 
-  Place({this.id, this.name, this.geoPoint});
+  Place({this.id, this.name, this.geoPoint, this.image});
 
-  Place.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  Place.fromJson(Map<String, dynamic> json, String pid) {
+    id = pid;
     name = json['name'];
     geoPoint = GeoPoint(
       json["coords"].latitude,

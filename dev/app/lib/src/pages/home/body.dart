@@ -9,6 +9,7 @@ import 'package:app/src/pages/home/bottombar/bottombar.dart';
 /// modificato il 05/06/2020
 ///
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/src/blocs/navigation/bloc.dart';
 import 'package:app/src/pages/feed/feed.dart';
@@ -36,6 +37,7 @@ class _BodyState extends State<Body> {
     return BlocBuilder<NavigationBloc, int>(
       bloc: navigationBloc,
       builder: (context, i) {
+        FocusScope.of(context).unfocus();
         return Stack(
           children: [
             Visibility(

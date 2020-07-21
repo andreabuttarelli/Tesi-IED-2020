@@ -1,5 +1,5 @@
+import 'package:hive/hive.dart';
 import 'package:webfeed/domain/atom_feed.dart';
-import 'package:webfeed/domain/atom_item.dart';
 import 'package:http/http.dart' as http;
 
 /// MIT License
@@ -13,6 +13,8 @@ class FeedRepositories {
   FeedRepositories({this.httpClient});
 
   Future<AtomFeed> fetchPosts(int index, int lang) async {
+    //Dio dio;
+
     var prefix = '';
     if (lang == 1)
       prefix = 'en/';
@@ -21,8 +23,16 @@ class FeedRepositories {
     else if (lang == 3) prefix = 'zh-hans/';
     var _targetUrl = 'https://parcocolosseo.it/${prefix}feed/atom?page=';
 
-    return await http
-        .read('$_targetUrl$index')
-        .then((xmlString) => AtomFeed.parse(xmlString));
+    await Hive.openBox('feedNews');
+
+    return await http.read('$_targetUrl$index').then((xmlString) {
+      saveXML(xmlString);
+      return AtomFeed.parse(xmlString);
+    });
+  }
+
+  saveXML(String xmlString) async {
+    var feed = Hive.box('feedNews');
+    feed.put('xml', xmlString);
   }
 }

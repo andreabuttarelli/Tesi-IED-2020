@@ -12,7 +12,7 @@ class PositionRepository {
       await Firestore.instance.collection('locations').getDocuments().then(
             (data) => data.documents.forEach(
               (doc) {
-                var place = Place.fromJson(doc.data);
+                var place = Place.fromJson(doc.data, doc.documentID);
                 places.add(place);
               },
             ),
@@ -48,5 +48,19 @@ class PositionRepository {
       return PlaceFound(place: places[index]);
     else
       return Null();
+  }
+
+  Future<List<Place>> getPlacesByName(String query) async {
+    if (savedPlaces.isEmpty) {
+      getAllPlaces();
+    }
+    final queryLowerCase = '$query'.toLowerCase();
+    final List<Place> searchedPlaces = [];
+    for (var i = 0; i < savedPlaces.length - 1; i++) {
+      if (savedPlaces[i].name.toLowerCase().contains("$queryLowerCase")) {
+        searchedPlaces.add(savedPlaces[i]);
+      }
+    }
+    return searchedPlaces;
   }
 }

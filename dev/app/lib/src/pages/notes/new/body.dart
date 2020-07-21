@@ -23,6 +23,7 @@ class _BodyState extends State<Body> {
   final _scrollThreshold = 200.0;
   NewNoteBloc newNoteBloc;
   List<Widget> placeholderWidgets;
+  int indexPosts = 1;
 
   @override
   void initState() {
@@ -41,134 +42,85 @@ class _BodyState extends State<Body> {
     return BlocBuilder<NewNoteBloc, NewNoteState>(
       builder: (context, state) {
         if (state is Uninitialized) {
-          return ListView(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Header(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 24),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: CircularProgressIndicator(),
-                        ),
-                        BlocBuilder<LanguageBloc, Language>(
-                          builder: (context, lang) {
-                            return CText(
-                              '${lang.script['feed_loading']}',
-                              size: 24,
-                              weight: FontWeight.bold,
-                            );
-                          },
-                        ),
-                      ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: CircularProgressIndicator(),
                     ),
-                  ),
-                  Column(
-                    children: placeholderWidgets,
-                  ),
-                ],
+                    BlocBuilder<LanguageBloc, Language>(
+                      builder: (context, lang) {
+                        return CText(
+                          '${lang.script['feed_loading']}',
+                          size: 24,
+                          weight: FontWeight.bold,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                children: placeholderWidgets,
               ),
             ],
           );
         }
         if (state is Error) {
-          return LiquidPullToRefresh(
-            onRefresh: _handleRefresh,
-            showChildOpacityTransition: false,
-            animSpeedFactor: 4,
-            color: Color(0xFFA92217),
-            height: 100,
-            child: NotificationListener<OverscrollIndicatorNotification>(
-              onNotification: (OverscrollIndicatorNotification overscroll) {
-                overscroll.disallowGlow();
-              },
-              child: ListView(
-                children: [
-                  Header(),
-                  Expanded(
-                    child: Center(
-                      child: BlocBuilder<LanguageBloc, Language>(
-                        builder: (context, lang) {
-                          return CText(
-                            '${lang.script['feed_failed']}',
-                            size: 24,
-                            weight: FontWeight.bold,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ], //failed to fetch posts
+          return Container(
+            child: Expanded(
+              child: Center(
+                child: BlocBuilder<LanguageBloc, Language>(
+                  builder: (context, lang) {
+                    return CText(
+                      '${lang.script['feed_failed']}',
+                      size: 24,
+                      weight: FontWeight.bold,
+                    );
+                  },
+                ),
               ),
             ),
           );
         }
         if (state is Loaded) {
           if (state.places.isEmpty) {
-            return ListView(
-              children: [
-                Header(),
-                Expanded(
-                  child: Center(
-                    child: BlocBuilder<LanguageBloc, Language>(
-                      builder: (context, lang) {
-                        return CText(
-                          '${lang.script['feed_empty']}',
-                          size: 24,
-                          weight: FontWeight.bold,
-                        );
-                      },
-                    ), //no post
-                  ),
+            return Container(
+              child: Expanded(
+                child: Center(
+                  child: BlocBuilder<LanguageBloc, Language>(
+                    builder: (context, lang) {
+                      return CText(
+                        '${lang.script['feed_empty']}',
+                        size: 24,
+                        weight: FontWeight.bold,
+                      );
+                    },
+                  ), //no post
                 ),
-              ],
+              ),
             );
           }
-          return LiquidPullToRefresh(
-            onRefresh: _handleRefresh,
-            showChildOpacityTransition: false,
-            animSpeedFactor: 4,
-            color: Color(0xFFA92217),
-            height: 100,
-            child: NotificationListener<OverscrollIndicatorNotification>(
-              onNotification: (OverscrollIndicatorNotification overscroll) {
-                overscroll.disallowGlow();
-              },
-              child: ListView.builder(
-                addAutomaticKeepAlives: true,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0)
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Header(),
-                        CText(
-                          'Vicini a te',
-                          size: 16,
-                          weight: FontWeight.normal,
-                          color: Palette.textPrimary,
-                          hPadding: 24,
-                          top: 40,
-                        ),
-                      ],
+          return ListView.builder(
+            shrinkWrap: true,
+            addAutomaticKeepAlives: true,
+            itemBuilder: (BuildContext context, int index) {
+              return index >= state.places.length
+                  ? (index >= indexPosts * 10) ? BottomLoader() : Container()
+                  : PlaceWidget(
+                      place: state.places[index],
                     );
-                  return index >= state.places.length
-                      ? BottomLoader()
-                      : PlaceWidget(
-                          place: state.places[index],
-                        );
-                },
-                itemCount: state.hasReachedMax
-                    ? state.places.length
-                    : state.places.length + 1,
-                controller: _scrollController,
-              ),
-            ),
+            },
+            itemCount: state.hasReachedMax
+                ? state.places.length
+                : state.places.length + 1,
+            controller: _scrollController,
           );
         }
       },
@@ -185,13 +137,7 @@ class _BodyState extends State<Body> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      newNoteBloc.add(Fetch());
+      newNoteBloc.add(FetchPlaces());
     }
-  }
-
-  Future<void> _handleRefresh() async {
-    newNoteBloc..add(Restart());
-    await Future.delayed(Duration(milliseconds: 500));
-    return;
   }
 }

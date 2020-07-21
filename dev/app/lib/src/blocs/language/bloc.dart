@@ -39,7 +39,7 @@ class LanguageBloc extends Bloc<LanguageEvent, Language> {
             break;
         }
       } else {
-        yield Spanish();
+        yield Italian();
       }
     }
 

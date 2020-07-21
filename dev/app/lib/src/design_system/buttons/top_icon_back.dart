@@ -33,6 +33,7 @@ class _TopIconBackState extends State<TopIconBack> {
             padding: EdgeInsets.only(top: 24, left: 24, bottom: 16, right: 16),
             child: GestureDetector(
               onTap: () {
+                FocusManager.instance.primaryFocus.unfocus();
                 Navigator.pop(context);
                 toogleTappedFlag();
               },

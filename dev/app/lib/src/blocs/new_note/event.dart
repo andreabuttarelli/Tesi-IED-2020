@@ -7,6 +7,12 @@ abstract class NewNotesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class Fetch extends NewNotesEvent {}
+class FetchPlaces extends NewNotesEvent {}
 
 class Restart extends NewNotesEvent {}
+
+class Search extends NewNotesEvent {
+  final String query;
+
+  Search({this.query});
+}

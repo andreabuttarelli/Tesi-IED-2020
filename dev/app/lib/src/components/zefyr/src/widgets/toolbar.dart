@@ -75,7 +75,7 @@ class ZefyrToolbarScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = ZefyrTheme.of(context).toolbarTheme;
     final toolbar = ZefyrToolbar.of(context);
-    final constraints = BoxConstraints.tightFor(height: 72);
+    final constraints = BoxConstraints.tightFor(height: 64);
     final children = <Widget>[
       Expanded(child: body),
     ];
@@ -108,7 +108,7 @@ class ZefyrToolbarScaffold extends StatelessWidget {
 
 /// Toolbar for [ZefyrEditor].
 class ZefyrToolbar extends StatefulWidget implements PreferredSizeWidget {
-  static const kToolbarHeight = 64.0;
+  static const kToolbarHeight = 54.0;
 
   const ZefyrToolbar({
     Key key,
@@ -407,8 +407,8 @@ class _DefaultZefyrToolbarDelegate implements ZefyrToolbarDelegate {
     } else {
       final text = kDefaultButtonTexts[action];
       assert(text != null);
-      final style = theme.textTheme.caption
-          .copyWith(fontWeight: FontWeight.bold, fontSize: 14.0);
+      final style = theme.textTheme.caption.copyWith(
+          fontFamily: 'Gilroy', fontWeight: FontWeight.bold, fontSize: 14.0);
       return ZefyrButton.text(
         action: action,
         text: text,

@@ -21,7 +21,7 @@ class LocalNotesRepository {
       await db.execute('''
 create table ${columnNames.tableLocalFeed} ( 
   id integer primary key autoincrement, 
-  ${columnNames.columnId} text not null unique,
+  ${columnNames.columnId} text unique,
   ${columnNames.columnTitle} text not null,
   ${columnNames.columnImage} text not null,
   ${columnNames.columnContent} text not null,
@@ -32,6 +32,7 @@ create table ${columnNames.tableLocalFeed} (
 
   Future<int> insert(LocalNote note) async {
     await open();
+    print(note.id);
     int id = await db.insert(columnNames.tableLocalFeed, note.toMap());
     return id;
   }
@@ -71,10 +72,10 @@ create table ${columnNames.tableLocalFeed} (
         where: '${columnNames.columnId} = ?', whereArgs: [id]);
   }
 
-  Future<int> update(LocalNote article) async {
+  Future<int> update(LocalNote note) async {
     await open();
-    return await db.update(columnNames.tableLocalFeed, article.toMap(),
-        where: '${columnNames.columnId} = ?', whereArgs: [article.id]);
+    return await db.update(columnNames.tableLocalFeed, note.toMap(),
+        where: '${columnNames.columnId} = ?', whereArgs: [note.id]);
   }
 
   Future close() async => db.close();

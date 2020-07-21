@@ -7,11 +7,13 @@ import 'dart:convert';
 
 import 'package:app/src/objects/article.dart';
 import 'package:app/src/repositories/feed.dart';
+import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webfeed/webfeed.dart';
 import './index.dart';
 
 class FeedBloc extends Bloc<FeedEvent, FeedState> {
@@ -41,6 +43,13 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     if (event is Fetch && !_hasReachedMax(currentState)) {
       try {
         if (currentState is FeedUninitialized) {
+          await Hive.openBox('feedNews');
+          var catchedFeed = Hive.box('feedNews');
+          String xml = catchedFeed.get('xml');
+          if (xml != null) {
+            AtomFeed cachedItems = AtomFeed.parse(xml);
+            yield FeedLoaded(posts: cachedItems.items, hasReachedMax: false);
+          }
           SharedPreferences prefs = await SharedPreferences.getInstance();
           lang = prefs.getInt('lang');
           if (lang == null) lang = 1;

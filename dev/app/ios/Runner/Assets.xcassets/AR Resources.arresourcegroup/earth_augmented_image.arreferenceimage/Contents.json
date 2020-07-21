@@ -1,0 +1,16 @@
+{
+  "images" : [
+    {
+      "filename" : "earth_augmented_image.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "unit" : "centimeters",
+    "width" : 19.977777777777778
+  }
+}

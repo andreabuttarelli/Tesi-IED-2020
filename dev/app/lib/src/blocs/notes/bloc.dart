@@ -31,12 +31,9 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     if (event is Fetch && !_hasReachedMax(currentState)) {
       try {
         if (currentState is NotesUninitialized) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          lang = prefs.getInt('lang');
-          if (lang == null) lang = 1;
           final notes = await LocalNotesRepository().getNotes(index);
           index++;
-          yield NotesLoaded(notes: notes, hasReachedMax: false);
+          yield NotesLoaded(notes: notes ?? [], hasReachedMax: false);
           return;
         }
         if (currentState is NotesLoaded) {
@@ -57,9 +54,6 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
     if (event is Restart) {
       yield NotesUninitialized();
       index = 0;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      lang = prefs.getInt('lang');
-      if (lang == null) lang = 1;
       final notes = await LocalNotesRepository().getNotes(index);
       index++;
       yield NotesLoaded(notes: notes, hasReachedMax: false);

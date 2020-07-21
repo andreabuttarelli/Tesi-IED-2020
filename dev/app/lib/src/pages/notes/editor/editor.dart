@@ -11,9 +11,11 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class Editor extends StatefulWidget {
   Place place;
+  LocalNote note;
   Editor({
     Key key,
     this.place,
+    this.note,
   }) : super(key: key);
 
   @override
@@ -22,23 +24,17 @@ class Editor extends StatefulWidget {
 
 class _EditorState extends State<Editor> {
   bool theme;
+  Place place;
 
   @override
   void initState() {
-    /*if (widget.localNote != null) {
-      local+ = LocalArticle(
-        id: widget.post.id,
-        title: widget.post.title,
-        image: widget.thumbnail,
-        category: '${widget.post.categories[0].term}',
-        date: widget.post.published,
-        content: widget.post.content,
-        link: widget.post.id,
-      );
-    }
-    if (widget.localArticle != null) {
-      post = widget.localArticle;
-    }*/
+    if (widget.note != null)
+      place = Place(
+          id: widget.note.id,
+          name: widget.note.title,
+          image: widget.note.image);
+    else
+      place = widget.place;
     super.initState();
   }
 
@@ -48,7 +44,7 @@ class _EditorState extends State<Editor> {
       theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
     });
     return BlocProvider(
-      create: (context) => EditorBloc()..add(Update(widget.place)),
+      create: (context) => EditorBloc()..add(Update(place)),
       child: Scaffold(
         backgroundColor: (!theme)
             ? LightPalette().colors["${Palette.backgroundPrimary}"]
@@ -56,6 +52,7 @@ class _EditorState extends State<Editor> {
         body: Stack(
           children: [
             Body(
+              note: widget.note,
               place: widget.place,
             ),
           ],

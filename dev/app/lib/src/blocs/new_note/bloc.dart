@@ -14,6 +14,7 @@ import './index.dart';
 class NewNoteBloc extends Bloc<NewNotesEvent, NewNoteState> {
   int index = 1;
   int lang = 1;
+  PositionRepository repository = PositionRepository();
 
   NewNoteBloc();
 
@@ -21,32 +22,18 @@ class NewNoteBloc extends Bloc<NewNotesEvent, NewNoteState> {
   get initialState => Uninitialized();
 
   @override
-  Stream<Transition<NewNotesEvent, NewNoteState>> transformEvents(
-    Stream<NewNotesEvent> events,
-    TransitionFunction<NewNotesEvent, NewNoteState> transitionFn,
-  ) {
-    return super.transformEvents(
-      events.debounceTime(const Duration(milliseconds: 500)),
-      transitionFn,
-    );
-  }
-
-  @override
   Stream<NewNoteState> mapEventToState(NewNotesEvent event) async* {
     final currentState = state;
-    if (event is Fetch && !_hasReachedMax(currentState)) {
+    if (event is FetchPlaces && !_hasReachedMax(currentState)) {
       try {
         if (currentState is Uninitialized) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          lang = prefs.getInt('lang');
-          if (lang == null) lang = 1;
-          final places = await PositionRepository().getAllPlaces();
+          final places = await repository.getAllPlaces();
           index++;
           yield Loaded(places: places, hasReachedMax: false);
           return;
         }
         if (currentState is Loaded) {
-          final places = await PositionRepository().getAllPlaces();
+          final places = await repository.getAllPlaces();
           index++;
           yield places.isEmpty
               ? currentState.copyWith(hasReachedMax: true)
@@ -63,13 +50,20 @@ class NewNoteBloc extends Bloc<NewNotesEvent, NewNoteState> {
     if (event is Restart) {
       yield Uninitialized();
       index = 0;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      lang = prefs.getInt('lang');
-      if (lang == null) lang = 1;
-      final places = await PositionRepository().getAllPlaces();
+      final places = await repository.getAllPlaces();
       index++;
       yield Loaded(places: places, hasReachedMax: false);
       return;
+    }
+
+    if (event is Search) {
+      if (event.query != '') {
+        final places = await repository.getPlacesByName(event.query);
+        yield Loaded(places: places, hasReachedMax: false);
+      } else {
+        final places = await repository.getAllPlaces();
+        yield Loaded(places: places, hasReachedMax: false);
+      }
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:app/src/blocs/token/state.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/augmented_reality/android/posts.dart';
 import 'package:app/src/pages/augmented_reality/android/scanner.dart';
+import 'package:app/src/pages/augmented_reality/apple/posts.dart';
 import 'package:app/src/pages/augmented_reality/apple/scanner.dart';
 import 'package:app/src/pages/augmented_reality/ui/before_cam.dart';
 import 'package:app/src/pages/augmented_reality/ui/found.dart';
@@ -44,7 +45,7 @@ class _BodyState extends State<Body> {
             children: [
               (state is LookingForMarker || state is MarkerFound)
                   ? (Platform.isAndroid) ? AndroidScanner() : IOSScanner()
-                  : AndroidPosts(),
+                  : (Platform.isAndroid) ? AndroidPosts() : IOSPosts(),
               BlocBuilder<TokenBloc, TokenState>(
                 builder: (context, tokenState) {
                   return AnimatedOpacity(

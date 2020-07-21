@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 final ColumnNames columnNames = ColumnNames();
 
 class LocalNote {
+  int nid;
   String id;
   String title;
   String image;
@@ -30,6 +31,7 @@ class LocalNote {
   }
 
   LocalNote.fromMap(Map<String, dynamic> map) {
+    nid = map["id"];
     id = map[columnNames.columnId];
     title = map[columnNames.columnTitle];
     image = map[columnNames.columnImage];

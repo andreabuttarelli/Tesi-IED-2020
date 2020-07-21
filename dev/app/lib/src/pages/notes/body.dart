@@ -23,6 +23,8 @@ class _BodyState extends State<Body> {
   final _scrollThreshold = 200.0;
   NotesBloc newNoteBloc;
   List<Widget> placeholderWidgets;
+  bool isInfinite = false;
+  int index = 1;
 
   @override
   void initState() {
@@ -110,30 +112,45 @@ class _BodyState extends State<Body> {
         }
         if (state is NotesLoaded) {
           if (state.notes.isEmpty) {
-            return ListView(
-              children: [
-                Header(),
-                Expanded(
-                  child: BlocBuilder<LanguageBloc, Language>(
-                    builder: (context, lang) {
-                      return Container(
-                        child: Wrap(
-                          children: [
-                            CText(
-                              '${lang.script['feed_empty']}',
-                              size: 24,
-                              weight: FontWeight.bold,
-                              top: 16,
-                              hPadding: 24,
+            return LiquidPullToRefresh(
+              onRefresh: _handleRefresh,
+              showChildOpacityTransition: false,
+              animSpeedFactor: 4,
+              color: Color(0xFFA92217),
+              height: 100,
+              child: NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (OverscrollIndicatorNotification overscroll) {
+                  overscroll.disallowGlow();
+                },
+                child: ListView(
+                  children: [
+                    Header(),
+                    Expanded(
+                      child: BlocBuilder<LanguageBloc, Language>(
+                        builder: (context, lang) {
+                          return Container(
+                            child: Wrap(
+                              children: [
+                                CText(
+                                  '${lang.script['feed_empty']}',
+                                  size: 24,
+                                  weight: FontWeight.bold,
+                                  top: 16,
+                                  hPadding: 24,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             );
+          }
+          if (state.notes.length >= index * 10) {
+            isInfinite = true;
           }
           return LiquidPullToRefresh(
             onRefresh: _handleRefresh,
@@ -146,6 +163,7 @@ class _BodyState extends State<Body> {
                 overscroll.disallowGlow();
               },
               child: ListView.builder(
+                padding: const EdgeInsets.only(bottom: 100),
                 addAutomaticKeepAlives: true,
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0)
@@ -161,10 +179,13 @@ class _BodyState extends State<Body> {
                           hPadding: 24,
                           top: 40,
                         ),
+                        NoteWidget(
+                          note: state.notes[index],
+                        ),
                       ],
                     );
                   return index >= state.notes.length
-                      ? BottomLoader()
+                      ? (index >= index * 10) ? BottomLoader() : Container()
                       : NoteWidget(
                           note: state.notes[index],
                         );
@@ -190,7 +211,11 @@ class _BodyState extends State<Body> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll <= _scrollThreshold) {
+    print(isInfinite);
+    if (isInfinite && maxScroll - currentScroll <= _scrollThreshold) {
+      setState(() {
+        index++;
+      });
       newNoteBloc.add(Fetch());
     }
   }

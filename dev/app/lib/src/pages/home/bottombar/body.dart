@@ -69,20 +69,22 @@ class _BodyState extends State<BottomBarBody> {
     });
     items.insert(items.length >> 1, _buildMiddleTabItem());
 
-    return BottomAppBar(
-      shape: CircularNotchedRectangle(),
-      clipBehavior: Clip.antiAlias,
-      child: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: items,
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Container(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: items,
+            ),
           ),
+          color: widget.backgroundColor.withOpacity(0.9),
         ),
       ),
-      color: widget.backgroundColor.withOpacity(0.8),
     );
   }
 
@@ -90,16 +92,18 @@ class _BodyState extends State<BottomBarBody> {
     return Expanded(
       child: SizedBox(
         height: widget.height,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: widget.iconSize),
-            Text(
-              widget.centerItemText ?? '',
-              style: TextStyle(color: widget.color),
-            ),
-          ],
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: widget.iconSize),
+              Text(
+                widget.centerItemText ?? '',
+                style: TextStyle(color: widget.color),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -113,22 +117,24 @@ class _BodyState extends State<BottomBarBody> {
     Color color =
         selectedIndex == index ? widget.color : widget.color.withOpacity(0.55);
     return Expanded(
-      child: SizedBox(
-        height: widget.height,
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: () => onPressed(index),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(item.iconData, color: color, size: widget.iconSize),
-                Text(
-                  item.text,
-                  style: TextStyle(color: color),
-                )
-              ],
+      child: SafeArea(
+        child: SizedBox(
+          height: widget.height,
+          child: Material(
+            type: MaterialType.transparency,
+            child: InkWell(
+              onTap: () => onPressed(index),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(item.iconData, color: color, size: widget.iconSize),
+                  Text(
+                    item.text,
+                    style: TextStyle(color: color),
+                  )
+                ],
+              ),
             ),
           ),
         ),
