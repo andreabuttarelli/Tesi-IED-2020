@@ -161,7 +161,7 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
               SafeArea(
                 bottom: false,
                 child: Hero(
-                  tag: '${place.name}',
+                  tag: '${place.id}',
                   child: Container(
                     width: double.maxFinite,
                     height: 200,

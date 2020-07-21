@@ -84,6 +84,7 @@ class _BodyState extends State<Body> {
                           .colors["${Palette.backgroundPrimary}"]
                           .withOpacity(0.4),
                   child: SafeArea(
+                    bottom: false,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

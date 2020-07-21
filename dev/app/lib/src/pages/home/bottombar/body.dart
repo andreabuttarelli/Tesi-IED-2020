@@ -69,22 +69,20 @@ class _BodyState extends State<BottomBarBody> {
     });
     items.insert(items.length >> 1, _buildMiddleTabItem());
 
-    return Container(
+    return BottomAppBar(
+      shape: CircularNotchedRectangle(),
+      clipBehavior: Clip.antiAlias,
       child: ClipRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: BottomAppBar(
-            shape: CircularNotchedRectangle(),
-            clipBehavior: Clip.antiAlias,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: items,
-            ),
-            color: widget.backgroundColor.withOpacity(0.8),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: items,
           ),
         ),
       ),
+      color: widget.backgroundColor.withOpacity(0.8),
     );
   }
 
