@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:app/src/objects/local_article.dart';
+import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ColumnNames {
   final String tableLocalFeed = 'localFeed';
@@ -16,8 +20,18 @@ class LocalFeedRepository {
   Database db;
 
   Future open() async {
-    var databasesPath = await getDatabasesPath();
-    String path = '$databasesPath' '${columnNames.tableLocalFeed}.db';
+    var documentDirectory = await getApplicationDocumentsDirectory();
+    String path =
+        join(documentDirectory.path, '${columnNames.tableLocalFeed}.db');
+    if (await Directory(dirname(path)).exists()) {
+    } else {
+      try {
+        await Directory(dirname(path)).create(recursive: true);
+      } catch (e) {
+        print(e);
+      }
+    }
+
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute('''

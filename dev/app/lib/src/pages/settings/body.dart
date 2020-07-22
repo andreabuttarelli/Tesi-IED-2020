@@ -1,4 +1,5 @@
 import 'package:app/src/blocs/alert/index.dart';
+import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
@@ -38,139 +39,150 @@ class _BodyState extends State<Body> {
     setState(() {
       theme = (MediaQuery.of(context).platformBrightness == Brightness.dark);
     });
-    return Container(
-      child: ListView(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+    return BlocBuilder<LanguageBloc, Language>(
+      builder: (context, lang) {
+        return Container(
+          child: ListView(
             children: [
-              SafeArea(
-                child: TopIconBack(
-                  icon: FeatherIcons.arrowLeft,
-                  color: (!theme)
-                      ? LightPalette().colors["Palette.textPrimary"]
-                      : DarkPalette().colors["Palette.textPrimary"],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SafeArea(
+                    child: TopIconBack(
+                      icon: FeatherIcons.arrowLeft,
+                      color: (!theme)
+                          ? LightPalette().colors["Palette.textPrimary"]
+                          : DarkPalette().colors["Palette.textPrimary"],
+                    ),
+                  ),
+                ],
+              ),
+              CText(
+                '${lang.script["settings_title"]}',
+                size: 32,
+                weight: FontWeight.bold,
+                hPadding: 24,
+                top: 8,
+                bottom: 24,
+              ),
+              Option(
+                label: '${lang.script["settings_change_email"]}',
+                color: Palette.textPrimary,
+                onClick: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Change(
+                        child: Email(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              Option(
+                label: '${lang.script["settings_change_password"]}',
+                color: Palette.textPrimary,
+                onClick: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Change(
+                        child: Password(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              Option(
+                label: '${lang.script["settings_change_lang"]}',
+                color: Palette.textPrimary,
+                onClick: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Change(
+                        child: LanguageBody(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Change(
+                        child: Accessiblity(),
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 32,
+                  ),
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: (!theme)
+                        ? LightPalette().colors["Palette.backgroundSecondary"]
+                        : DarkPalette().colors["Palette.backgroundSecondary"],
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Column(
+                    children: [
+                      CText(
+                        '${lang.script["accessible_mode_title"]}',
+                        size: 24,
+                        weight: FontWeight.bold,
+                        hPadding: 0,
+                        top: 8,
+                        bottom: 0,
+                      ),
+                      Container(
+                        child: Wrap(
+                          children: [
+                            CText(
+                              '${lang.script["accessible_mode_description"]}',
+                              size: 16,
+                              weight: FontWeight.w600,
+                              hPadding: 0,
+                              top: 8,
+                              bottom: 24,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Button(
+                        color: Palette.textPrimary,
+                        type: ButtonType.primaryStroke,
+                        dims: ButtonDims.medium,
+                        label: 'Try it now',
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40),
+              ),
+              Option(
+                label: '${lang.script["settings_logout"]}',
+                color: Palette.textAccent,
+                onClick: () {
+                  alertBloc..add(Show());
+                },
+              ),
+              Option(
+                label: '${lang.script["settings_delete_account"]}',
+                color: Palette.textSecondary50,
+                withIcon: false,
               ),
             ],
           ),
-          CText(
-            'Settings',
-            size: 32,
-            weight: FontWeight.bold,
-            hPadding: 24,
-            top: 8,
-            bottom: 24,
-          ),
-          Option(
-            label: 'Change Email',
-            color: Palette.textPrimary,
-            onClick: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Change(
-                    child: Email(),
-                  ),
-                ),
-              );
-            },
-          ),
-          Option(
-            label: 'Change Password',
-            color: Palette.textPrimary,
-            onClick: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Change(
-                    child: Password(),
-                  ),
-                ),
-              );
-            },
-          ),
-          Option(
-            label: 'Change Language',
-            color: Palette.textPrimary,
-            onClick: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Change(
-                    child: LanguageBody(),
-                  ),
-                ),
-              );
-            },
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Change(
-                    child: Accessiblity(),
-                  ),
-                ),
-              );
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 32,
-              ),
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: (!theme)
-                    ? LightPalette().colors["Palette.backgroundSecondary"]
-                    : DarkPalette().colors["Palette.backgroundSecondary"],
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Column(
-                children: [
-                  CText(
-                    'Acessible Mode',
-                    size: 24,
-                    weight: FontWeight.bold,
-                    hPadding: 0,
-                    top: 8,
-                    bottom: 0,
-                  ),
-                  CText(
-                    'Big fonts, higher contrast.',
-                    size: 16,
-                    weight: FontWeight.w600,
-                    hPadding: 0,
-                    top: 8,
-                    bottom: 24,
-                  ),
-                  /*Button(
-                    type: ButtonType.primaryStroke,
-                    dims: ButtonDims.medium,
-                    label: 'Try it now',
-                  )*/
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 40),
-          ),
-          Option(
-            label: 'Logout',
-            color: Palette.textAccent,
-            onClick: () {
-              alertBloc..add(Show());
-            },
-          ),
-          Option(
-            label: 'Delete Account',
-            color: Palette.textSecondary50,
-            withIcon: false,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

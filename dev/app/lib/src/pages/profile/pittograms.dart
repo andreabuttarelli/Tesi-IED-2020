@@ -30,27 +30,30 @@ class _PittogramsState extends State<Pittograms> {
       theme = MediaQuery.of(context).platformBrightness == Brightness.dark;
     });
 
-    return AnimatedOpacity(
-      opacity: opacity,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeInOutCubic,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        child: GestureDetector(
-          onTapDown: (TapDownDetails details) => toogleTappedFlag(),
-          onTapCancel: () => cancelTappedFlag(),
-          onTapUp: (TapUpDetails details) => cancelTappedFlag(),
-          onTap: () {
-            Navigator.pushNamed(context, '/TreasureHunt');
-          },
-          child: AnimatedContainer(
-            margin: const EdgeInsets.only(top: 24, bottom: 24),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            decoration: BoxDecoration(
-              color: (!theme)
-                  ? LightPalette().colors["Palette.backgroundSecondary"]
-                  : DarkPalette().colors["Palette.backgroundSecondary"],
-              /*boxShadow: [
+    return BlocBuilder<LanguageBloc, Language>(
+      builder: (context, lang) {
+        return AnimatedOpacity(
+          opacity: opacity,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOutCubic,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            child: GestureDetector(
+              onTapDown: (TapDownDetails details) => toogleTappedFlag(),
+              onTapCancel: () => cancelTappedFlag(),
+              onTapUp: (TapUpDetails details) => cancelTappedFlag(),
+              onTap: () {
+                Navigator.pushNamed(context, '/TreasureHunt');
+              },
+              child: AnimatedContainer(
+                margin: const EdgeInsets.only(top: 24, bottom: 24),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                decoration: BoxDecoration(
+                  color: (!theme)
+                      ? LightPalette().colors["Palette.backgroundSecondary"]
+                      : DarkPalette().colors["Palette.backgroundSecondary"],
+                  /*boxShadow: [
                 BoxShadow(
                   color: (isTapped)
                       ? Colors.transparent
@@ -66,65 +69,69 @@ class _PittogramsState extends State<Pittograms> {
                   offset: Offset(0, 2),
                 ),
               ],*/
-              borderRadius: BorderRadius.circular(16),
-            ),
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOutCubic,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOutCubic,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PittogramIcon(img: PittogramsImages().colosseo),
-                    PittogramIcon(img: PittogramsImages().domusAurea),
-                    PittogramIcon(img: PittogramsImages().foroRomano),
-                    PittogramIcon(img: PittogramsImages().palatino),
+                    Row(
+                      children: [
+                        PittogramIcon(img: PittogramsImages().colosseo),
+                        PittogramIcon(img: PittogramsImages().domusAurea),
+                        PittogramIcon(img: PittogramsImages().foroRomano),
+                        PittogramIcon(img: PittogramsImages().palatino),
+                      ],
+                    ),
+                    CText(
+                      '${lang.script["profile_token_title"]}',
+                      size: 24,
+                      weight: FontWeight.bold,
+                      color: Palette.textPrimary,
+                      top: 24,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: (theme)
+                            ? DarkPalette()
+                                .colors["Palette.white"]
+                                .withOpacity(0.2)
+                            : LightPalette()
+                                .colors["Palette.black"]
+                                .withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CText(
+                            '${lang.script["profile_token_found"]}:',
+                            size: 20,
+                            weight: FontWeight.w600,
+                            color: Palette.textSecondary70,
+                            top: 3,
+                          ),
+                          CText(
+                            '0',
+                            size: 20,
+                            weight: FontWeight.bold,
+                            color: Palette.textPrimary,
+                            top: 3,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                CText(
-                  'Adesso tocca a te lasciare il segno.',
-                  size: 24,
-                  weight: FontWeight.bold,
-                  color: Palette.textPrimary,
-                  top: 24,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 16),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: (theme)
-                        ? DarkPalette().colors["Palette.white"].withOpacity(0.2)
-                        : LightPalette()
-                            .colors["Palette.black"]
-                            .withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CText(
-                        'Token trovati:',
-                        size: 20,
-                        weight: FontWeight.w600,
-                        color: Palette.textSecondary70,
-                        top: 3,
-                      ),
-                      CText(
-                        '0',
-                        size: 20,
-                        weight: FontWeight.bold,
-                        color: Palette.textPrimary,
-                        top: 3,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 

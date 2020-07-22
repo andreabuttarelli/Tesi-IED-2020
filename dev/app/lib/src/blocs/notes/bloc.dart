@@ -33,7 +33,8 @@ class NotesBloc extends Bloc<NotesEvent, NotesState> {
         if (currentState is NotesUninitialized) {
           final notes = await LocalNotesRepository().getNotes(index);
           index++;
-          yield NotesLoaded(notes: notes ?? [], hasReachedMax: false);
+          yield NotesLoaded(
+              notes: (notes.length > 0) ? notes : [], hasReachedMax: false);
           return;
         }
         if (currentState is NotesLoaded) {

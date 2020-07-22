@@ -3,6 +3,7 @@ import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/blocs/token/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
+import 'package:app/src/pages/camera/camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -55,7 +56,12 @@ class _BeforeCameraState extends State<BeforeCamera> {
                           flagAction = true;
                         });
                         arBloc..add(OpenCamera());
-                        Navigator.pushNamed(context, "/Camera");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Camera(),
+                              fullscreenDialog: true),
+                        );
                       },
                       child: Container(
                         margin: const EdgeInsets.symmetric(
@@ -99,7 +105,8 @@ class _BeforeCameraState extends State<BeforeCamera> {
                               ),
                             ),
                             Expanded(
-                              child: Wrap(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CText(
                                     'Lascia il segno',
@@ -110,14 +117,20 @@ class _BeforeCameraState extends State<BeforeCamera> {
                                     bottom: 0,
                                     left: 16,
                                   ),
-                                  CText(
-                                    '${state.place.name}',
-                                    size: 20,
-                                    weight: FontWeight.bold,
-                                    hPadding: 0,
-                                    top: 4,
-                                    bottom: 0,
-                                    left: 16,
+                                  Container(
+                                    child: Wrap(
+                                      children: [
+                                        CText(
+                                          '${state.place.name}',
+                                          size: 20,
+                                          weight: FontWeight.bold,
+                                          hPadding: 0,
+                                          top: 4,
+                                          bottom: 0,
+                                          left: 16,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

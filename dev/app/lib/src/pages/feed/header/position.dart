@@ -36,7 +36,7 @@ class _PositionState extends State<PositionWidget> {
     });
     return BlocBuilder<PositionBloc, PositionState>(
       builder: (context, state) {
-        tempListen();
+        //tempListen();
         if (state is Null) return Container();
         if (state is PlaceFound)
           return GestureDetector(

@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:app/src/blocs/camera/index.dart';
+import 'package:app/src/design_system/palette.dart';
+import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/augmented_reality/ui/looking.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +46,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
   List<CameraDescription> cameras = [];
   bool cameraTaken = false;
   bool audioEnabled = true;
+  bool isFilming = false;
 
   @override
   void initState() {
@@ -117,13 +121,8 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
   /// Display the preview from the camera (or a message if the preview is not available).
   Widget _cameraPreviewWidget() {
     if (controller == null || !controller.value.isInitialized) {
-      return const Text(
-        'Tap a camera',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 24.0,
-          fontWeight: FontWeight.w900,
-        ),
+      return const CircularProgressIndicator(
+        backgroundColor: Colors.white,
       );
     } else {
       final size = MediaQuery.of(context).size;
@@ -153,10 +152,24 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
       right: 24,
       top: 24,
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Icon(
-            FeatherIcons.mic,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(27),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+            child: Container(
+              height: 54,
+              width: 54,
+              decoration: BoxDecoration(
+                color: Colors.black12,
+                borderRadius: BorderRadius.circular(27),
+              ),
+              child: Center(
+                child: Icon(
+                  FeatherIcons.mic,
+                  size: 24,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -205,6 +218,41 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
         child: Column(
           children: [
             Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+              child: (isFilming)
+                  ? Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(27),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+                            child: Container(
+                              height: 10,
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                color: Colors.white12,
+                                borderRadius: BorderRadius.circular(27),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: LinearProgressIndicator(
+                            minHeight: 10,
+                            value: 0.3,
+                            backgroundColor: Colors.transparent,
+                          ),
+                        ),
+                      ],
+                    )
+                  : CText(
+                      'hold to make a video',
+                      size: 16,
+                      color: Palette.white,
+                    ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
@@ -218,25 +266,79 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
               ? onTakePictureButtonPressed
               : null,
         ),*/
+                Spacer(),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(27),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+                    child: Container(
+                      height: 54,
+                      width: 54,
+                      decoration: BoxDecoration(
+                        color: Colors.white12,
+                        borderRadius: BorderRadius.circular(27),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          FeatherIcons.refreshCw,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
                 Stack(
                   children: [
                     ClipPath(
                       clipper: InvertedCircleClipper(),
-                      child: new Container(
-                        width: 84,
-                        height: 84,
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.bounceIn,
+                        width: 92,
+                        height: 92,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(42),
+                          gradient: LinearGradient(colors: [
+                            (isFilming)
+                                ? Color(0xFF4BC47C)
+                                : Colors.transparent,
+                            (isFilming)
+                                ? Color(0xFF0ABAB5)
+                                : Colors.transparent,
+                          ]),
+                          borderRadius: BorderRadius.circular(46),
                         ),
                         child: Container(
-                          width: 84,
-                          height: 84,
+                          width: 92,
+                          height: 92,
                           color: Colors.transparent,
                         ),
                       ),
                     ),
-                    GestureDetector(
+                    Positioned(
+                      top: 4,
+                      left: 4,
+                      child: ClipPath(
+                        clipper: InvertedCircleClipper(),
+                        child: new Container(
+                          width: 84,
+                          height: 84,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(42),
+                          ),
+                          child: Container(
+                            width: 84,
+                            height: 84,
+                            color: Colors.transparent,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 4,
+                      left: 4,
+                      child: GestureDetector(
                         onTap: () {
                           print("picture");
                           if (controller != null &&
@@ -255,8 +357,16 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                           print("onLongPressEnd");
                           if (controller != null &&
                               controller.value.isInitialized &&
-                              controller.value.isRecordingVideo)
-                            onStopButtonPressed();
+                              controller.value
+                                  .isRecordingVideo) if (controller != null &&
+                              controller.value.isRecordingPaused)
+                            onResumeButtonPressed();
+                          else
+                            onPauseButtonPressed();
+                          /*if (controller != null &&
+                              controller.value.isInitialized &&
+                              controller.value.isRecordingVideo)*/
+                          //onStopButtonPressed();
                         },
                         onLongPressUp: () {
                           print("onLongPressUp");
@@ -273,9 +383,41 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                           width: 84,
                           height: 84,
                           color: Colors.transparent,
-                        )),
+                        ),
+                      ),
+                    ),
                   ],
-                )
+                ),
+                Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    if (controller != null &&
+                        controller.value.isInitialized &&
+                        controller.value.isRecordingVideo)
+                      onStopButtonPressed();
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(27),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+                      child: Container(
+                        height: 54,
+                        width: 54,
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.circular(27),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            FeatherIcons.check,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
 
                 /*IconButton(
           icon: const Icon(Icons.videocam),
@@ -380,7 +522,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
           videoController?.dispose();
           videoController = null;
         });
-        if (filePath != null) showInSnackBar('Picture saved to $filePath');
+        //if (filePath != null) showInSnackBar('Picture saved to $filePath');
         GallerySaver.saveImage('$filePath').then((path) => print('$path'));
       }
     });
@@ -388,30 +530,42 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
 
   void onVideoRecordButtonPressed() {
     startVideoRecording().then((String filePath) {
-      if (mounted) setState(() {});
-      if (filePath != null) showInSnackBar('Saving video to $filePath');
+      if (mounted)
+        setState(() {
+          isFilming = true;
+        });
+      //if (filePath != null) showInSnackBar('Saving video to $filePath');
     });
   }
 
   void onStopButtonPressed() {
     stopVideoRecording().then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Video recorded to: $videoPath');
+      if (mounted)
+        setState(() {
+          isFilming = false;
+        });
+      //showInSnackBar('Video recorded to: $videoPath');
       GallerySaver.saveVideo('$videoPath').then((path) => print('$path'));
     });
   }
 
   void onPauseButtonPressed() {
     pauseVideoRecording().then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Video recording paused');
+      if (mounted)
+        setState(() {
+          isFilming = false;
+        });
+      //showInSnackBar('Video recording paused');
     });
   }
 
   void onResumeButtonPressed() {
     resumeVideoRecording().then((_) {
-      if (mounted) setState(() {});
-      showInSnackBar('Video recording resumed');
+      if (mounted)
+        setState(() {
+          isFilming = true;
+        });
+      //showInSnackBar('Video recording resumed');
     });
   }
 

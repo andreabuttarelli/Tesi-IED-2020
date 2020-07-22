@@ -140,7 +140,9 @@ class _FoundState extends State<Found> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Wrap(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       CText(
                                         'Lascia il segno',
@@ -151,14 +153,20 @@ class _FoundState extends State<Found> {
                                         bottom: 0,
                                         left: 16,
                                       ),
-                                      CText(
-                                        '${state.place.name}',
-                                        size: 20,
-                                        weight: FontWeight.bold,
-                                        hPadding: 0,
-                                        top: 4,
-                                        bottom: 0,
-                                        left: 16,
+                                      Container(
+                                        child: Wrap(
+                                          children: [
+                                            CText(
+                                              '${state.place.name}',
+                                              size: 20,
+                                              weight: FontWeight.bold,
+                                              hPadding: 0,
+                                              top: 4,
+                                              bottom: 0,
+                                              left: 16,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
