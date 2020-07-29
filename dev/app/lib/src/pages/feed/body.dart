@@ -1,7 +1,6 @@
 import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/feed/placeholder.dart';
-import 'package:content_placeholder/content_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/blocs/feed/index.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

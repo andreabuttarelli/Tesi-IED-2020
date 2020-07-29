@@ -1,15 +1,8 @@
 import 'package:app/src/blocs/language/index.dart';
-import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/user_picture_button.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/feed/header/position.dart';
-
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 05/06/2020
-/// aggiornato il 05/06/2020
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './norms.dart';

@@ -5,10 +5,8 @@ import 'package:app/src/blocs/token/index.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:vector_math/vector_math_64.dart' as vector;
 
 class IOSScanner extends StatefulWidget {
   IOSScanner({Key key}) : super(key: key);
@@ -52,7 +50,7 @@ class _ScannerState extends State<IOSScanner> {
 
   tempListen() async {
     //only with simulators
-    Position position = Position(latitude: 41.8853658, longitude: 12.4966204);
+    //Position position = Position(latitude: 41.8853658, longitude: 12.4966204);
     await Future.delayed(Duration(milliseconds: 400));
     tokenBloc
       ..add(UpdateTokenPosition(geopoint: GeoPoint(41.8853658, 12.4966204)));

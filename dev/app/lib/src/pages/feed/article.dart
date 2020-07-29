@@ -1,18 +1,14 @@
-import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
-import 'package:app/src/objects/article.dart';
 import 'package:app/src/pages/details/article/article.dart';
 import 'package:content_placeholder/content_placeholder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:webfeed/domain/media/thumbnail.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ArticleWidget extends StatefulWidget {
   final AtomItem post;

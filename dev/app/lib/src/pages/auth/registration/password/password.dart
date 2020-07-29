@@ -7,9 +7,7 @@ import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
-import 'package:app/src/objects/validators.dart';
 import 'package:app/src/pages/auth/registration/confirm/confirm.dart';
-import 'package:app/src/pages/auth/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

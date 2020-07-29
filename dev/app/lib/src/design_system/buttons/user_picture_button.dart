@@ -38,7 +38,7 @@ class _UserProfileButtonState extends State<UserProfileButton> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Profile()),
+                      MaterialPageRoute(builder: (context) => PreLogin()),
                     );
                   },
                   onTapDown: (detail) => tapped(),
@@ -55,23 +55,17 @@ class _UserProfileButtonState extends State<UserProfileButton> {
                               .colors["Palette.backgroundSecondary"], //A92217
                       borderRadius: BorderRadius.circular(40),
                     ),
-                    child: Icon(
-                      FeatherIcons.user,
-                      size: 24,
-                      color: (!theme)
-                          ? LightPalette().colors["Palette.textPrimary"]
-                          : DarkPalette().colors["Palette.textPrimary"],
-                    ),
-                    /*BlocBuilder<LanguageBloc, Language>(
+                    child: BlocBuilder<LanguageBloc, Language>(
                       builder: (context, lang) {
                         return CText(
                           '${lang.script["feed_profile_notlogged"]}',
-                          size: 16,
-                          weight: FontWeight.bold,
-                          color: Colors.black,
+                          size: 12,
+                          top: 2,
+                          weight: FontWeight.normal,
+                          color: Palette.textPrimary,
                         );
                       },
-                    ),*/
+                    ),
                   ),
                 ),
               ],
@@ -110,6 +104,7 @@ class _UserProfileButtonState extends State<UserProfileButton> {
             ),
           );
         }
+        return Container();
       },
     );
   }

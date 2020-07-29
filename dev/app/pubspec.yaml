@@ -74,15 +74,15 @@ flutter:
     - assets/img/logo.png
     - assets/img/near_location_light.png
     - assets/img/near_location_dark.png
-    - assets/earth.jpg
     - assets/earth_augmented_image.jpg
-    - assets/square_picture.jpg
     - assets/pittograms/colosseo.png
     - assets/pittograms/palatino.png
     - assets/pittograms/foro_romano.png
     - assets/pittograms/domus_aurea.png
     - assets/ar/AR_image.jpg
     - assets/ar/AR_video.jpg
+    - assets/models/helmet/scene.gltf
+    - assets/models/helmet/texture/lambert1_baseColor.jpeg
 
   fonts:
     - family: Gilroy

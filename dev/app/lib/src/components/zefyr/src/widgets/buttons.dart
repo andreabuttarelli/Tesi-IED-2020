@@ -183,8 +183,8 @@ class _RawZefyrButtonState extends State<RawZefyrButton> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final width = theme.buttonTheme.constraints.minHeight;
-    final constraints = theme.buttonTheme.constraints.copyWith(
-        minWidth: width, maxHeight: theme.buttonTheme.constraints.minHeight);
+    /*final constraints = theme.buttonTheme.constraints.copyWith(
+        minWidth: width, maxHeight: theme.buttonTheme.constraints.minHeight);*/
     final radius = BorderRadius.all(Radius.circular(32.0));
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),

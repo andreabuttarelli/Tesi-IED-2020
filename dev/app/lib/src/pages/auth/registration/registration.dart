@@ -3,7 +3,6 @@ import 'package:app/src/blocs/registration/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './confirm/confirm.dart';
 
 class Registration extends StatelessWidget {
   final Widget child;

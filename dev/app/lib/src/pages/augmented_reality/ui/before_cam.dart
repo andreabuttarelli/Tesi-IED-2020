@@ -143,6 +143,7 @@ class _BeforeCameraState extends State<BeforeCamera> {
                 ),
               );
             }
+            return Container();
           },
         );
       },

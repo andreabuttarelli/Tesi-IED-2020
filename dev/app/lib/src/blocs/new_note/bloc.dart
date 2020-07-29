@@ -1,14 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:app/src/objects/article.dart';
-import 'package:app/src/repositories/feed.dart';
-import 'package:app/src/repositories/notes.dart';
 import 'package:app/src/repositories/position.dart';
-import 'package:meta/meta.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import './index.dart';
 
 class NewNoteBloc extends Bloc<NewNotesEvent, NewNoteState> {

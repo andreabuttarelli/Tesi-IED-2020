@@ -7,7 +7,7 @@ abstract class TokenEvent extends Equatable {
 }
 
 class UpdateTokenPosition extends TokenEvent {
-  GeoPoint geopoint;
+  final GeoPoint geopoint;
 
   UpdateTokenPosition({this.geopoint});
 }

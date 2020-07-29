@@ -1,4 +1,3 @@
-import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/type.dart';
@@ -6,7 +5,6 @@ import 'package:app/src/design_system/buttons/user_picture_button.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Header extends StatelessWidget {
   const Header({Key key}) : super(key: key);

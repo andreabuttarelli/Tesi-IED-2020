@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:app/src/blocs/authentication/index.dart';
 import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/blocs/login/index.dart';
@@ -11,6 +9,7 @@ import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/design_system/textfield/textfield.dart';
+import 'package:app/src/pages/auth/login/google_button.dart';
 import 'package:app/src/pages/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,6 +118,11 @@ class _BodyState extends State<Body> {
                     },
                   ),
                   Spacer(),
+                  GoogleSignInButton(
+                    onClick: () {
+                      loginBloc..add(LoginWithGooglePressed());
+                    },
+                  ),
                   Button(
                     color: Palette.accent,
                     type: ButtonType.secondarySolid,

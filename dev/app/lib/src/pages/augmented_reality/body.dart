@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:app/src/blocs/augmented_reality/index.dart';
 import 'package:app/src/blocs/token/bloc.dart';
 import 'package:app/src/blocs/token/state.dart';
-import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/augmented_reality/android/posts.dart';
 import 'package:app/src/pages/augmented_reality/android/scanner.dart';
 import 'package:app/src/pages/augmented_reality/apple/posts.dart';
@@ -14,8 +13,6 @@ import 'package:app/src/pages/augmented_reality/ui/looking.dart';
 import 'package:app/src/pages/augmented_reality/ui/no_ar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart'
-    show ArCoreController;
 
 class Body extends StatefulWidget {
   Body({Key key}) : super(key: key);

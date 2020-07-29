@@ -3,7 +3,6 @@ import 'package:app/src/objects/local_article.dart';
 import 'package:flutter/material.dart';
 import 'package:webfeed/domain/atom_item.dart';
 import 'body.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class Article extends StatefulWidget {
   AtomItem post;

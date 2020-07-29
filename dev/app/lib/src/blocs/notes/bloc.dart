@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:app/src/repositories/notes.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:bloc/bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import './index.dart';
 
 class NotesBloc extends Bloc<NotesEvent, NotesState> {

@@ -1,11 +1,9 @@
 import 'package:app/src/blocs/feed/index.dart';
 import 'package:app/src/blocs/language/index.dart';
-import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/option.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
-import 'package:app/src/pages/settings/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';

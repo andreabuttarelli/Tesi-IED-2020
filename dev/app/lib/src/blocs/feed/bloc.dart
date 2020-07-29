@@ -1,11 +1,4 @@
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:app/src/objects/article.dart';
 import 'package:app/src/repositories/feed.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';

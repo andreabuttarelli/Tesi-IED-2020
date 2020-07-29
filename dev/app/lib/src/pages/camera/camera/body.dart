@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
-import 'package:app/src/blocs/camera/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/pages/augmented_reality/ui/looking.dart';
+import 'package:app/src/pages/camera/preview/preview.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
@@ -47,6 +46,8 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
   bool cameraTaken = false;
   bool audioEnabled = true;
   bool isFilming = false;
+  bool isPicture = true;
+  double value = 0.0;
 
   @override
   void initState() {
@@ -220,7 +221,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
             Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-              child: (isFilming)
+              child: (value != 0.0)
                   ? Stack(
                       children: [
                         ClipRRect(
@@ -241,7 +242,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                           borderRadius: BorderRadius.circular(5),
                           child: LinearProgressIndicator(
                             minHeight: 10,
-                            value: 0.3,
+                            value: value,
                             backgroundColor: Colors.transparent,
                           ),
                         ),
@@ -343,8 +344,15 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
                           print("picture");
                           if (controller != null &&
                               controller.value.isInitialized &&
-                              !controller.value.isRecordingVideo)
+                              !controller.value.isRecordingVideo) {
                             onTakePictureButtonPressed();
+                          } else {
+                            if (!isFilming) {
+                              onResumeButtonPressed();
+                            } else {
+                              onPauseButtonPressed();
+                            }
+                          }
                         },
                         onLongPress: () {
                           print("onLongPress");
@@ -528,12 +536,31 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
     });
   }
 
+  void updateProgres() {
+    const time = const Duration(milliseconds: 100);
+    Timer.periodic(time, (timer) {
+      if (isFilming) {
+        setState(() {
+          value += 0.002;
+        });
+      }
+      if (value == 1.0) {
+        onStopButtonPressed();
+        timer.cancel();
+        return;
+      }
+    });
+  }
+
   void onVideoRecordButtonPressed() {
     startVideoRecording().then((String filePath) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           isFilming = true;
+          isPicture = false;
         });
+        updateProgres();
+      }
       //if (filePath != null) showInSnackBar('Saving video to $filePath');
     });
   }
@@ -543,9 +570,17 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
       if (mounted)
         setState(() {
           isFilming = false;
+          isPicture = false;
         });
       //showInSnackBar('Video recorded to: $videoPath');
-      GallerySaver.saveVideo('$videoPath').then((path) => print('$path'));
+      GallerySaver.saveVideo('$videoPath')
+          .then((path) => print('$path'))
+          .then((value) => null)
+          .then((value) => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Preview(), fullscreenDialog: true),
+              ));
     });
   }
 
@@ -554,6 +589,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
       if (mounted)
         setState(() {
           isFilming = false;
+          isPicture = false;
         });
       //showInSnackBar('Video recording paused');
     });
@@ -564,6 +600,7 @@ class _BodyState extends State<Body> with WidgetsBindingObserver {
       if (mounted)
         setState(() {
           isFilming = true;
+          isPicture = false;
         });
       //showInSnackBar('Video recording resumed');
     });

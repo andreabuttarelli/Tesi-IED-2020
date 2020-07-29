@@ -13,7 +13,7 @@ class UserBloc extends Bloc<UserEvent, UserObject> {
   @override
   Stream<UserObject> mapEventToState(UserEvent event) async* {
     if (event is UserLogged) {
-      UserRepository repository;
+      //UserRepository repository;
       //yield await repository.getCurrentUserObject();
     }
   }

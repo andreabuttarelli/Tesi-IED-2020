@@ -1,6 +1,5 @@
 import 'package:app/src/blocs/alert/index.dart';
 import 'package:app/src/blocs/language/index.dart';
-import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
 import 'package:app/src/design_system/buttons/option.dart';

@@ -1,7 +1,6 @@
 import 'package:app/src/blocs/alert/index.dart';
 import 'package:app/src/blocs/authentication/index.dart';
 import 'package:app/src/design_system/palette.dart';
-import 'package:app/src/pages/home/home.dart';
 import 'package:app/src/pages/settings/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

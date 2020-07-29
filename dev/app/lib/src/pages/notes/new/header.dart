@@ -1,6 +1,5 @@
 import 'package:app/src/blocs/new_note/bloc.dart';
 import 'package:app/src/blocs/new_note/index.dart';
-import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';

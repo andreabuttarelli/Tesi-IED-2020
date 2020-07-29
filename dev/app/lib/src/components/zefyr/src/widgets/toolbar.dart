@@ -73,9 +73,9 @@ class ZefyrToolbarScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ZefyrTheme.of(context).toolbarTheme;
+    //final theme = ZefyrTheme.of(context).toolbarTheme;
     final toolbar = ZefyrToolbar.of(context);
-    final constraints = BoxConstraints.tightFor(height: 64);
+    //final constraints = BoxConstraints.tightFor(height: 64);
     final children = <Widget>[
       Expanded(child: body),
     ];
@@ -240,11 +240,11 @@ class ZefyrToolbarState extends State<ZefyrToolbar>
     if (hasOverlay) {
       Widget widget = Builder(builder: _overlayBuilder);
       assert(widget != null);
-      final overlay = FadeTransition(
+      /*final overlay = FadeTransition(
         key: _overlayKey,
         opacity: _overlayAnimation,
         child: widget,
-      );
+      );*/
       //layers.add(overlay);
     }
 

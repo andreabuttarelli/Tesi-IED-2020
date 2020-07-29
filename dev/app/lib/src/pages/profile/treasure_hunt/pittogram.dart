@@ -1,12 +1,8 @@
-import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/enums/pittograms.dart';
 import 'package:app/src/pages/profile/pittogram_icon.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class Pittogram extends StatefulWidget {
   Pittogram({Key key}) : super(key: key);

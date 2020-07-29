@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CameraEvent extends Equatable {

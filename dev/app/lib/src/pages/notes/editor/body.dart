@@ -1,23 +1,16 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:app/src/blocs/accessibility/index.dart';
 import 'package:app/src/components/zefyr/zefyr.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
-import 'package:app/src/design_system/text.dart';
-import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/objects/local_note.dart';
 import 'package:app/src/objects/place.dart';
-import 'package:app/src/pages/notes/editor/action_bar/action_bar.dart';
-import 'package:app/src/repositories/local_feed.dart';
 import 'package:app/src/repositories/notes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:quill_delta/quill_delta.dart';
-import 'package:share/share.dart';
-import 'package:webfeed/domain/atom_item.dart';
 import 'dart:convert';
 
 class Body extends StatefulWidget {

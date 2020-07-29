@@ -1,6 +1,7 @@
 import 'package:app/src/blocs/language/index.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/pages/augmented_reality/camera.dart';
+import 'package:app/src/pages/camera/camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/pages/home/bottombar/bottombar.dart';
 import 'package:app/src/pages/home/bottombar/body.dart';
@@ -30,8 +31,7 @@ class Home extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AugmentedReality(),
-                    fullscreenDialog: true),
+                    builder: (context) => Camera(), fullscreenDialog: true),
               );
             },
             tooltip: '${lang.script["camera_title"]}',

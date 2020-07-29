@@ -1,18 +1,11 @@
-import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/buttons/button.dart';
 import 'package:app/src/design_system/buttons/dims.dart';
-import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
-import 'package:app/src/design_system/textfield/textfield.dart';
-import 'package:app/src/objects/validators.dart';
-import 'package:app/src/pages/auth/registration/password/password.dart';
-import 'package:app/src/pages/auth/registration/registration.dart';
 import 'package:app/src/pages/home/home.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class Confirm extends StatefulWidget {
   Confirm({Key key}) : super(key: key);

@@ -13,12 +13,12 @@
 import 'package:equatable/equatable.dart';
 
 abstract class Language extends Equatable {
-  Map<String, String> script = {};
+  final Map<String, String> script = {};
   Language();
 }
 
 class Italian extends Language {
-  Map<String, String> script = {
+  final Map<String, String> script = {
     "close": "Chiudi",
     "back": "Indietro",
     "feed_title": "Notizie",
@@ -61,7 +61,7 @@ class Italian extends Language {
 }
 
 class English extends Language {
-  Map<String, String> script = {
+  final Map<String, String> script = {
     "close": "Close",
     "back": "Back",
     "feed_title": "News",
@@ -101,7 +101,7 @@ class English extends Language {
 }
 
 class Spanish extends Language {
-  Map<String, String> script = {
+  final Map<String, String> script = {
     "close": "Cierra",
     "back": "Atras",
     "feed_title": "News",
@@ -145,7 +145,7 @@ class Spanish extends Language {
 }
 
 class Chinese extends Language {
-  Map<String, String> script = {
+  final Map<String, String> script = {
     "close": "关闭",
     "back": "背部",
     "feed_title": "新闻",

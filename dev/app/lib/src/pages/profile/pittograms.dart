@@ -5,7 +5,6 @@ import 'package:app/src/enums/pittograms.dart';
 import 'package:app/src/pages/profile/pittogram_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class Pittograms extends StatefulWidget {
   Pittograms({Key key}) : super(key: key);

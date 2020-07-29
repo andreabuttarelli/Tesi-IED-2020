@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 abstract class UserEvent extends Equatable {
   UserEvent();
@@ -11,7 +10,6 @@ abstract class UserEvent extends Equatable {
 }
 
 class UserLogged extends UserEvent {
-
   UserLogged();
 
   List<Object> get props => [];

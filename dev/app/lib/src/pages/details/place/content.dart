@@ -1,20 +1,9 @@
 import 'package:app/src/blocs/accessibility/bloc.dart';
-import 'package:app/src/blocs/theme/bloc.dart';
-import 'package:app/src/blocs/theme/index.dart';
-import 'package:app/src/design_system/buttons/button.dart';
-import 'package:app/src/design_system/buttons/dims.dart';
-import 'package:app/src/design_system/buttons/type.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
-import 'package:app/src/objects/local_article.dart';
 import 'package:app/src/objects/place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
-import 'package:share/share.dart';
-import 'package:webfeed/domain/atom_item.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
 class Content extends StatefulWidget {

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:vector_math/vector_math_64.dart' as vector;
 
 class AndroidScanner extends StatefulWidget {
   AndroidScanner({Key key}) : super(key: key);
@@ -73,7 +72,7 @@ class _ScannerState extends State<AndroidScanner> {
 
   tempListen() async {
     //only with simulators
-    Position position = Position(latitude: 41.8853658, longitude: 12.4966204);
+    //Position position = Position(latitude: 41.8853658, longitude: 12.4966204);
     await Future.delayed(Duration(milliseconds: 400));
     tokenBloc
       ..add(UpdateTokenPosition(geopoint: GeoPoint(41.8853658, 12.4966204)));

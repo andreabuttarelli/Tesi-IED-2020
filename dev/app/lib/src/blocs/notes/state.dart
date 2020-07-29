@@ -1,5 +1,4 @@
 import 'package:app/src/objects/local_note.dart';
-import 'package:app/src/objects/place.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class NotesState extends Equatable {

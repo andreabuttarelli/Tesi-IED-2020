@@ -1,5 +1,4 @@
 import 'package:app/src/design_system/palette.dart';
-import 'package:app/src/enums/pittograms.dart';
 import 'package:flutter/material.dart';
 
 class PittogramIcon extends StatelessWidget {

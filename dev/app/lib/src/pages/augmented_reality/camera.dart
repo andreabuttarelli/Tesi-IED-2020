@@ -1,11 +1,8 @@
-import 'dart:io';
-import 'dart:ui';
 import 'package:app/src/blocs/token/index.dart';
-import 'package:app/src/pages/augmented_reality/android/only_cam.dart';
-import 'package:app/src/pages/augmented_reality/android/scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './body.dart';
+import 'package:app/src/pages/augmented_reality/apple/helmet.dart';
 
 class AugmentedReality extends StatefulWidget {
   AugmentedReality({Key key}) : super(key: key);

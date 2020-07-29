@@ -15,8 +15,6 @@ class FirstTimeBloc extends Bloc<FirstTimeEvent, FirstTimeState> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool firstTime = prefs.getBool('first_time');
 
-      var _duration = new Duration(seconds: 3);
-
       if (firstTime != null && !firstTime) {
         yield FirstTimeState.notFirstTime;
       } else {

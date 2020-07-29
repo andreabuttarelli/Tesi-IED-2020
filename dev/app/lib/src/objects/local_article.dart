@@ -1,5 +1,4 @@
 import 'package:app/src/repositories/local_feed.dart';
-import 'package:webfeed/domain/atom_item.dart';
 import 'package:meta/meta.dart';
 
 final ColumnNames columnNames = ColumnNames();

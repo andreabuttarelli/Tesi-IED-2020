@@ -1,15 +1,4 @@
-import 'package:app/src/blocs/language/bloc.dart';
-import 'package:app/src/blocs/language/index.dart';
-import 'package:app/src/pages/home/bottombar/body.dart';
-import 'package:app/src/pages/home/bottombar/bottombar.dart';
-
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-/// modificato il 05/06/2020
-///
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app/src/blocs/navigation/bloc.dart';
 import 'package:app/src/pages/feed/feed.dart';

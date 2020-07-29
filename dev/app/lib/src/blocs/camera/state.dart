@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CameraState extends Equatable {
@@ -11,9 +10,9 @@ abstract class CameraState extends Equatable {
 class Undefined extends CameraState {}
 
 class Content extends CameraState {
-  String url;
-  bool isImage;
-  bool isSaved;
+  final String url;
+  final bool isImage;
+  final bool isSaved;
 
   Content({this.url, this.isImage, this.isSaved});
 

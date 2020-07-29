@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:share/share.dart';
-import 'package:webfeed/domain/atom_item.dart';
 import './content.dart';
 
 class Body extends StatefulWidget {

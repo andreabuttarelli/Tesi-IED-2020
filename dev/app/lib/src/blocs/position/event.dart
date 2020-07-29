@@ -7,7 +7,7 @@ abstract class PositionEvent extends Equatable {
 }
 
 class UpdatePosition extends PositionEvent {
-  GeoPoint geopoint;
+  final GeoPoint geopoint;
 
   UpdatePosition({this.geopoint});
 }

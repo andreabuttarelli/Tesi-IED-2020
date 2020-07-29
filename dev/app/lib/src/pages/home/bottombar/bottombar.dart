@@ -1,11 +1,4 @@
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-/// modificato il 05/06/2020
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:app/src/blocs/navigation/index.dart';
 import 'package:app/src/pages/home/bottombar/body.dart';
 
 class BottomBar extends StatelessWidget {
@@ -20,6 +13,10 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomBarBody(items: items, color: color, backgroundColor: bgColor,);
+    return BottomBarBody(
+      items: items,
+      color: color,
+      backgroundColor: bgColor,
+    );
   }
 }

@@ -1,10 +1,8 @@
 import 'package:app/src/blocs/augmented_reality/bloc.dart';
 import 'package:app/src/blocs/augmented_reality/event.dart';
-import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:arkit_plugin/widget/arkit_scene_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 import 'dart:async';

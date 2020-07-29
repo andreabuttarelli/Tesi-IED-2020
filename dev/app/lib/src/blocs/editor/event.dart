@@ -1,6 +1,5 @@
 import 'package:app/src/objects/place.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 abstract class EditorEvent extends Equatable {
   EditorEvent();

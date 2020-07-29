@@ -5,7 +5,7 @@ abstract class AccessibilityEvent extends Equatable {
 }
 
 class ChangeAccessibleMode extends AccessibilityEvent {
-  bool value;
+  final bool value;
 
   ChangeAccessibleMode(this.value);
 

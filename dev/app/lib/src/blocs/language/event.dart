@@ -20,7 +20,7 @@ abstract class LanguageEvent extends Equatable {
 class LanguageBlocStarted extends LanguageEvent {}
 
 class ChangeLanguage extends LanguageEvent {
-  Language lang;
+  final Language lang;
   ChangeLanguage({@required this.lang});
 
   @override

@@ -1,12 +1,5 @@
 import 'package:app/src/blocs/accessibility/index.dart';
-import 'package:app/src/blocs/theme/index.dart';
 import 'package:app/src/design_system/palette.dart';
-
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-/// modificato il 05/06/2020
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +12,7 @@ class CText extends StatefulWidget {
   final double vPadding;
   final double top, bottom, left, right;
   const CText(
-    @required this.value, {
+    this.value, {
     Key key,
     this.size,
     this.weight,

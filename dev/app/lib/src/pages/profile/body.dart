@@ -1,21 +1,12 @@
 import 'package:app/src/blocs/language/index.dart';
-import 'package:app/src/blocs/theme/index.dart';
-import 'package:app/src/blocs/user/index.dart';
 import 'package:app/src/design_system/buttons/top_icon.dart';
 import 'package:app/src/design_system/buttons/top_icon_back.dart';
 import 'package:app/src/design_system/palette.dart';
 import 'package:app/src/design_system/text.dart';
 import 'package:app/src/objects/local_article.dart';
-import 'package:app/src/objects/user.dart';
 import 'package:app/src/pages/profile/pittograms.dart';
 import 'package:app/src/pages/settings/settings.dart';
 import 'package:app/src/repositories/local_feed.dart';
-
-/// MIT License
-/// by Andrea Buttarelli
-/// creato il 04/02/2020
-/// modificato il 04/07/2020
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
