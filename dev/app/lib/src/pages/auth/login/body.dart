@@ -36,7 +36,8 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        if (state == LoginState.loading()) {
+        print(state);
+        if (state.isSubmitting) {
           Scaffold.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -51,7 +52,7 @@ class _BodyState extends State<Body> {
               ),
             );
         }
-        if (state == LoginState.success()) {
+        if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
           BlocProvider.of<UserBloc>(context).add(UserLogged());
           Navigator.pushReplacement(
@@ -61,7 +62,7 @@ class _BodyState extends State<Body> {
             ),
           );
         }
-        if (state == LoginState.failure()) {
+        if (state.isFailure) {
           Scaffold.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -77,71 +78,80 @@ class _BodyState extends State<Body> {
       },
       child: BlocBuilder<LanguageBloc, Language>(
         builder: (context, lang) {
-          return SafeArea(
-            bottom: false,
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TopIconBack(
-                    icon: Icons.arrow_back,
-                    color: Colors.black,
+          return NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (OverscrollIndicatorNotification overscroll) {
+              overscroll.disallowGlow();
+            },
+            child: SingleChildScrollView(
+              child: SafeArea(
+                bottom: false,
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TopIconBack(
+                        icon: Icons.arrow_back,
+                        color: Colors.black,
+                      ),
+                      CText(
+                        'Bentornato',
+                        size: 32,
+                        weight: FontWeight.bold,
+                        hPadding: 24,
+                        top: 0,
+                        bottom: 24,
+                      ),
+                      CTextField(
+                        title: 'Email',
+                        placeholder: 'Enter email',
+                        autofocus: true,
+                        callBack: (text) {
+                          setState(() {
+                            email = text;
+                          });
+                          loginBloc..add(EmailChanged(email: text));
+                        },
+                      ),
+                      CTextField(
+                        title: 'Password',
+                        placeholder: 'Enter password',
+                        secure: true,
+                        callBack: (text) {
+                          setState(() {
+                            password = text;
+                          });
+                          loginBloc..add(PasswordChanged(password: text));
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 54),
+                      ),
+                      GoogleSignInButton(
+                        onClick: () {
+                          loginBloc..add(LoginWithGooglePressed());
+                        },
+                      ),
+                      Button(
+                        color: Palette.accent,
+                        type: ButtonType.secondarySolid,
+                        dims: ButtonDims.large,
+                        label: 'Login',
+                        onClick: () {
+                          loginBloc
+                            ..add(
+                              LoginWithCredentialsPressed(
+                                email: email,
+                                password: password,
+                              ),
+                            );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24),
+                      ),
+                    ],
                   ),
-                  CText(
-                    'Bentornato',
-                    size: 32,
-                    weight: FontWeight.bold,
-                    hPadding: 24,
-                    top: 0,
-                    bottom: 24,
-                  ),
-                  CTextField(
-                    title: 'Email',
-                    placeholder: 'Enter email',
-                    autofocus: true,
-                    callBack: (text) {
-                      setState(() {
-                        email = text;
-                      });
-                      loginBloc..add(EmailChanged(email: text));
-                    },
-                  ),
-                  CTextField(
-                    title: 'Password',
-                    placeholder: 'Enter password',
-                    secure: true,
-                    callBack: (text) {
-                      setState(() {
-                        password = text;
-                      });
-                      loginBloc..add(PasswordChanged(password: text));
-                    },
-                  ),
-                  Spacer(),
-                  GoogleSignInButton(
-                    onClick: () {
-                      loginBloc..add(LoginWithGooglePressed());
-                    },
-                  ),
-                  Button(
-                    color: Palette.accent,
-                    type: ButtonType.secondarySolid,
-                    dims: ButtonDims.large,
-                    label: 'Login',
-                    onClick: () {
-                      loginBloc
-                        ..add(
-                          LoginWithCredentialsPressed(
-                            email: email,
-                            password: password,
-                          ),
-                        );
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                  ),
-                ],
+                ),
               ),
             ),
           );
